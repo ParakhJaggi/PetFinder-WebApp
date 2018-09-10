@@ -8,7 +8,7 @@ import * as Login from 'js/login';
 
 export class Home extends React.Component {
 	render() {
-
+		/*TODO edit*/
 		return (
 			<div className="container padded">
 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
