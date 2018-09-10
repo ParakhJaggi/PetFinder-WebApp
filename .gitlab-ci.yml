@@ -2,7 +2,7 @@ image: java: 10
 
 deploy
   stage: deploy
-  image:ruby:2.3
+  image: ruby:2.3
   script:
     -apt-get update -qy
     -apt-get install -y ruby-dev
