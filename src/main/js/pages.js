@@ -11,14 +11,18 @@ export class Home extends React.Component {
 		return (
 			<div className="container padded">
 				This is the home page.
-
-				<ul>
+				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<a class="navbar-brand " style={{color: 'pink'}}>Navigation</a>
+				<ul class="navbar-nav ml-auto">
 					<li><Link to="/register">Register</Link></li>
 					<li><Link to="/login">Login</Link></li>
 					<li><Link to="/page-1">Page 1</Link></li>
 					<li><Link to="/page-2">Page 2</Link></li>
 					<li><Link to="/page-3">Page 3</Link></li>
 				</ul>
+			</div>
+				</nav>
 			</div>
 		);
 	}
