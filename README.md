@@ -4,6 +4,8 @@ This is Group 4's Tempeturs project.
 ## Elastic Search
 This application uses elastic search as a data backend. To run the app you will have to either install elastic search locally or point to a remote elastic search instance. Configuration options are provided in `application.yml`.
 
+
+
 ## Development
 In development there are three components to the running application. A Java app server, which runs your backend code, elasticsearch, which is the data store, and a webpack development server which serves up the frontend resources and does hot reloading.
 
