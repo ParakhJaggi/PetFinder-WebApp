@@ -7,6 +7,8 @@ This application uses elastic search as a data backend. To run the app you will 
 ## Development
 In development there are three components to the running application. A Java app server, which runs your backend code, elasticsearch, which is the data store, and a webpack development server which serves up the frontend resources and does hot reloading.
 
+
+
 ### Running the Backend in IntelliJ
 1. Install Java, Gradle, IntelliJ if you don't already have them
 3. Import the project as a Gradle project into IntelliJ (may need a Gradle plugin)

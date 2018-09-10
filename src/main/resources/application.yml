@@ -31,8 +31,8 @@ web:
     css-bundle-location: /statics/petfinder-site.css
 
 elastic-search:
-  host: kppmugiwdt:wxjl490jfb@cypress-5116526.us-east-1.bonsaisearch.net
+  host: cypress-5116526.us-east-1.bonsaisearch.net
   port: 443
   scheme: https
-  user-name:
-  password:
+  user-name: kppmugiwdt
+  password: wxjl490jfb
