@@ -11,4 +11,4 @@ deploy:
     -dpl --provider=heroku --app=$APP_NAME --api-key=$API_KEY
 
   only:
-    -master
+    - master
