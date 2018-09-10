@@ -1,1 +1,1 @@
-web: java -Dspring.profiles.active=development -Dserver.port=$PORT -jar build/libs/*jar
+web: java -Dspring.profiles.active=qa -Dserver.port=$PORT -jar build/libs/*jar
