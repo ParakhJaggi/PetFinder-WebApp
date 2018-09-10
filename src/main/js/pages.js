@@ -11,28 +11,38 @@ export class Home extends React.Component {
 		/*TODO edit*/
 		return (
 			<div className="container padded">
-				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<a class="navbar-brand " style={{color: 'pink'}}>Navigation</a>
-				<ul class="navbar-nav ml-auto">
-					<li><Link to="/register">Register</Link></li>
-					<li><Link to="/login">Login</Link></li>
-					<li><Link to="/profile-page">Edit Profile</Link></li>
-					<li><Link to="/page-2">Page 2</Link></li>
-					<li><Link to="/page-3">Page 3</Link></li>
-				</ul>
-			</div>
-				</nav>
+				<NavBar></NavBar>
 			</div>
 		);
 	}
 }
-
+export class NavBar extends React.Component {
+	render() {
+        /*TODO edit*/
+		return (
+            <div className="container padded">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <a class="navbar-brand " style={{color: 'pink'}}>Navigation</a>
+                        <ul class="navbar-nav ml-auto">
+                            <li><Link to="/register">Register</Link></li>
+                            <li><Link to="/login">Login</Link></li>
+                            <li><Link to="/profile-page">Edit Profile</Link></li>
+                            <li><Link to="/page-2">Page 2</Link></li>
+                            <li><Link to="/page-3">Page 3</Link></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+		);
+	}
+}
 export class RegisterPage extends React.Component {
 	render() {
 		return (
 			<div className="container padded">
-				<div className="row">
+                <NavBar></NavBar>
+                <div className="row">
 					<div className="col-6 offset-md-3">
 						<h2>Register</h2>
 						<hr />
@@ -48,7 +58,8 @@ export class LoginPage extends React.Component {
 	render() {
 		return (
 			<div className="container padded">
-				<div className="row">
+                <NavBar></NavBar>
+                <div className="row">
 					<div className="col-6 offset-md-3">
 						<h2>Login</h2>
 						<hr />
@@ -64,6 +75,7 @@ class ProfilePage extends React.Component {
 	render() {
 		return (
 			<div className="container padded">
+                <NavBar></NavBar>
 				This is Profile Page.
 
 				{ _.isDefined(this.props.authentication) &&
@@ -91,6 +103,7 @@ export class Page2 extends React.Component {
 	render() {
 		return (
 			<div className="container padded">
+                <NavBar></NavBar>
 				This is page 2.
 			</div>
 		);
@@ -101,6 +114,7 @@ export class Page3 extends React.Component {
 	render() {
 		return (
 			<div className="container padded">
+                <NavBar></NavBar>
 				This is page 3.
 			</div>
 		);
