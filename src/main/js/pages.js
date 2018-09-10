@@ -8,16 +8,16 @@ import * as Login from 'js/login';
 
 export class Home extends React.Component {
 	render() {
+
 		return (
 			<div className="container padded">
-				This is the home page.
 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<a class="navbar-brand " style={{color: 'pink'}}>Navigation</a>
 				<ul class="navbar-nav ml-auto">
 					<li><Link to="/register">Register</Link></li>
 					<li><Link to="/login">Login</Link></li>
-					<li><Link to="/page-1">Page 1</Link></li>
+					<li><Link to="/profile-page">Edit Profile</Link></li>
 					<li><Link to="/page-2">Page 2</Link></li>
 					<li><Link to="/page-3">Page 3</Link></li>
 				</ul>
@@ -60,11 +60,11 @@ export class LoginPage extends React.Component {
 	}
 }
 
-class Page1 extends React.Component {
+class ProfilePage extends React.Component {
 	render() {
 		return (
 			<div className="container padded">
-				This is page 1.
+				This is Profile Page.
 
 				{ _.isDefined(this.props.authentication) &&
 				<div>{this.props.authentication['access_token']}</div>
@@ -78,14 +78,14 @@ class Page1 extends React.Component {
 	}
 }
 
-Page1 = connect(
+ProfilePage = connect(
 	state => ({
 		authentication: Users.State.getAuthentication(state),
 		user: Users.State.getUser(state)
 	})
-)(Page1);
+)(ProfilePage);
 
-export { Page1 };
+export { ProfilePage };
 
 export class Page2 extends React.Component {
 	render() {
