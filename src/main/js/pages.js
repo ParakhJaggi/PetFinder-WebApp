@@ -21,10 +21,10 @@ export class NavBar extends React.Component {
         /*TODO edit*/
 		return (
             <div className="container padded">
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="collapse navbar-collapse" id="navbarNav">
-                        <a class="navbar-brand " style={{color: 'pink'}}>Navigation</a>
-                        <ul class="navbar-nav ml-auto">
+                        <a class="navbar-brand " style={{color: 'blue'}}>Navigation</a>
+                        <ul class="nav ml-auto">
                             <li><Link to="/register">Register</Link></li>
                             <li><Link to="/login">Login</Link></li>
                             <li><Link to="/profile-page">Edit Profile</Link></li>
