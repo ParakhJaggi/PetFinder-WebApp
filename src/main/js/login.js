@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import * as Validation from 'js/alloy/utils/validation';
 import * as Bessemer from 'js/alloy/bessemer/components';
-
 import * as Users from 'js/users';
+
 
 class LoginForm extends React.Component {
 	onSubmit = ({principal, password}) => {
@@ -16,15 +16,20 @@ class LoginForm extends React.Component {
 		let { handleSubmit, submitting } = this.props;
 
 		return (
+
+
 			<form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
+
 				<Bessemer.Field name="principal" friendlyName="Email Address"
 				                validators={[Validation.requiredValidator, Validation.emailValidator]} />
 
 				<Bessemer.Field name="password" friendlyName="Password"
-				                validators={[Validation.requiredValidator, Validation.passwordValidator]} />
-
+				                validators={[Validation.requiredValidator, Validation.passwordValidator]}
+                				field={<input className="form-control" type="password" />} />
 				<Bessemer.Button loading={submitting}>Sign In</Bessemer.Button>
+
 			</form>
+
 		);
 	}
 }
@@ -51,6 +56,7 @@ class RegistrationForm extends React.Component {
 		let { handleSubmit, submitting } = this.props;
 
 		return (
+
 			<form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
 				<Bessemer.Field name="principal" friendlyName="Email Address"
 				                validators={[Validation.requiredValidator, Validation.emailValidator]} />
