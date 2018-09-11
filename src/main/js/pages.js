@@ -12,6 +12,7 @@ export class Home extends React.Component {
 		return (
 			<div className="container padded">
 				<NavBar></NavBar>
+                Welcome to our project!
 			</div>
 		);
 	}
@@ -77,6 +78,7 @@ class ProfilePage extends React.Component {
 			<div className="container padded">
                 <NavBar></NavBar>
 				This is Profile Page.
+				This will let users edit photo/add other info
 
 				{ _.isDefined(this.props.authentication) &&
 				<div>{this.props.authentication['access_token']}</div>
@@ -104,7 +106,7 @@ export class Page2 extends React.Component {
 		return (
 			<div className="container padded">
                 <NavBar></NavBar>
-				This is page 2.
+				This is page 2. Unknown Purpose
 			</div>
 		);
 	}
@@ -115,7 +117,8 @@ export class Page3 extends React.Component {
 		return (
 			<div className="container padded">
                 <NavBar></NavBar>
-				This is page 3.
+				This is page 3. Unknown Purpose
+
 			</div>
 		);
 	}
