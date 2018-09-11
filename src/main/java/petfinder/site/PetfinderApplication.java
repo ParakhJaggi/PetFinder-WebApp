@@ -12,5 +12,4 @@ public class PetfinderApplication {
 		SpringApplication.run(PetfinderApplication.class, args);
 	}
 }
-//test commit
 /*Test*/
