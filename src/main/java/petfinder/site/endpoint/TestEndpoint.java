@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestEndpoint {
     @GetMapping("/")
     public String run(){
-        return "Hello World :)\n";
+
+    return "{"+'"'+"data"+'"'+":"+'"'+ "Hello World!"+'"'+"}";
     }
 }

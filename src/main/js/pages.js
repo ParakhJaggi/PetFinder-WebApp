@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import * as Users from 'js/users';
 import * as Login from 'js/login';
 
+
 export class Home extends React.Component {
 	render() {
 		/*TODO edit*/
@@ -106,7 +107,7 @@ export class Page2 extends React.Component {
 		return (
 			<div className="container padded">
                 <NavBar></NavBar>
-				This is page 2. Unknown Purpose
+				<Hello></Hello>
 			</div>
 		);
 	}
@@ -122,4 +123,45 @@ export class Page3 extends React.Component {
 			</div>
 		);
 	}
+}
+
+export class Hello extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {data: null};
+    }
+
+    componentDidMount() {
+        this._getData();
+    }
+
+
+    _getData = () => {
+        fetch('http://localhost:8000/hello/')
+            .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let errorMessage =
+                            '${response.status(${response.statusText})',
+                        error = new Error(errorMessage);
+                    throw(error);
+                }
+            })
+            .then(response => response.json())
+            .then(json =>{
+                console.log(json);
+                this.setState({ data: json.data });
+            });
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>{this.state.data}</h1>
+            </div>
+        );
+    }
 }
