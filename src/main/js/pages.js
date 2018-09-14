@@ -139,7 +139,7 @@ export class Hello extends React.Component {
 
 
     _getData = () => {
-        fetch('http://localhost:8080/hello/')
+        fetch('/hello/')
             .then(response => {
                 if (response.ok) {
                     return response;
