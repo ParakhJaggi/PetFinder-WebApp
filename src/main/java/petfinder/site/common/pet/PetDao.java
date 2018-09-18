@@ -29,6 +29,7 @@ public class PetDao {
         petElasticsearchRepository = new PetElasticsearchRepository(PetfinderElasticSearchClientProvider.getInstance());
 
         return petElasticsearchRepository.find(id);
+
 	}
 
 	public Optional<PetDto> findPetLowTech(Long id) {
