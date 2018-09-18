@@ -2,15 +2,11 @@ package petfinder.site;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import petfinder.site.common.pet.PetDto;
-import petfinder.site.common.pet.PetService;
 
-import java.util.Optional;
 
 /**
  * Created by jlutteringer on 8/22/17.
  */
-
 
 
 @SpringBootApplication

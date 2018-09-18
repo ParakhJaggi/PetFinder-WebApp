@@ -31,4 +31,12 @@ web:
     js-bundle-location: /statics/petfinder-site.js
     css-bundle-location: /statics/petfinder-site.css
 
+elastic-search:
+  host: apple-3855115-us-east-1.k4s.bonsaiapps.net
+  port: 443
+  scheme: https
+  user-name: 61fh7mmy92
+  password: sbspuokfe3
+
+
 
