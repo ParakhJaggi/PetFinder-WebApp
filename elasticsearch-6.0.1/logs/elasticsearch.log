@@ -1,0 +1,98 @@
+[2018-09-17T18:27:47,008][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-09-17T18:27:47,221][INFO ][o.e.e.NodeEnvironment    ] [ZqjJ2uo] using [1] data paths, mounts [[/ (/dev/disk1s1)]], net usable_space [81.7gb], net total_space [233.5gb], types [apfs]
+[2018-09-17T18:27:47,222][INFO ][o.e.e.NodeEnvironment    ] [ZqjJ2uo] heap size [990.7mb], compressed ordinary object pointers [true]
+[2018-09-17T18:27:47,225][INFO ][o.e.n.Node               ] node name [ZqjJ2uo] derived from node ID [ZqjJ2uoXRsK9HZWLufhwVw]; set [node.name] to override
+[2018-09-17T18:27:47,225][INFO ][o.e.n.Node               ] version[6.0.1], pid[1790], build[601be4a/2017-12-04T09:29:09.525Z], OS[Mac OS X/10.13.3/x86_64], JVM["Oracle Corporation"/Java HotSpot(TM) 64-Bit Server VM/10.0.2/10.0.2+13]
+[2018-09-17T18:27:47,226][INFO ][o.e.n.Node               ] JVM arguments [-Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -XX:+HeapDumpOnOutOfMemoryError, -Des.path.home=/Users/ParakhJaggi/Downloads/elasticsearch-6.0.1, -Des.path.conf=/Users/ParakhJaggi/Downloads/elasticsearch-6.0.1/config]
+[2018-09-17T18:27:48,908][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [aggs-matrix-stats]
+[2018-09-17T18:27:48,909][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [analysis-common]
+[2018-09-17T18:27:48,909][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [ingest-common]
+[2018-09-17T18:27:48,909][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [lang-expression]
+[2018-09-17T18:27:48,909][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [lang-mustache]
+[2018-09-17T18:27:48,910][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [lang-painless]
+[2018-09-17T18:27:48,910][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [parent-join]
+[2018-09-17T18:27:48,910][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [percolator]
+[2018-09-17T18:27:48,910][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [reindex]
+[2018-09-17T18:27:48,911][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [repository-url]
+[2018-09-17T18:27:48,911][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [transport-netty4]
+[2018-09-17T18:27:48,911][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [tribe]
+[2018-09-17T18:27:48,912][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] no plugins loaded
+[2018-09-17T18:27:51,384][INFO ][o.e.d.DiscoveryModule    ] [ZqjJ2uo] using discovery type [zen]
+[2018-09-17T18:27:52,342][INFO ][o.e.n.Node               ] initialized
+[2018-09-17T18:27:52,344][INFO ][o.e.n.Node               ] [ZqjJ2uo] starting ...
+[2018-09-17T18:27:52,724][INFO ][o.e.t.TransportService   ] [ZqjJ2uo] publish_address {127.0.0.1:9300}, bound_addresses {[fe80::1]:9300}, {[::1]:9300}, {127.0.0.1:9300}
+[2018-09-17T18:27:55,812][INFO ][o.e.c.s.MasterService    ] [ZqjJ2uo] zen-disco-elected-as-master ([0] nodes joined), reason: new_master {ZqjJ2uo}{ZqjJ2uoXRsK9HZWLufhwVw}{7N34wTA9TzqrhO194D6KFg}{127.0.0.1}{127.0.0.1:9300}
+[2018-09-17T18:27:55,818][INFO ][o.e.c.s.ClusterApplierService] [ZqjJ2uo] new_master {ZqjJ2uo}{ZqjJ2uoXRsK9HZWLufhwVw}{7N34wTA9TzqrhO194D6KFg}{127.0.0.1}{127.0.0.1:9300}, reason: apply cluster state (from master [master {ZqjJ2uo}{ZqjJ2uoXRsK9HZWLufhwVw}{7N34wTA9TzqrhO194D6KFg}{127.0.0.1}{127.0.0.1:9300} committed version [1] source [zen-disco-elected-as-master ([0] nodes joined)]])
+[2018-09-17T18:27:55,837][INFO ][o.e.h.n.Netty4HttpServerTransport] [ZqjJ2uo] publish_address {127.0.0.1:9200}, bound_addresses {[fe80::1]:9200}, {[::1]:9200}, {127.0.0.1:9200}
+[2018-09-17T18:27:55,837][INFO ][o.e.n.Node               ] [ZqjJ2uo] started
+[2018-09-17T18:27:55,864][INFO ][o.e.g.GatewayService     ] [ZqjJ2uo] recovered [0] indices into cluster_state
+[2018-09-17T19:01:15,219][INFO ][o.e.n.Node               ] [ZqjJ2uo] stopping ...
+[2018-09-17T19:01:15,405][INFO ][o.e.n.Node               ] [ZqjJ2uo] stopped
+[2018-09-17T19:01:15,406][INFO ][o.e.n.Node               ] [ZqjJ2uo] closing ...
+[2018-09-17T19:01:15,420][INFO ][o.e.n.Node               ] [ZqjJ2uo] closed
+[2018-09-17T19:03:06,534][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-09-17T19:03:06,696][INFO ][o.e.e.NodeEnvironment    ] [ZqjJ2uo] using [1] data paths, mounts [[/ (/dev/disk1s1)]], net usable_space [81.6gb], net total_space [233.5gb], types [apfs]
+[2018-09-17T19:03:06,697][INFO ][o.e.e.NodeEnvironment    ] [ZqjJ2uo] heap size [990.7mb], compressed ordinary object pointers [true]
+[2018-09-17T19:03:06,699][INFO ][o.e.n.Node               ] node name [ZqjJ2uo] derived from node ID [ZqjJ2uoXRsK9HZWLufhwVw]; set [node.name] to override
+[2018-09-17T19:03:06,699][INFO ][o.e.n.Node               ] version[6.0.1], pid[1971], build[601be4a/2017-12-04T09:29:09.525Z], OS[Mac OS X/10.13.3/x86_64], JVM["Oracle Corporation"/Java HotSpot(TM) 64-Bit Server VM/10.0.2/10.0.2+13]
+[2018-09-17T19:03:06,700][INFO ][o.e.n.Node               ] JVM arguments [-Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -XX:+HeapDumpOnOutOfMemoryError, -Des.path.home=/Users/ParakhJaggi/IdeaProjects/software2/elasticsearch-6.0.1, -Des.path.conf=/Users/ParakhJaggi/IdeaProjects/software2/elasticsearch-6.0.1/config]
+[2018-09-17T19:03:08,178][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [aggs-matrix-stats]
+[2018-09-17T19:03:08,179][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [analysis-common]
+[2018-09-17T19:03:08,180][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [ingest-common]
+[2018-09-17T19:03:08,180][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [lang-expression]
+[2018-09-17T19:03:08,180][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [lang-mustache]
+[2018-09-17T19:03:08,180][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [lang-painless]
+[2018-09-17T19:03:08,180][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [parent-join]
+[2018-09-17T19:03:08,181][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [percolator]
+[2018-09-17T19:03:08,181][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [reindex]
+[2018-09-17T19:03:08,181][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [repository-url]
+[2018-09-17T19:03:08,181][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [transport-netty4]
+[2018-09-17T19:03:08,182][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [tribe]
+[2018-09-17T19:03:08,182][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] no plugins loaded
+[2018-09-17T19:03:10,288][INFO ][o.e.d.DiscoveryModule    ] [ZqjJ2uo] using discovery type [zen]
+[2018-09-17T19:03:11,042][INFO ][o.e.n.Node               ] initialized
+[2018-09-17T19:03:11,042][INFO ][o.e.n.Node               ] [ZqjJ2uo] starting ...
+[2018-09-17T19:03:11,270][INFO ][o.e.t.TransportService   ] [ZqjJ2uo] publish_address {127.0.0.1:9300}, bound_addresses {[fe80::1]:9300}, {[::1]:9300}, {127.0.0.1:9300}
+[2018-09-17T19:03:14,397][INFO ][o.e.c.s.MasterService    ] [ZqjJ2uo] zen-disco-elected-as-master ([0] nodes joined), reason: new_master {ZqjJ2uo}{ZqjJ2uoXRsK9HZWLufhwVw}{j7mQIHjcRu6COB6FzU2N0g}{127.0.0.1}{127.0.0.1:9300}
+[2018-09-17T19:03:14,402][INFO ][o.e.c.s.ClusterApplierService] [ZqjJ2uo] new_master {ZqjJ2uo}{ZqjJ2uoXRsK9HZWLufhwVw}{j7mQIHjcRu6COB6FzU2N0g}{127.0.0.1}{127.0.0.1:9300}, reason: apply cluster state (from master [master {ZqjJ2uo}{ZqjJ2uoXRsK9HZWLufhwVw}{j7mQIHjcRu6COB6FzU2N0g}{127.0.0.1}{127.0.0.1:9300} committed version [1] source [zen-disco-elected-as-master ([0] nodes joined)]])
+[2018-09-17T19:03:14,421][INFO ][o.e.h.n.Netty4HttpServerTransport] [ZqjJ2uo] publish_address {127.0.0.1:9200}, bound_addresses {[fe80::1]:9200}, {[::1]:9200}, {127.0.0.1:9200}
+[2018-09-17T19:03:14,422][INFO ][o.e.n.Node               ] [ZqjJ2uo] started
+[2018-09-17T19:03:14,456][INFO ][o.e.g.GatewayService     ] [ZqjJ2uo] recovered [0] indices into cluster_state
+[2018-09-17T19:54:23,075][INFO ][o.e.n.Node               ] [ZqjJ2uo] stopping ...
+[2018-09-17T19:54:23,134][INFO ][o.e.n.Node               ] [ZqjJ2uo] stopped
+[2018-09-17T19:54:23,135][INFO ][o.e.n.Node               ] [ZqjJ2uo] closing ...
+[2018-09-17T19:54:23,145][INFO ][o.e.n.Node               ] [ZqjJ2uo] closed
+[2018-09-17T20:41:29,311][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-09-17T20:41:29,463][INFO ][o.e.e.NodeEnvironment    ] [ZqjJ2uo] using [1] data paths, mounts [[/ (/dev/disk1s1)]], net usable_space [80.7gb], net total_space [233.5gb], types [apfs]
+[2018-09-17T20:41:29,464][INFO ][o.e.e.NodeEnvironment    ] [ZqjJ2uo] heap size [990.7mb], compressed ordinary object pointers [true]
+[2018-09-17T20:41:29,467][INFO ][o.e.n.Node               ] node name [ZqjJ2uo] derived from node ID [ZqjJ2uoXRsK9HZWLufhwVw]; set [node.name] to override
+[2018-09-17T20:41:29,467][INFO ][o.e.n.Node               ] version[6.0.1], pid[2384], build[601be4a/2017-12-04T09:29:09.525Z], OS[Mac OS X/10.13.3/x86_64], JVM["Oracle Corporation"/Java HotSpot(TM) 64-Bit Server VM/10.0.2/10.0.2+13]
+[2018-09-17T20:41:29,467][INFO ][o.e.n.Node               ] JVM arguments [-Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -XX:+HeapDumpOnOutOfMemoryError, -Des.path.home=/Users/ParakhJaggi/IdeaProjects/software2/elasticsearch-6.0.1, -Des.path.conf=/Users/ParakhJaggi/IdeaProjects/software2/elasticsearch-6.0.1/config]
+[2018-09-17T20:41:30,999][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [aggs-matrix-stats]
+[2018-09-17T20:41:31,000][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [analysis-common]
+[2018-09-17T20:41:31,000][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [ingest-common]
+[2018-09-17T20:41:31,001][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [lang-expression]
+[2018-09-17T20:41:31,001][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [lang-mustache]
+[2018-09-17T20:41:31,001][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [lang-painless]
+[2018-09-17T20:41:31,001][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [parent-join]
+[2018-09-17T20:41:31,001][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [percolator]
+[2018-09-17T20:41:31,002][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [reindex]
+[2018-09-17T20:41:31,002][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [repository-url]
+[2018-09-17T20:41:31,002][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [transport-netty4]
+[2018-09-17T20:41:31,003][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] loaded module [tribe]
+[2018-09-17T20:41:31,004][INFO ][o.e.p.PluginsService     ] [ZqjJ2uo] no plugins loaded
+[2018-09-17T20:41:33,375][INFO ][o.e.d.DiscoveryModule    ] [ZqjJ2uo] using discovery type [zen]
+[2018-09-17T20:41:34,225][INFO ][o.e.n.Node               ] initialized
+[2018-09-17T20:41:34,225][INFO ][o.e.n.Node               ] [ZqjJ2uo] starting ...
+[2018-09-17T20:41:34,522][INFO ][o.e.t.TransportService   ] [ZqjJ2uo] publish_address {127.0.0.1:9300}, bound_addresses {[fe80::1]:9300}, {[::1]:9300}, {127.0.0.1:9300}
+[2018-09-17T20:41:37,657][INFO ][o.e.c.s.MasterService    ] [ZqjJ2uo] zen-disco-elected-as-master ([0] nodes joined), reason: new_master {ZqjJ2uo}{ZqjJ2uoXRsK9HZWLufhwVw}{BvZ_JLCxRQaZAZWCa_uIlw}{127.0.0.1}{127.0.0.1:9300}
+[2018-09-17T20:41:37,668][INFO ][o.e.c.s.ClusterApplierService] [ZqjJ2uo] new_master {ZqjJ2uo}{ZqjJ2uoXRsK9HZWLufhwVw}{BvZ_JLCxRQaZAZWCa_uIlw}{127.0.0.1}{127.0.0.1:9300}, reason: apply cluster state (from master [master {ZqjJ2uo}{ZqjJ2uoXRsK9HZWLufhwVw}{BvZ_JLCxRQaZAZWCa_uIlw}{127.0.0.1}{127.0.0.1:9300} committed version [1] source [zen-disco-elected-as-master ([0] nodes joined)]])
+[2018-09-17T20:41:37,692][INFO ][o.e.h.n.Netty4HttpServerTransport] [ZqjJ2uo] publish_address {127.0.0.1:9200}, bound_addresses {[fe80::1]:9200}, {[::1]:9200}, {127.0.0.1:9200}
+[2018-09-17T20:41:37,692][INFO ][o.e.n.Node               ] [ZqjJ2uo] started
+[2018-09-17T20:41:37,725][INFO ][o.e.g.GatewayService     ] [ZqjJ2uo] recovered [0] indices into cluster_state
+[2018-09-17T20:43:30,786][INFO ][o.e.c.m.MetaDataCreateIndexService] [ZqjJ2uo] [petfinder-pets] creating index, cause [auto(bulk api)], templates [], shards [5]/[1], mappings []
+[2018-09-17T20:43:31,800][INFO ][o.e.c.m.MetaDataMappingService] [ZqjJ2uo] [petfinder-pets/y0e2HQWLQQSs5E04YXtMQg] create_mapping [doc]
+[2018-09-17T21:05:18,401][INFO ][o.e.n.Node               ] [ZqjJ2uo] stopping ...
+[2018-09-17T21:05:18,748][INFO ][o.e.n.Node               ] [ZqjJ2uo] stopped
+[2018-09-17T21:05:18,750][INFO ][o.e.n.Node               ] [ZqjJ2uo] closing ...
+[2018-09-17T21:05:18,760][INFO ][o.e.n.Node               ] [ZqjJ2uo] closed
