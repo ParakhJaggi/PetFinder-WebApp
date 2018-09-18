@@ -16,11 +16,11 @@ web:
     js-bundle-location: http://localhost:3000/petfinder-site.js
 
 elastic-search:
-  host: localhost
-  port: 9200
-  scheme: http
-  user-name:
-  password:
+  host: apple-3855115.us-east-1.bonsaisearch.net
+  port: 443
+  scheme: https
+  user-name: 61fh7mmy92
+  password: sbspuokfe3
 ---
 spring:
   profiles: qa
@@ -30,9 +30,4 @@ web:
     js-bundle-location: /statics/petfinder-site.js
     css-bundle-location: /statics/petfinder-site.css
 
-elastic-search:
-  host: cypress-5116526.us-east-1.bonsaisearch.net
-  port: 443
-  scheme: https
-  user-name: kppmugiwdt
-  password: wxjl490jfb
+

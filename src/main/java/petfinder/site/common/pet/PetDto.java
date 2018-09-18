@@ -15,6 +15,9 @@ public class PetDto implements Identifiable {
 		this.name = name;
 		this.type = type;
 	}
+	public PetDto() {
+
+	}
 
 	@Override
 	public Long getId() {
