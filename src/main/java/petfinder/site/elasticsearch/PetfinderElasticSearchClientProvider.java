@@ -22,7 +22,6 @@ import alloy.elasticsearch.ElasticSearchClientProvider;
 @Service
 public class PetfinderElasticSearchClientProvider implements ElasticSearchClientProvider {
 	private RestHighLevelClient client;
-	//private static PetfinderElasticSearchClientProvider petfinderElasticSearchClientProvider;
 
 	@Value("${elastic-search.host}")
 	private String elasticSearchHost;
@@ -51,16 +50,13 @@ public class PetfinderElasticSearchClientProvider implements ElasticSearchClient
 
 		client = new RestHighLevelClient(builder);
 
-		//petfinderElasticSearchClientProvider = this;
 	}
 
 	public RestHighLevelClient getClient() {
 		return client;
 	}
 
-//	public static PetfinderElasticSearchClientProvider getInstance(){
-      // return petfinderElasticSearchClientProvider;
-    //}
+
 
 
 }
