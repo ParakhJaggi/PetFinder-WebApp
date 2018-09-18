@@ -26,7 +26,7 @@ public class PetDao {
 	private ElasticSearchClientProvider elasticSearchClientProvider;
 
 	public Optional<PetDto> findPet(Long id) {
-        petElasticsearchRepository = new PetElasticsearchRepository(PetfinderElasticSearchClientProvider.getInstance());
+      //  petElasticsearchRepository = new PetElasticsearchRepository(PetfinderElasticSearchClientProvider.getInstance());
 
         return petElasticsearchRepository.find(id);
 	}
@@ -38,7 +38,7 @@ public class PetDao {
 	}
 
 	public void save(PetDto pet) {
-	    petElasticsearchRepository = new PetElasticsearchRepository(PetfinderElasticSearchClientProvider.getInstance());
+	//    petElasticsearchRepository = new PetElasticsearchRepository(PetfinderElasticSearchClientProvider.getInstance());
 		petElasticsearchRepository.save(pet);
 	}
 }
