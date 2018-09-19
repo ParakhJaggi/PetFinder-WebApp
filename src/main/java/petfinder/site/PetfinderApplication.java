@@ -17,12 +17,12 @@ import java.util.Optional;
 public class PetfinderApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PetfinderApplication.class, args);
-        PetService service = new PetService();
+        //PetService service = new PetService();
 
         //service.save(new PetDto(Long.parseLong("5"),"test","test"));
-        Optional<PetDto> dto = service.findPet(Long.parseLong("4"));
+        //Optional<PetDto> dto = service.findPet(Long.parseLong("4"));
 
-        System.out.println(dto.get().getName());
+        //System.out.println(dto.get().getName());
 
 
 	}
