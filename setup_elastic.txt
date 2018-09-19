@@ -1,0 +1,78 @@
+curl -XPUT https://kppmugiwdt:wxjl490jfb@cypress-5116526.us-east-1.bonsaisearch.net/temperature_4_data/_mapping/_doc -d
+'{
+  "mappings": {
+	"user" : {
+		"properties" : {
+			"user_id" : {
+				"type" : "long"
+			},
+			"name" : {
+				"type" : "string"
+			},
+			"city" : {
+				"type" : "string"
+			},
+			"state" : {
+				"type" : "string"
+			},
+			"is_sitter" : {
+				"type" : "boolean"
+			},
+			"is_owner" : {
+				"type" : "boolean"
+			},
+			"rating" : {
+				"type" : "object",
+				"properties" : {
+					"numerator" : {
+						"type" : "integer"
+					},
+					"denominator" : {
+						"type" : "integer"
+					}
+				}
+			},
+			"pet" : {
+				"type" : "nested",
+				"properties" : {
+					"pet_id" : {
+						"type" :   "long"
+					},        
+					"name" : {
+						"type" :   "string"
+					},
+					"species" : {
+						"type" :   "string"
+					},
+					"breed" : {
+						"type" :   "string"
+					},
+					"gender" : {
+						"type" :   "boolean"
+					},
+					"age" : {
+						"type" :   "integer"
+					},
+					"fixed" : {
+						"type" :   "boolean"
+					},
+					"special_needs" : {
+						"type" :   "string"
+					},
+					"rating" : {
+						"type" : "object",
+						"properties" : {
+							"numerator" : {
+								"type" : "integer"
+							},
+							"denominator" : {
+								"type" : "integer"
+							}
+						}
+					}
+				}	
+			}	
+		}
+	}
+  }
+}'

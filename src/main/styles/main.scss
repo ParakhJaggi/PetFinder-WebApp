@@ -2,27 +2,74 @@
 @import "~react-select/scss/default.scss";
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome.scss";
+@import "variables.scss";
+@import "mixins.scss";
+@import "global.scss";
+@import "utilities.scss";
+@import "navbar.scss";
+@import "cards.scss";
+@import "login.scss";
+@import "footer.scss";
+@import "all.css";
+@import "brands.css";
+@import "fontawesome.css";
+@import "regular.css";
+@import "solid.css";
+@import "v4-shims.css";
 
-.navbar-nav > li{
-  border-color: aqua;
-  border-width: thick;
-  display:inline;
-}
-.navbar{
-  border: 4px solid cadetblue;
-}
-.navbar-collapse > ul{
-  text-align:center;
+
+.portrait-crop{
+  position: relative;
+  left:65px;
+  bottom:10px;
+  height: 200%;
+  width: 105%;
+  overflow: visible;
+
 }
 
-.nav a{
-  display:inline-block;
-  padding: 20px;
+.bunny-crop{
+  position:relative;
+  top:0px;
+  right:10px;
+  width:110%;
+  overflow: visible;
 }
 
-.nav{
-  list-style:none;
-  margin:0;
-  padding:0;
-  text-align:center;
+.dog-crop{
+  overflow: visible;
+  width:105%;
+}
+
+
+
+div.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+.top-buffer { margin-top:60px; }
+
+.login-background{
+  background: url("https://i.postimg.cc/wM9Y5CCJ/background2.jpg") no-repeat center;
+  background-size: cover;
+  height: 100%;
+}
+
+.register-background{
+  background-image: url("https://i.postimg.cc/NfJvTPp9/dog3.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+
+.myContainer {
+  resize: none;
+  padding-top: 75px;
+  padding-right: 15px;
+  padding-left: 150px;
+  margin-right: auto;
+  margin-left: 0;
 }
