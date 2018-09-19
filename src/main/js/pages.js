@@ -263,7 +263,7 @@ export class Page3 extends React.Component {
                                 </a>
                                 <div class="card-body align-bottom">
                                     <div className="card-img-overlay dog-crop align-bottom">
-                                    <img src={require('js/dogs.png')} className=" dog-crop card-img-bottom"></img>
+                                    <img src={'https://i.postimg.cc/DwXpZCDK/dogs.png'} className=" dog-crop card-img-bottom"></img>
                                     </div>
                                 </div>
 
@@ -278,7 +278,7 @@ export class Page3 extends React.Component {
                                 </a>
                                 <div className="card-body">
                                     <div className="card-img-overlay">
-                                        <img src={require('js/cats.png')} className="card-img-bottom"></img>
+                                        <img src={'https://i.postimg.cc/Jn1ppRh1/cats.png'} className="card-img-bottom"></img>
                                     </div>
                                 </div>
                         </div>
@@ -293,7 +293,7 @@ export class Page3 extends React.Component {
                                 </a>
                                 <div className="card-body">
                                     <div className="card-img-overlay">
-                                        <img src={require('js/bunny.png')} className="card-img-bottom bunny-crop "></img>
+                                        <img src={'https://i.postimg.cc/kMLpm31y/bunny.png'} className="card-img-bottom bunny-crop "></img>
                                     </div>
                                 </div>
 
@@ -309,7 +309,7 @@ export class Page3 extends React.Component {
                                 </a>
                                 <div className="card-body">
                                     <div className="card-img-overlay">
-                                        <img src={require('js/birds.png')} className="card-img-bottom portrait-crop"></img>
+                                        <img src={'https://i.postimg.cc/QxRSRQMY/birds.png'} className="card-img-bottom portrait-crop"></img>
                                     </div>
                                 </div>
                         </div>
