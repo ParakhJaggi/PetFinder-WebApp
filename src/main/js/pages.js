@@ -20,7 +20,6 @@ import 'react-chartjs-2';
 //import 'js/vendor/chart.js/Chart.min';
 //import 'js/vendor/datatables/jquery.dataTables';
 //import 'js/demo/datatables-demo';
-import 'js/demo/chart-pie-demo';
 import {LoginForm} from 'js/login';
 import {RegistrationForm} from 'js/login';
 
