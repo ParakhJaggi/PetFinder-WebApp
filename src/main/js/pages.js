@@ -14,12 +14,6 @@ import 'bootstrap';
 import 'jquery';
 import 'js/sb-admin';
 import 'react-chartjs-2';
-//import 'js/vendor/jquery/jquery';
-//import 'js/vendor/jquery-easing/jquery.easing.min';
-//import 'js/vendor/jquery-easing/jquery.easing';
-//import 'js/vendor/chart.js/Chart.min';
-//import 'js/vendor/datatables/jquery.dataTables';
-//import 'js/demo/datatables-demo';
 import {LoginForm} from 'js/login';
 import {RegistrationForm} from 'js/login';
 
@@ -47,7 +41,6 @@ export class NavBar extends React.Component {
                 <nav className="navbar navbar-expand navbar-dark bg-dark sticky">
 
                     <a className="navbar-brand mr-1" href="index.html">Tempeturs</a>
-
                     <button className="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
                         <i className="fas fa-bars"></i>
                     </button>
