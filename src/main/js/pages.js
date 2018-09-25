@@ -154,6 +154,9 @@ export class RegisterPage extends React.Component {
                     <div className="card-header">Register</div>
                     <div className="card-body">
                         <RegistrationForm/>
+                        <a className="d-block small" href="/#/profile-page">ProfilePage</a>
+                        <a className="d-block small" href="/#/login">login</a>
+
                     </div>
                 </div>
             </div>
@@ -178,6 +181,8 @@ export class LoginPage extends React.Component {
                             <a className="d-block small mt-3" href="#/register">Register an Account</a>
                             <a className="d-block small" href="forgot-password.html">Forgot Password?</a>
                             <a className="d-block small" href="/#/page-3">Home</a>
+                            <a className="d-block small" href="/#/profile-page">ProfilePage</a>
+
                         </div>
                     </div>
                 </div>
@@ -193,12 +198,12 @@ class ProfilePage extends React.Component {
 	render() {
 		return (
 			<div className="container padded">
-                <NavBar></NavBar>
+
 				This is Profile Page.
 				This will let users edit photo/add other info
 
-				{ _.isDefined(this.props.authentication) &&
-				<div>{this.props.authentication['access_token']}</div>
+				{ _.isDefined(this.props.authentication)
+				//<div>{this.props.authentication['access_token']}</div>
 				}
 
 				{ _.isDefined(this.props.user) &&

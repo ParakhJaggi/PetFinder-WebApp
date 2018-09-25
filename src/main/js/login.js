@@ -71,7 +71,8 @@ class RegistrationForm extends React.Component {
 
 				<Bessemer.Button loading={submitting}>Register</Bessemer.Button>
 			</form>
-		);
+
+    );
 	}
 }
 
