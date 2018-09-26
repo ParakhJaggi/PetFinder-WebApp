@@ -16,7 +16,7 @@ import 'js/sb-admin';
 import 'react-chartjs-2';
 import {LoginForm} from 'js/login';
 import {RegistrationForm} from 'js/login';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
 
 export class Home extends React.Component {
