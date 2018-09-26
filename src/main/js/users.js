@@ -53,12 +53,12 @@ Actions.register = user => {
 	};
 };
 
-Actions.authenticate = (username, password) => {
+Actions.authenticate = (username, password, onSuccess) => {
 	return (dispatch) => {
 		return authenticate(username, password).then(
 			authentication => {
 				dispatch(Actions.setAuthentication(authentication));
-
+				onSuccess();
 				return getUserDetails().then(user => {
 					dispatch(Actions.setUser(user));
 				});
