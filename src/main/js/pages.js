@@ -16,6 +16,8 @@ import 'js/sb-admin';
 import 'react-chartjs-2';
 import {LoginForm} from 'js/login';
 import {RegistrationForm} from 'js/login';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 
 export class Home extends React.Component {
@@ -143,17 +145,32 @@ export class SideBar extends React.Component {
 		);
 	}
 }
+const registerRedirectPage = '/profile-page';
 export class RegisterPage extends React.Component {
-	render() {
-		return (
-
-            <body className="register-background fixed-top " id="page-top" >
-            <Pulse>
+    state = {
+        shouldRedirect: false
+    }
+    setRedirect = () => {
+        this.setState ({shouldRedirect: true});
+    }
+    redirectPage = () => {
+        if(this.state.shouldRedirect){
+            return <Redirect to={registerRedirectPage}/>;
+        }
+    }
+    render() {
+        return (
+        <body className="register-background fixed-top " id="page-top" >
+        {this.redirectPage()}
+        <Pulse>
             <div className="myContainer pull-left">
                 <div className="card card-login mx-auto mt-9">
                     <div className="card-header">Register</div>
                     <div className="card-body">
                         <RegistrationForm/>
+                        <a className="d-block small" href="/#/profile-page">ProfilePage</a>
+                        <a className="d-block small" href="/#/login">login</a>
+
                     </div>
                 </div>
             </div>
@@ -163,21 +180,35 @@ export class RegisterPage extends React.Component {
 		);
 	}
 }
-
+const loginRedirectPage = '/profile-page';
 export class LoginPage extends React.Component {
-	render() {
+    state = {
+        shouldRedirect: false
+    }
+    setRedirect = () => {
+        this.setState ({shouldRedirect: true});
+    }
+    redirectPage = () => {
+        if(this.state.shouldRedirect){
+            return <Redirect to={loginRedirectPage}/>;
+        }
+    }
+    render() {
 		return (
             <body className="login-background fixed-top " id="page-top" >
+            {this.redirectPage()}
             <Pulse>
             <div className="container justify-content-center">
                 <div className="card card-login mx-auto mt-5">
                     <div className="card-header">Login</div>
                     <div className="card-body">
-                        <LoginForm/>
+                        <LoginForm success={this.setRedirect}/>
                         <div className="text-center">
                             <a className="d-block small mt-3" href="#/register">Register an Account</a>
                             <a className="d-block small" href="forgot-password.html">Forgot Password?</a>
                             <a className="d-block small" href="/#/page-3">Home</a>
+                            <a className="d-block small" href="/#/profile-page">ProfilePage</a>
+
                         </div>
                     </div>
                 </div>
@@ -193,12 +224,12 @@ class ProfilePage extends React.Component {
 	render() {
 		return (
 			<div className="container padded">
-                <NavBar></NavBar>
+
 				This is Profile Page.
 				This will let users edit photo/add other info
 
-				{ _.isDefined(this.props.authentication) &&
-				<div>{this.props.authentication['access_token']}</div>
+				{ _.isDefined(this.props.authentication)
+				//<div>{this.props.authentication['access_token']}</div>
 				}
 
 				{ _.isDefined(this.props.user) &&
@@ -948,4 +979,37 @@ class Layout extends React.Component {
             </div>
 		);
 	}
+}
+
+
+export class SendTest extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {value: ''};
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handleSubmit(event) {
+        alert('A name was submitted: ' + this.state.value);
+        axios.post('/hello/testsend', this.state.value);
+        event.preventDefault();
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Name:
+                    <input type='text' value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <input type='submit' value='Submit' />
+            </form>
+        );
+    }
 }

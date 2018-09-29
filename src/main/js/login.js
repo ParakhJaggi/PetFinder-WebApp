@@ -8,17 +8,17 @@ import * as Users from 'js/users';
 
 
 class LoginForm extends React.Component {
-	onSubmit = ({principal, password}) => {
-		return this.props.authenticate(principal, password);
+	onSubmit = ({principal, password}, success) => {
+		return this.props.authenticate(principal, password, success);
 	};
 
 	render() {
 		let { handleSubmit, submitting } = this.props;
+        let onSuccess = this.props.success;
+        return (
 
-		return (
 
-
-			<form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
+			<form name="form" onSubmit={handleSubmit(form => this.onSubmit(form, onSuccess))}>
 
 				<Bessemer.Field name="principal" friendlyName="Email Address"
 				                validators={[Validation.requiredValidator, Validation.emailValidator]} />
@@ -41,7 +41,7 @@ LoginForm = connect(
 
 	}),
 	dispatch => ({
-		authenticate: (principal, password) => dispatch(Users.Actions.authenticate(principal, password))
+		authenticate: (principal, password, onSuccess) => dispatch(Users.Actions.authenticate(principal, password, onSuccess))
 	})
 )(LoginForm);
 
@@ -54,6 +54,7 @@ class RegistrationForm extends React.Component {
 
 	render() {
 		let { handleSubmit, submitting } = this.props;
+		let onSuccess = this.props.success;
 
 		return (
 
@@ -71,7 +72,8 @@ class RegistrationForm extends React.Component {
 
 				<Bessemer.Button loading={submitting}>Register</Bessemer.Button>
 			</form>
-		);
+
+    );
 	}
 }
 
