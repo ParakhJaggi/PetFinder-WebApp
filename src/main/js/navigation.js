@@ -100,7 +100,7 @@ export class SideBar extends React.Component {
                 <li className="nav-item">
                     <a className="nav-link" href="#/sits">
                         <i className="fas fa-fw fa-chart-area"></i>
-                        <span>My Sits</span></a>
+                        <span>Add Pet</span></a>
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="#/about-us">

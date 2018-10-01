@@ -22,6 +22,7 @@ import {SideBar} from 'js/navigation';
 import {NavBar} from 'js/navigation';
 import {ChinchillaSwitch,FerretSwitch,OtherRodentSwitch,HamsterSwitch,GuineaPigSwitch,RabbitSwitch,LocationSlider} from 'js/switches';
 import Slider from 'react-rangeslider';
+import {RegistrationPetForm} from 'js/pet';
 
 export class Home extends React.Component {
 	render() {
@@ -1094,12 +1095,17 @@ export class AboutUs extends React.Component{
     }
 }
 
-export class MySits extends React.Component{
+export class AddPet extends React.Component{
     render() {
         return (
-            <div>
+
+            <div className="container top-buffer">
                 <NavBar/>
                 <SideBar/>
+
+                <div className="card">
+                    <RegistrationPetForm/>
+                </div>
             </div>
         );
     }
