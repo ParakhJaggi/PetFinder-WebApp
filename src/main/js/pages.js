@@ -22,6 +22,14 @@ import {SideBar} from 'js/navigation';
 import {NavBar} from 'js/navigation';
 import {ChinchillaSwitch,FerretSwitch,OtherRodentSwitch,HamsterSwitch,GuineaPigSwitch,RabbitSwitch,LocationSlider} from 'js/switches';
 import Slider from 'react-rangeslider';
+import * as cookie from 'react-cookies';
+
+function logout(){
+    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+    cookie.remove('authentication', { path: '/' });
+    cookie.remove('user', { path: '/' });
+    window.location.reload(true);
+}
 
 export class Home extends React.Component {
 	render() {
@@ -300,7 +308,6 @@ export class RodentSearch extends React.Component {
                 <i class="fas fa-angle-up"></i>
             </a>
 
-
             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -313,7 +320,7 @@ export class RodentSearch extends React.Component {
                         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="login.html">Logout</a>
+                            <button class="btn btn-primary" onClick="logout">Logout</button>
                         </div>
                     </div>
                 </div>
@@ -497,8 +504,7 @@ export class DogSearch extends React.Component {
                         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="login.html">Logout</a>
-                        </div>
+                            <button className="btn btn-primary" onClick="logout">Logout</button>                        </div>
                     </div>
                 </div>
             </div>
@@ -673,8 +679,7 @@ export class BirdSearch extends React.Component {
                         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="login.html">Logout</a>
-                        </div>
+                            <button className="btn btn-primary" onClick="logout">Logout</button>                        </div>
                     </div>
                 </div>
             </div>
@@ -850,8 +855,7 @@ export class CatSearch extends React.Component {
                         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="login.html">Logout</a>
-                        </div>
+                            <button className="btn btn-primary" onClick="logout">Logout</button>                        </div>
                     </div>
                 </div>
             </div>
@@ -1023,8 +1027,7 @@ export class Dashboard extends React.Component {
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
-                    </div>
+                        <button className="btn btn-primary" onClick="logout">Logout</button>                    </div>
                 </div>
             </div>
         </div>
