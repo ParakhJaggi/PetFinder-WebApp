@@ -24,6 +24,7 @@ import {ChinchillaSwitch,FerretSwitch,OtherRodentSwitch,HamsterSwitch,GuineaPigS
 import Slider from 'react-rangeslider';
 import * as cookie from 'react-cookies';
 import {RegistrationPetForm} from 'js/pet';
+import axios from 'axios';
 
 function logout(){
     console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
@@ -122,6 +123,17 @@ export class LoginPage extends React.Component {
 }
 
 class ProfilePage extends React.Component {
+    state = {
+        pets: []
+    };
+
+    componentDidMount() {
+        axios.get('/pets/all')
+            .then(res => {
+                const pets = res.pets;
+                this.setState({ pets });
+            });
+    }
 	render() {
 		return (
 			<div className="container padded">
@@ -136,6 +148,11 @@ class ProfilePage extends React.Component {
 				{ _.isDefined(this.props.user) &&
 				<div>Welcome, {this.props.user.principal}!</div>
 				}
+
+                <ul>
+                    { this.state.pets.map(pet => <li>{pet.name + ' is a ' + pet.type}</li>)}
+                </ul>
+
 			</div>
 		);
 	}
