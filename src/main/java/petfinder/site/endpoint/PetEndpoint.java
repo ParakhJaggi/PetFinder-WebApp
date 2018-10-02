@@ -28,6 +28,16 @@ public class PetEndpoint {
 	@Autowired
 	private PetService petService;
 
+	/**
+	 * @author laird
+	 */
+	@GetMapping(value = "/populateTestData")
+	public void popData(){
+		petService.save(new PetDto((long)1, "fluffy", "cat"));
+		petService.save(new PetDto((long)2, "pupperino", "dog"));
+		petService.save(new PetDto((long)3, "ratto", "rodent"));
+	}
+
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public Optional<PetDto> getPet(@PathVariable("id") Long id) {
 		return petService.findPet(id);
@@ -39,9 +49,15 @@ public class PetEndpoint {
 		return pet;
 	}
 
+	@GetMapping(value = "/all", produces = "application/json")
+	public PetCollectionDTO getAll(){
+		return petService.findByType(AnimalTypeRequestBuilder.getInstance().generate());
+		//return petService.findByType(new AnimalTypeRequest(true, false, false, false, false));
+	}
+
 	@GetMapping(value = "/cats", produces = "application/json")
 	public PetCollectionDTO getCats(){
-		return petService.findByType(AnimalTypeRequestBuilder.getInstance().setCat().generate());
+		return petService.findByType(AnimalTypeRequestBuilder.getInstance().setCat().setDog().setRodent().generate());
 		//return petService.findByType(new AnimalTypeRequest(true, false, false, false, false));
 	}
 
@@ -81,7 +97,7 @@ public class PetEndpoint {
 		if(bird)
 			buildRequest.setBird();
 		if(rodent)
-			buildRequest.setBird();
+			buildRequest.setRodent();
 		if(reptile)
 			buildRequest.setReptile();
 		return petService.findByType(buildRequest.generate());

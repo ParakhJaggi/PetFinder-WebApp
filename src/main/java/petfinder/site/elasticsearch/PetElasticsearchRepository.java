@@ -2,9 +2,8 @@ package petfinder.site.elasticsearch;
 
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,7 @@ import petfinder.site.common.pet.PetCollectionDTO;
 import petfinder.site.common.pet.PetDto;
 
 import javax.naming.directory.SearchResult;
+import javax.xml.transform.Source;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,23 +28,27 @@ public class PetElasticsearchRepository extends ElasticSearchJsonRepository<PetD
 		super(new ElasticSearchIndex(provider, "petfinder-pets"), PetDto.class);
 	}
 	public final String TYPE = "type";
+
+	/**
+	 * Author laird
+	 * @param atr pet results
+	 * @return pet results
+	 */
 	public PetCollectionDTO findByType(AnimalTypeRequest atr) {
 		int count = atr.getCount();
 		List<String> strings = atr.getTypes();
-		//MatchQueryBuilder matchQueryBuilder = new MatchQueryBuilder("type", );
 		QueryBuilder queryBuilder = null;
 		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-		if(count == 1)
-			queryBuilder = QueryBuilders.multiMatchQuery(TYPE, strings.get(0));
-		if(count == 2)
-			queryBuilder = QueryBuilders.multiMatchQuery(TYPE, strings.get(0), strings.get(1));
-		if(count == 3)
-			queryBuilder = QueryBuilders.multiMatchQuery(TYPE, strings.get(0), strings.get(1), strings.get(2));
-		if(count == 4)
-			queryBuilder = QueryBuilders.multiMatchQuery(TYPE, strings.get(0),strings.get(1), strings.get(2),strings.get(3));
-		if(count == 5)
-			queryBuilder = QueryBuilders.multiMatchQuery(TYPE, strings.get(0), strings.get(1), strings.get(2), strings.get(3), strings.get(4));
-		sourceBuilder.query(queryBuilder);
+		BoolQueryBuilder qs = QueryBuilders.boolQuery();
+		if(count == 0){
+			//match on all animals
+			sourceBuilder.query(QueryBuilders.matchAllQuery());
+		}else {
+			for (int i = 0; i < count; i++) {
+				qs = qs.should(QueryBuilders.termQuery("type", strings.get(i)));
+			}
+		}
+		sourceBuilder.query(qs);
 		PetCollectionDTO results = new PetCollectionDTO();
 		results.setPets( this.index.search(sourceBuilder, this.serializer));
 		return results;
