@@ -7,6 +7,7 @@ import createLogger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 import axios from 'axios';
+import cookie from 'react-cookies';
 
 import Index from 'js/index';
 import * as Users from 'js/users';
@@ -20,7 +21,7 @@ const reducers = [
 ];
 
 const reducer = Utils.combineReducers(reducers);
-const store = createStore(reducer, {authentication: null, user: null}, applyMiddleware(thunkMiddleware, createLogger()));
+const store = createStore(reducer, {authentication: cookie.load('authentication') || null, user: cookie.load('user') || null}, applyMiddleware(thunkMiddleware, createLogger()));
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';

@@ -9,7 +9,7 @@ public class PetDto implements Identifiable {
 	private Long id;
 	private String name;
 	private String type;
-
+	public PetDto(){}
 	public PetDto(Long id, String name, String type) {
 		this.id = id;
 		this.name = name;
