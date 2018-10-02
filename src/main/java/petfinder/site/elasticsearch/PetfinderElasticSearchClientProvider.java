@@ -46,9 +46,7 @@ public class PetfinderElasticSearchClientProvider implements ElasticSearchClient
 
 			builder.setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider));
 		}
-
 		client = new RestHighLevelClient(builder);
-
 	}
 
 	public RestHighLevelClient getClient() {

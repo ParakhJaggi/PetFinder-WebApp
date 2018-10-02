@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import petfinder.site.common.AnimalTypeRequest;
+import petfinder.site.common.AnimalTypeRequestBuilder;
+import petfinder.site.common.pet.PetCollectionDTO;
 import petfinder.site.common.pet.PetDto;
 import petfinder.site.common.pet.PetService;
 import petfinder.site.common.user.UserDto;
@@ -35,4 +38,53 @@ public class PetEndpoint {
 		petService.save(pet);
 		return pet;
 	}
+
+	@GetMapping(value = "/cats", produces = "application/json")
+	public PetCollectionDTO getCats(){
+		return petService.findByType(AnimalTypeRequestBuilder.getInstance().setCat().generate());
+		//return petService.findByType(new AnimalTypeRequest(true, false, false, false, false));
+	}
+
+	@GetMapping(value = "/dogs", produces = "application/json")
+	public PetCollectionDTO getDogs(){
+		return petService.findByType(AnimalTypeRequestBuilder.getInstance().setDog().generate());
+		//return petService.findByType(new AnimalTypeRequest(false, true, false, false, false));
+	}
+
+	@GetMapping(value = "/reptiles", produces = "application/json")
+	public PetCollectionDTO getReptiles(){
+		return petService.findByType(AnimalTypeRequestBuilder.getInstance().setReptile().generate());
+		//return petService.findByType(new AnimalTypeRequest(false, false, true, false, false));
+
+	}
+
+	@GetMapping(value = "/rodents", produces = "application/json")
+	public PetCollectionDTO getRodents(){
+		return petService.findByType(AnimalTypeRequestBuilder.getInstance().setRodent().generate());
+		//return petService.findByType(new AnimalTypeRequest(false, false, false, true, false));
+	}
+
+	@GetMapping(value = "/birds", produces = "application/json")
+	public PetCollectionDTO getBirds(){
+		return petService.findByType(AnimalTypeRequestBuilder.getInstance().setBird().generate());
+		//return petService.findByType(new AnimalTypeRequest(false, false, false, false, true));
+	}
+	@GetMapping(value = "/{cat}/{dog}/{rodent}/{bird}/{reptile}", produces = "application/json")
+	public PetCollectionDTO getBirds(@PathVariable("cat") Boolean cat, @PathVariable("dog") Boolean dog,
+									 @PathVariable("rodent") Boolean rodent, @PathVariable("bird") Boolean bird,
+									 @PathVariable("reptile") Boolean reptile){
+		AnimalTypeRequestBuilder buildRequest = AnimalTypeRequestBuilder.getInstance();
+		if(cat)
+			buildRequest.setCat();
+		if(dog)
+			buildRequest.setDog();
+		if(bird)
+			buildRequest.setBird();
+		if(rodent)
+			buildRequest.setBird();
+		if(reptile)
+			buildRequest.setReptile();
+		return petService.findByType(buildRequest.generate());
+	}
 }
+

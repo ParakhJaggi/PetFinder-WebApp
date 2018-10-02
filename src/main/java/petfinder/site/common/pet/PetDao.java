@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 
 import alloy.elasticsearch.ElasticSearchClientProvider;
+import petfinder.site.common.AnimalTypeRequest;
 import petfinder.site.elasticsearch.PetElasticsearchRepository;
 
 /**
@@ -34,5 +35,9 @@ public class PetDao {
 
 	public void save(PetDto pet) {
 		petElasticsearchRepository.save(pet);
+	}
+
+	public PetCollectionDTO findByType(AnimalTypeRequest atr){
+		return petElasticsearchRepository.findByType(atr);
 	}
 }

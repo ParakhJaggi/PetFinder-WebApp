@@ -20,9 +20,9 @@ import petfinder.site.common.user.UserAuthenticationDto;
  * Created by jlutteringer on 1/16/18.
  */
 public class ElasticSearchRepository<T, I> implements Repository<T, I>  {
-	private ElasticSearchIndex index;
-	private Serializer<T> serializer;
-	private Momentizer<T, I> momentizer;
+	protected ElasticSearchIndex index;
+	protected Serializer<T> serializer;
+	protected Momentizer<T, I> momentizer;
 
 	public ElasticSearchRepository(ElasticSearchIndex index, Serializer<T> serializer, Momentizer<T, I> momentizer) {
 		this.index = index;

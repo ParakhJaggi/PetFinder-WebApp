@@ -1097,12 +1097,17 @@ export class AboutUs extends React.Component{
     }
 }
 
-export class MySits extends React.Component{
+export class AddPet extends React.Component{
     render() {
         return (
-            <div>
+
+            <div className="container top-buffer">
                 <NavBar/>
                 <SideBar/>
+
+                <div className="card">
+                    <RegistrationPetForm/>
+                </div>
             </div>
         );
     }
