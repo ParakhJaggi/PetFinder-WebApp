@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as cookie from 'react-cookies';
 
 export function register(user) {
 	return axios.post('/api/user/register', user);
@@ -58,9 +59,11 @@ Actions.authenticate = (username, password, onSuccess) => {
 		return authenticate(username, password).then(
 			authentication => {
 				dispatch(Actions.setAuthentication(authentication));
+                cookie.save('authentication', authentication, { path: '/' });
 				onSuccess();
 				return getUserDetails().then(user => {
 					dispatch(Actions.setUser(user));
+                    cookie.save('user', user, { path: '/' });
 				});
 			}
 		);
@@ -71,6 +74,8 @@ Actions.logout = () => {
 	return (dispatch) => {
 		dispatch(Actions.setAuthentication(null));
 		dispatch(Actions.setUser(null));
+        cookie.remove('authentication', { path: '/' });
+        cookie.remove('user', { path: '/' });
 	};
 };
 
