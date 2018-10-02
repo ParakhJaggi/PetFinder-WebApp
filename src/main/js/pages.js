@@ -23,6 +23,7 @@ import {NavBar} from 'js/navigation';
 import {ChinchillaSwitch,FerretSwitch,OtherRodentSwitch,HamsterSwitch,GuineaPigSwitch,RabbitSwitch,LocationSlider} from 'js/switches';
 import Slider from 'react-rangeslider';
 import * as cookie from 'react-cookies';
+import {RegistrationPetForm} from 'js/pet';
 
 function logout(){
     console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
