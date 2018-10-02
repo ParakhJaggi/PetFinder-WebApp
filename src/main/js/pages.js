@@ -168,12 +168,14 @@ export class RodentSearch extends React.Component {
                                 <table className="table" id="dataTable" width="100%" cellSpacing="0">
                                     <thead>
                                     <tr>
-                                        <th><HamsterSwitch/></th>
-                                        <th><RabbitSwitch/></th>
-                                        <th><GuineaPigSwitch/></th>
-                                        <th><FerretSwitch/></th>
-                                        <th><ChinchillaSwitch/></th>
-                                        <th><OtherRodentSwitch/></th>
+                                        <th className="pl-5"><span>Hamsters</span><HamsterSwitch/></th>
+                                        <th className="pl-5"><span>Rabbits</span><RabbitSwitch/></th>
+                                        <th className="pl-5"><span>Guinea Pigs</span><GuineaPigSwitch/></th>
+                                    </tr>
+                                    <tr>
+                                        <th className="pl-5"><span>Ferrets</span><FerretSwitch/></th>
+                                        <th className="pl-5"><span>Chinchillas</span><ChinchillaSwitch/></th>
+                                        <th className="pl-5"><span>Other</span><OtherRodentSwitch/></th>
                                     </tr>
                                     </thead>
                                 </table>
@@ -300,8 +302,6 @@ export class RodentSearch extends React.Component {
             <a class="scroll-to-top rounded" href="#page-top">
                 <i class="fas fa-angle-up"></i>
             </a>
-
-
             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -319,13 +319,8 @@ export class RodentSearch extends React.Component {
                     </div>
                 </div>
             </div>
-
-
             </body>
-
             </html>
-
-
         );
     }
 }

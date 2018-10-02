@@ -17,8 +17,6 @@ export class GuineaPigSwitch extends React.Component {
     render() {
         return (
             <div className="example">
-                <label htmlFor="normal-switch">
-                    <span>Guinea Pigs</span>
                     <Switch
                         checked={this.state.checked}
                         onChange={this.handleChange}
@@ -34,7 +32,7 @@ export class GuineaPigSwitch extends React.Component {
                         className="react-switch"
                         id="material-switch"
                     />
-                </label>
+
             </div>
         );
     }
@@ -54,8 +52,6 @@ export class HamsterSwitch extends React.Component {
     render() {
         return (
             <div className="example">
-                <label htmlFor="normal-switch">
-                    <span>Hamsters</span>
                     <Switch
                         checked={this.state.checked}
                         onChange={this.handleChange}
@@ -71,7 +67,6 @@ export class HamsterSwitch extends React.Component {
                         className="react-switch"
                         id="material-switch"
                     />
-                </label>
             </div>
         );
     }
@@ -90,8 +85,6 @@ export class ChinchillaSwitch extends React.Component {
     render() {
         return (
             <div className="example">
-                <label htmlFor="normal-switch">
-                    <span>Chinchillas</span>
                     <Switch
                         checked={this.state.checked}
                         onChange={this.handleChange}
@@ -107,7 +100,6 @@ export class ChinchillaSwitch extends React.Component {
                         className="react-switch"
                         id="material-switch"
                     />
-                </label>
             </div>
         );
     }
@@ -126,8 +118,6 @@ export class FerretSwitch extends React.Component {
     render() {
         return (
             <div className="example">
-                <label htmlFor="normal-switch">
-                    <span>Ferrets</span>
                     <Switch
                         checked={this.state.checked}
                         onChange={this.handleChange}
@@ -143,7 +133,6 @@ export class FerretSwitch extends React.Component {
                         className="react-switch"
                         id="material-switch"
                     />
-                </label>
             </div>
         );
     }
@@ -163,8 +152,6 @@ export class OtherRodentSwitch extends React.Component {
     render() {
         return (
             <div className="example">
-                <label htmlFor="normal-switch">
-                    <span>Other</span>
                     <Switch
                         checked={this.state.checked}
                         onChange={this.handleChange}
@@ -180,7 +167,6 @@ export class OtherRodentSwitch extends React.Component {
                         className="react-switch"
                         id="material-switch"
                     />
-                </label>
             </div>
         );
     }
@@ -200,8 +186,6 @@ export class RabbitSwitch extends React.Component {
     render() {
         return (
             <div className="example">
-                <label htmlFor="normal-switch">
-                    <span>Rabbit</span>
                     <Switch
                         checked={this.state.checked}
                         onChange={this.handleChange}
@@ -217,7 +201,6 @@ export class RabbitSwitch extends React.Component {
                         className="react-switch"
                         id="material-switch"
                     />
-                </label>
             </div>
         );
     }

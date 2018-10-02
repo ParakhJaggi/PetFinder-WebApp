@@ -320,3 +320,11 @@ div.sticky {
   top: 10px;
   transform: translate3d(-50%, 0, 0);
 }
+
+.navfix{
+  left: $sidebar-collapsed-width;
+}
+
+.container{
+  padding-left:200px;
+}

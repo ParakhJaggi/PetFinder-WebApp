@@ -84,6 +84,7 @@
 @media (min-width: 768px) {
   .sidebar {
     width: $sidebar-base-width !important;
+    max-width: 190px;
 
     .nav-item {
       .nav-link {
