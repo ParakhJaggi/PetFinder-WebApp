@@ -1,4 +1,4 @@
-package petfinder.site.common;
+package petfinder.site.common.RestRequests;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,20 @@ public class AnimalTypeRequest {
     }
     public List<String> getTypes(){
         List<String> strings = new ArrayList<>();
+        if(this.cat)
+            strings.add("cat");
+        if(this.dog)
+            strings.add("dog");
+        if(this.rodent)
+            strings.add("rodent");
+        if(this.reptile)
+            strings.add("reptile");
+        if(this.bird)
+            strings.add("bird");
+        return strings;
+    }
+    public List<Object> getObjects(){
+        List<Object> strings = new ArrayList<>();
         if(this.cat)
             strings.add("cat");
         if(this.dog)

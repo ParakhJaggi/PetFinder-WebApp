@@ -1,4 +1,4 @@
-package petfinder.site.common;
+package petfinder.site.common.RestRequests;
 
 public class AnimalTypeRequestBuilder {
     private static AnimalTypeRequestBuilder at = new AnimalTypeRequestBuilder();
