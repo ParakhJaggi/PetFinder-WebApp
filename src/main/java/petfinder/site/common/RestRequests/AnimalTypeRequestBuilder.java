@@ -1,4 +1,4 @@
-package petfinder.site.common;
+package petfinder.site.common.RestRequests;
 
 public class AnimalTypeRequestBuilder {
     private static AnimalTypeRequestBuilder at = new AnimalTypeRequestBuilder();
@@ -8,8 +8,9 @@ public class AnimalTypeRequestBuilder {
         return at;
     }
     public AnimalTypeRequest generate(){
+        AnimalTypeRequest toReturn = new AnimalTypeRequest(cat, dog, rodent, reptile, bird);
         this.reset();
-        return new AnimalTypeRequest(cat, dog, rodent, reptile, bird);
+        return toReturn;
     }
     private void reset(){
         cat = false; dog = false; reptile = false; bird = false; rodent = false;

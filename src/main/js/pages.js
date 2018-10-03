@@ -23,6 +23,8 @@ import {NavBar} from 'js/navigation';
 import {ChinchillaSwitch,FerretSwitch,OtherRodentSwitch,HamsterSwitch,GuineaPigSwitch,RabbitSwitch,LocationSlider} from 'js/switches';
 import Slider from 'react-rangeslider';
 import * as cookie from 'react-cookies';
+import {RegistrationPetForm} from 'js/pet';
+import axios from 'axios';
 
 function logout(){
     console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
@@ -121,6 +123,17 @@ export class LoginPage extends React.Component {
 }
 
 class ProfilePage extends React.Component {
+    state = {
+        pets: []
+    };
+
+    componentDidMount() {
+        axios.get('/pets/all')
+            .then(res => {
+                const pets = res.pets;
+                this.setState({ pets });
+            });
+    }
 	render() {
 		return (
 			<div className="container padded">
@@ -135,6 +148,11 @@ class ProfilePage extends React.Component {
 				{ _.isDefined(this.props.user) &&
 				<div>Welcome, {this.props.user.principal}!</div>
 				}
+
+                <ul>
+                    { this.state.pets.map(pet => <li>{pet.name + ' is a ' + pet.type}</li>)}
+                </ul>
+
 			</div>
 		);
 	}
@@ -160,7 +178,7 @@ export class RodentSearch extends React.Component {
                 <div id="content-wrapper">
                     <div class="top-buffer">
                     </div>
-                    <div class="container">
+                    <div class="container shiftRight">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a href="#">Dashboard</a>
@@ -175,12 +193,14 @@ export class RodentSearch extends React.Component {
                                 <table className="table" id="dataTable" width="100%" cellSpacing="0">
                                     <thead>
                                     <tr>
-                                        <th><HamsterSwitch/></th>
-                                        <th><RabbitSwitch/></th>
-                                        <th><GuineaPigSwitch/></th>
-                                        <th><FerretSwitch/></th>
-                                        <th><ChinchillaSwitch/></th>
-                                        <th><OtherRodentSwitch/></th>
+                                        <th className="pl-5"><span>Hamsters</span><HamsterSwitch/></th>
+                                        <th className="pl-5"><span>Rabbits</span><RabbitSwitch/></th>
+                                        <th className="pl-5"><span>Guinea Pigs</span><GuineaPigSwitch/></th>
+                                    </tr>
+                                    <tr>
+                                        <th className="pl-5"><span>Ferrets</span><FerretSwitch/></th>
+                                        <th className="pl-5"><span>Chinchillas</span><ChinchillaSwitch/></th>
+                                        <th className="pl-5"><span>Other</span><OtherRodentSwitch/></th>
                                     </tr>
                                     </thead>
                                 </table>
@@ -296,7 +316,7 @@ export class RodentSearch extends React.Component {
                         </div>
                     </div>
                     <footer class="footer navbar-fixed-bottom">
-                        <div class="container my-auto">
+                        <div class="container shiftRight my-auto">
                             <div class="copyright text-center my-auto">
                                 <span>Copyright © Your Website 2018</span>
                             </div>
@@ -325,13 +345,8 @@ export class RodentSearch extends React.Component {
                     </div>
                 </div>
             </div>
-
-
             </body>
-
             </html>
-
-
         );
     }
 }
@@ -347,7 +362,7 @@ export class DogSearch extends React.Component {
                 <div id="content-wrapper">
                     <div class="top-buffer">
                     </div>
-                    <div class="container">
+                    <div class="container shiftRight">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a href="#">Dashboard</a>
@@ -479,7 +494,7 @@ export class DogSearch extends React.Component {
                         </div>
                     </div>
                     <footer class="footer navbar-fixed-bottom">
-                        <div class="container my-auto">
+                        <div class="container shiftRight my-auto">
                             <div class="copyright text-center my-auto">
                                 <span>Copyright © Your Website 2018</span>
                             </div>
@@ -524,7 +539,7 @@ export class BirdSearch extends React.Component {
                 <div id="content-wrapper">
                     <div class="top-buffer">
                     </div>
-                    <div class="container">
+                    <div class="container shiftRight">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a href="#">Dashboard</a>
@@ -654,7 +669,7 @@ export class BirdSearch extends React.Component {
                         </div>
                     </div>
                     <footer class="footer navbar-fixed-bottom">
-                        <div class="container my-auto">
+                        <div class="container shiftRight my-auto">
                             <div class="copyright text-center my-auto">
                                 <span>Copyright © Your Website 2018</span>
                             </div>
@@ -700,7 +715,7 @@ export class CatSearch extends React.Component {
                 <div id="content-wrapper">
                     <div class="top-buffer">
                     </div>
-                    <div class="container">
+                    <div class="container shiftRight">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a href="#">Dashboard</a>
@@ -879,7 +894,7 @@ export class Dashboard extends React.Component {
             <div id="content-wrapper">
                 <div class="top-buffer">
                 </div>
-                <div class="container">
+                <div class="container shiftRight">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="#">Dashboard</a>
@@ -997,7 +1012,7 @@ export class Dashboard extends React.Component {
                 </div>
 
                 <footer class="footer navbar-fixed-bottom">
-                    <div class="container my-auto">
+                    <div class="container shiftRight my-auto">
                         <div class="copyright text-center my-auto">
                             <span>Copyright © Your Website 2018</span>
                         </div>
@@ -1101,7 +1116,7 @@ export class AddPet extends React.Component{
     render() {
         return (
 
-            <div className="container top-buffer">
+            <div className="container shiftRight top-buffer">
                 <NavBar/>
                 <SideBar/>
 
