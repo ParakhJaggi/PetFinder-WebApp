@@ -53,6 +53,7 @@
 
     .form-inline .input-group {
       width: auto;
+
     }
 
   }
@@ -61,7 +62,7 @@
 
 .sidebar {
   width: $sidebar-collapsed-width !important;
-  background-color: $gray-900;
+  background-color: rgba(101,180,211,0.7);
   min-height: calc(100vh - #{$navbar-base-height});
   @include sidebar-icons;
   .nav-item {
@@ -83,6 +84,7 @@
 @media (min-width: 768px) {
   .sidebar {
     width: $sidebar-base-width !important;
+    max-width: 190px;
 
     .nav-item {
       .nav-link {
@@ -118,7 +120,7 @@
 // Add .fixed-top class to top .navbar-nav and to .sidebar - add .fixed-nav to body
 
 .sidebar.fixed-top {
-  top: $navbar-base-height;
+  top: $navbar-base-height+(-2);
   height: calc(100vh - #{$navbar-base-height});
   overflow-y: auto;
 }

@@ -1,5 +1,6 @@
 package petfinder.site.common.pet;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.elasticsearch.client.RestHighLevelClient;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 
 import alloy.elasticsearch.ElasticSearchClientProvider;
+import petfinder.site.common.Exceptions.PetException;
+import petfinder.site.common.RestRequests.AnimalTypeRequest;
 import petfinder.site.elasticsearch.PetElasticsearchRepository;
 
 /**
@@ -24,6 +27,7 @@ public class PetDao {
 	public Optional<PetDto> findPet(Long id) {
 
         return petElasticsearchRepository.find(id);
+
 	}
 
 	public Optional<PetDto> findPetLowTech(Long id) {
@@ -34,5 +38,12 @@ public class PetDao {
 
 	public void save(PetDto pet) {
 		petElasticsearchRepository.save(pet);
+	}
+
+	public PetCollectionDTO findByType(AnimalTypeRequest atr){
+		return petElasticsearchRepository.findByType(atr);
+	}
+	public PetCollectionDTO findByFieldMatch(String term, List<Object> toMatch) throws PetException {
+		return petElasticsearchRepository.findByFieldMatch(term, toMatch);
 	}
 }
