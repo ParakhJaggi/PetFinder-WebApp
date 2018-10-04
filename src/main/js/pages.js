@@ -40,7 +40,7 @@ export class Home extends React.Component {
 				<NavBar></NavBar>
                 <SideBar></SideBar>
                 <div className= "container padded top-buffer">
-                    Welcome to our project!
+                    Welcome to our project!g
                 </div>
 			</div>
 
