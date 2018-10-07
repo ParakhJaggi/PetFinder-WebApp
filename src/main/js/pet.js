@@ -4,11 +4,12 @@ import * as Validation from 'js/alloy/utils/validation';
 import * as ReduxForm from 'redux-form';
 import connect from 'react-redux/es/connect/connect';
 import * as Users from 'js/users';
+import axios from 'axios';
 
 class RegistrationPetForm extends React.Component {
-	onSubmit = pet => {
-		return this.props.register(pet);
-	};
+    onSubmit = pet => {
+        return axios.post('/pets', pet);
+    };
 
 	render() {
 		let {handleSubmit, submitting} = this.props;
@@ -16,9 +17,9 @@ class RegistrationPetForm extends React.Component {
 
 		return (
 
-			<form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
-				<Bessemer.Field name="principal" friendlyName="Pet Name"
-				                validators={[Validation.requiredValidator]}/>
+            <form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
+                <Bessemer.Field name="name" friendlyName="Pet Name"
+                                validators={[Validation.requiredValidator]} />
 
 				<Bessemer.Field name="Type" friendlyName="Type"/*Todo Radio box*/
 				                validators={[Validation.requiredValidator]}
