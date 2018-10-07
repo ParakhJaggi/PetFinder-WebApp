@@ -358,7 +358,7 @@ export class RodentSearch extends React.Component {
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button class="btn btn-primary" onClick="logout">Logout</button>
+                            <button class="btn btn-primary" onClick={()=>logout()}>Logout</button>
 						</div>
 					</div>
 				</div>
@@ -540,7 +540,7 @@ export class DogSearch extends React.Component {
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
+                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>                        </div>
 						</div>
 					</div>
 				</div>
@@ -720,7 +720,7 @@ export class BirdSearch extends React.Component {
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
+                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>                        </div>
 						</div>
 					</div>
 				</div>
@@ -900,7 +900,7 @@ export class CatSearch extends React.Component {
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
+                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>                        </div>
 						</div>
 					</div>
 				</div>
@@ -1080,7 +1080,7 @@ export class Dashboard extends React.Component {
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
+                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>
 						</div>
 					</div>
 				</div>
