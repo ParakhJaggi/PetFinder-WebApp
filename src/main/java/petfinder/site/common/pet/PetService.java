@@ -18,6 +18,12 @@ import petfinder.site.endpoint.PetEndpoint;
 public class PetService {
 	@Autowired
 	private PetDao petDao;
+
+	//only for unit testing!
+	public void setPetDao(PetDao petDao) {
+		this.petDao = petDao;
+	}
+
 	final static Logger logger = Logger.getLogger(PetService.class.toString());
 
 	public Optional<PetDto> findPet(Long id) {
