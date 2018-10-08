@@ -27,6 +27,7 @@ public class PetDao {
 	public Optional<PetDto> findPet(Long id) {
 
         return petElasticsearchRepository.find(id);
+
 	}
 
 	public Optional<PetDto> findPetLowTech(Long id) {

@@ -37,7 +37,7 @@ State.getUser = state => {
 	return state.user;
 };
 
-export { State };
+export {State};
 
 let Actions = {};
 
@@ -59,11 +59,11 @@ Actions.authenticate = (username, password, onSuccess) => {
 		return authenticate(username, password).then(
 			authentication => {
 				dispatch(Actions.setAuthentication(authentication));
-                cookie.save('authentication', authentication, { path: '/' });
+				cookie.save('authentication', authentication, {path: '/'});
 				onSuccess();
 				return getUserDetails().then(user => {
 					dispatch(Actions.setUser(user));
-                    cookie.save('user', user, { path: '/' });
+					cookie.save('user', user, {path: '/'});
 				});
 			}
 		);
@@ -74,8 +74,8 @@ Actions.logout = () => {
 	return (dispatch) => {
 		dispatch(Actions.setAuthentication(null));
 		dispatch(Actions.setUser(null));
-        cookie.remove('authentication', { path: '/' });
-        cookie.remove('user', { path: '/' });
+		cookie.remove('authentication', {path: '/'});
+		cookie.remove('user', {path: '/'});
 	};
 };
 
@@ -87,7 +87,7 @@ Actions.setUser = user => {
 	return {type: Actions.Types.SET_USER, user};
 };
 
-export { Actions };
+export {Actions};
 
 let Reducers = {};
 
@@ -113,4 +113,4 @@ Reducers.user = (user = null, action) => {
 	}
 };
 
-export { Reducers };
+export {Reducers};
