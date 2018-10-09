@@ -12,12 +12,23 @@ import petfinder.site.common.user.UserService;
 import java.util.Optional;
 
 public class UserTester extends UserDao {
+     public static final String emailEndings[] = {"baylor password","gmail password", "yahoo password", "hotmail password","outlook password"};
     @Override
     public Optional<UserAuthenticationDto> findUserByPrincipal(String principal) {
         UserAuthenticationDto ret = new UserAuthenticationDto();
-        if(principal.toLowerCase().contains("@baylor.edu")){
-            ret.setPrincicple(new UserDto(principal,null,null,null),"baylor password");
+        if(principal.toLowerCase().contains("@baylor")){
+            ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[0]);
+        } else if(principal.toLowerCase().contains("@gmail")){
+            ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[1]);
+        } else if(principal.toLowerCase().contains("@yahoo")){
+            ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[2]);
+        } else if(principal.toLowerCase().contains("@hotmail")){
+            ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[3]);
+        } else if(principal.toLowerCase().contains("@outlook")){
+            ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[4]);
         }
+
+
 
     return Optional.of(ret);
     }
