@@ -12,6 +12,9 @@ import alloy.util.AlloyAuthentication;
 import alloy.util.Wait;
 import alloy.util._Lists;
 import alloy.util._Maps;
+import petfinder.site.common.RestRequests.AnimalTypeRequestBuilder;
+import petfinder.site.common.pet.PetCollectionDTO;
+import petfinder.site.common.pet.PetDao;
 import petfinder.site.common.user.UserDto.UserType;
 
 /**
@@ -19,7 +22,12 @@ import petfinder.site.common.user.UserDto.UserType;
  */
 @Service
 public class UserService {
-	@Autowired
+    //ONLY FOR UNIT TESTING
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @Autowired
 	private UserDao userDao;
 
 	@Autowired
@@ -74,4 +82,8 @@ public class UserService {
 		userDao.save(userAuthentication);
 		return userAuthentication.getUser();
 	}
+	//For testing
+    public Optional<UserAuthenticationDto> findUsersTest(String principle){
+        return userDao.findUserByPrincipal(principle);
+    }
 }
