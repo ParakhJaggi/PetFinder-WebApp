@@ -49,10 +49,11 @@ public class PetEndpointTester {
                 .getPets().size(), AnimalTypeTester.CAT_NUM + AnimalTypeTester.DOG_NUM
                 +AnimalTypeTester.BIRD_NUM + AnimalTypeTester.REPTILE_NUM + AnimalTypeTester.RODENT_NUM);
     }
-    /* this isnt working right now
     @Test
     public void testFieldMatch(){
         List<Object> animals = new ArrayList<>();
+        List<Object> names = new ArrayList<>();
+        List<Object> ids = new ArrayList<>();
         animals.add("cat");
         animals.add("dog");
         assertEquals(service.findByFieldMatch("type",animals)
@@ -62,7 +63,19 @@ public class PetEndpointTester {
         animals.add("bird");
         assertEquals(service.findByFieldMatch("type",animals)
                 .getPets().size(), AnimalTypeTester.CAT_NUM + AnimalTypeTester.DOG_NUM
-                +AnimalTypeTester.BIRD_NUM + AnimalTypeTester.REPTILE_NUM + AnimalTypeTester.RODENT_NUM);
+                +AnimalTypeTester.BIRD_NUM + AnimalTypeTester.REPTILE_NUM + AnimalTypeTester.RODENT_NUM + 1);
+        names.add("fluffy");
+        assertEquals(service.findByFieldMatch("name", names).getPets().size(), AnimalTypeTester.FLUFFY_NUM);
+        names.add("zeek");
+        names.add("chimp");
+        assertEquals(service.findByFieldMatch("name", names).getPets().size(), AnimalTypeTester.FLUFFY_NUM);
+        names.clear();
+        assertEquals(service.findByFieldMatch("name", names).getPets().size(), 0);
+        ids.add((long)1);
+        assertEquals(service.findByFieldMatch("id", ids).getPets().size(), 1);
+        ids.add((long)-1);
+        assertEquals(service.findByFieldMatch("id", ids).getPets().size(), 1);
+        ids.clear();
+        assertEquals(service.findByFieldMatch("id", ids).getPets().size(), 0);
     }
-    */
 }
