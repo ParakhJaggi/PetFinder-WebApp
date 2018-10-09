@@ -52,7 +52,7 @@ export class NavBar extends React.Component {
 								<i className="fas fa-user-circle fa-fw  "></i>
 							</a>
 							<div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-								<a className="dropdown-item" href="#">Settings</a>
+								<a className="dropdown-item" href="#/profile-page">Settings</a>
 								<a className="dropdown-item" href="#">Activity Log</a>
 								<div className="dropdown-divider"></div>
 								<a className="dropdown-item" href="#" data-toggle="modal"
