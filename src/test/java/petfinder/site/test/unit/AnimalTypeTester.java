@@ -65,7 +65,7 @@ public class AnimalTypeTester extends PetDao {
         if(term.equals( "type")) {
             petsTotal.stream().filter(s -> toMatch.contains(s.getType())).forEach(pets::add);
         } else if(term.equals("name")){
-            //i am prous of this stream
+            //i am proud of this stream
             petsTotal.stream().filter(s -> toMatch.contains(s.getName())).forEach(pets::add);
         }else if(term.equals("id")){
             petsTotal.stream().filter(s -> toMatch.contains(s.getId())).forEach(pets::add);
