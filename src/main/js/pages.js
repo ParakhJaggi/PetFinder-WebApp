@@ -186,7 +186,9 @@ class ProfilePage extends React.Component {
 		return (
 
 			<div className="container padded">
-
+				<NavBar/>
+				<SideBar/>
+				<div className="top-buffer">
 				This is Profile Page.
 				This will let users edit photo/add other info
 
@@ -204,6 +206,7 @@ class ProfilePage extends React.Component {
 					currentSchedule={myData}
                     ref={(scheduler) => { this.scheduler = scheduler; }}
                 />
+				</div>
 			</div>
 		);
 	}
