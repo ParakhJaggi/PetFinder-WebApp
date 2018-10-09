@@ -188,7 +188,7 @@ class ProfilePage extends React.Component {
 			<div className="container padded">
 				<NavBar/>
 				<SideBar/>
-				<div className="top-buffer">
+				<div className="top-buffer shiftRight">
 				This is Profile Page.
 				This will let users edit photo/add other info
 
