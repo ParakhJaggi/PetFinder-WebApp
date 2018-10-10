@@ -45,6 +45,7 @@ public class UserEndpointTester {
         String test = "Linda_Livingstone@baylor.edu";
         assertEquals(service.findUsersTest(test).get().getUser().getPrincipal(),
               test );
+
     }
 
 
