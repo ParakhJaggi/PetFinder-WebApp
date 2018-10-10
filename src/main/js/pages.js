@@ -34,6 +34,8 @@ import WeeklyScheduler from 'react-week-scheduler';
 import * as cookie from 'react-cookies';
 import {RegistrationPetForm} from 'js/pet';
 import axios from 'axios';
+import * as Bessemer from 'js/alloy/bessemer/components';
+import * as Validation from 'js/alloy/utils/validation';
 
 function logout() {
 	cookie.remove('authentication', {path: '/'});
@@ -177,12 +179,19 @@ class ProfilePage extends React.Component {
         }
     }
 
+    onSubmit = pet => {
+        return axios.post('/pets', pet);
+    };
+
 	render() {
         const startingDefault = { event: 'Not Available', color: '#faf1ff' };
         const blockingEvent = { event: 'Available', color: '#00d7dd' };
         const eventList = [startingDefault, blockingEvent];
 
-		return (
+        let {handleSubmit, submitting} = this.props;
+        let onSuccess = this.props.success;
+
+        return (
 
 			<div className="container padded">
 				<NavBar/>
@@ -197,9 +206,32 @@ class ProfilePage extends React.Component {
 				{_.isDefined(this.props.user) &&
 				<div>Welcome, {this.props.user.principal}!</div>
 				}
-				<ul>
-					{this.state.pets.map(pet => <li>{pet.name + ' is a ' + pet.type}</li>)}
-				</ul>
+				{this.state.pets.map(pet =>
+					<div>
+                        <form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
+                            <Bessemer.Field name="name" friendlyName="Pet Name"
+                                            validators={[Validation.requiredValidator]}
+											value = {pet.name}
+							/>
+
+                            <Bessemer.Field name="type" friendlyName="Type"/*Todo Radio box*/
+                                            validators={[Validation.requiredValidator]}
+                                            value = {pet.type}
+                            />
+
+                            <Bessemer.Field name="subtype" friendlyName="Sub Type"
+                                            validators={[Validation.requiredValidator]}
+                                            value = {pet.subtype}
+                            />
+
+                            <Bessemer.Field name="preferences" friendlyName="Extra Preferences"
+                                            value = {pet.preferences}
+                            />
+
+                            <Bessemer.Button loading={submitting}>Register</Bessemer.Button>
+                        </form>
+					</div>
+				)}
                 <WeeklyScheduler
                     defaultEvent={startingDefault} selectedEvent={blockingEvent} events={eventList}
 					currentSchedule={myData}
