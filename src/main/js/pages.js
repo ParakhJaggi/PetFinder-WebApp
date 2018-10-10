@@ -32,11 +32,13 @@ import {
 import Slider from 'react-rangeslider';
 import WeeklyScheduler from 'react-week-scheduler';
 import * as cookie from 'react-cookies';
-import {RegistrationPetForm} from 'js/pet';
+import {RegistrationPetForm, EditPetForm} from 'js/pet';
 import axios from 'axios';
+import * as Bessemer from 'js/alloy/bessemer/components';
+import * as Validation from 'js/alloy/utils/validation';
+import * as ReduxForm from 'redux-form';
 
 function logout() {
-	console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 	cookie.remove('authentication', {path: '/'});
 	cookie.remove('user', {path: '/'});
 	window.location.reload(true);
@@ -182,12 +184,19 @@ class ProfilePage extends React.Component {
 		}
 	}
 
+    onSubmit = pet => {
+        return axios.post('/pets', pet);
+    };
+
 	render() {
 		const startingDefault = {event: 'Not Available', color: '#faf1ff'};
 		const blockingEvent = {event: 'Available', color: '#00d7dd'};
 		const eventList = [startingDefault, blockingEvent];
 
-		return (
+        let {handleSubmit, submitting} = this.props;
+        let onSuccess = this.props.success;
+
+        return (
 
 			<div className="container padded">
 				<NavBar/>
@@ -196,15 +205,15 @@ class ProfilePage extends React.Component {
 					This is Profile Page.
 					This will let users edit photo/add other info
 
-					{_.isDefined(this.props.authentication)
-						//<div>{this.props.authentication['access_token']}</div>
-					}
-					{_.isDefined(this.props.user) &&
-					<div>Welcome, {this.props.user.principal}!</div>
-					}
-					<ul>
-						{this.state.pets.map(pet => <li>{pet.name + ' is a ' + pet.type}</li>)}
-					</ul>
+				{_.isDefined(this.props.authentication)
+					//<div>{this.props.authentication['access_token']}</div>
+				}
+				{_.isDefined(this.props.user) &&
+				<div>Welcome, {this.props.user.principal}!</div>
+				}
+				{this.state.pets.map(pet =>
+                    <EditPetForm pet={pet}/>
+				)}
 					<WeeklyScheduler
 						defaultEvent={startingDefault} selectedEvent={blockingEvent} events={eventList}
 						currentSchedule={myData}
@@ -403,7 +412,7 @@ export class RodentSearch extends React.Component {
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button class="btn btn-primary" onClick="logout">Logout</button>
+                            <button class="btn btn-primary" onClick={()=>logout()}>Logout</button>
 						</div>
 					</div>
 				</div>
@@ -585,7 +594,7 @@ export class DogSearch extends React.Component {
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
+                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>
 						</div>
 					</div>
 				</div>
@@ -765,7 +774,7 @@ export class BirdSearch extends React.Component {
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
+                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>
 						</div>
 					</div>
 				</div>
@@ -945,7 +954,7 @@ export class CatSearch extends React.Component {
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
+                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>
 						</div>
 					</div>
 				</div>
@@ -1125,7 +1134,7 @@ export class Dashboard extends React.Component {
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
+                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>
 						</div>
 					</div>
 				</div>
