@@ -24,7 +24,7 @@ public class PetElasticsearchRepository extends ElasticSearchJsonRepository<PetD
 		super(new ElasticSearchIndex(provider, "petfinder-pets"), PetDto.class);
 	}
 	public final String TYPE = "type";
-	final String [] VALID_TYPES = {"type", "id", "name"};
+	final String [] VALID_TYPES = {"type", "id", "name", "owner", "subtype"};
 
 	/**
 	 * Author laird
