@@ -19,7 +19,7 @@ public class UserDto implements Momento<String> {
 	private UserType type;
 	private Map<String, Object> attributes;
 
-	private UserDto() {
+	public UserDto() {
 
 	}
 
@@ -27,6 +27,7 @@ public class UserDto implements Momento<String> {
 		this.principal = principal;
 		this.roles = roles;
 		this.attributes = attributes;
+		this.type = type;
 	}
 
 	public String getPrincipal() {
