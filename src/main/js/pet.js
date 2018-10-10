@@ -21,14 +21,14 @@ class RegistrationPetForm extends React.Component {
                 <Bessemer.Field name="name" friendlyName="Pet Name"
                                 validators={[Validation.requiredValidator]} />
 
-				<Bessemer.Field name="Type" friendlyName="Type"/*Todo Radio box*/
+				<Bessemer.Field name="type" friendlyName="Type"/*Todo Radio box*/
 				                validators={[Validation.requiredValidator]}
 				/>
 
 				<Bessemer.Field name="subtype" friendlyName="Sub Type"
 				                validators={[Validation.requiredValidator]}/>
 
-				<Bessemer.Field name="details" friendlyName="Optional Details"/>
+				<Bessemer.Field name="preferences" friendlyName="Extra Preferences"/>
 
 				<Bessemer.Button loading={submitting}>Register</Bessemer.Button>
 			</form>
