@@ -50,7 +50,15 @@ export {RegistrationPetForm};
 
 class EditPetForm extends React.Component {
     onSubmit = pet => {
-        return axios.post('/pets', pet);
+        let toPost = {
+            'id':this.props.pet.id,
+            'name':(pet[this.props.pet.id + 'name'] == null)?this.props.pet.name:pet[this.props.pet.id + 'name'],
+            'type':(pet[this.props.pet.id + 'type']==null)?this.props.pet.type:pet[this.props.pet.id + 'type'],
+            'owner':this.props.pet.owner,
+            'subtype':(pet[this.props.pet.id + 'subtype'] == null)?this.props.pet.subtype:pet[this.props.pet.id + 'subtype'],
+            'preferences':(pet[this.props.pet.id + 'preferences']==null)?this.props.pet.preferences:pet[this.props.pet.id + 'preferences']
+        };
+        return axios.post('/pets', toPost);
     };
 
     render() {
@@ -58,24 +66,22 @@ class EditPetForm extends React.Component {
         let onSuccess = this.props.success;
 
         return (
-            <form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
+            <form name={this.props.pet.id + 'form'} onSubmit={handleSubmit(form => this.onSubmit(form))} initialValues={this.props.pet}>
 				{'Your pet is named' + this.props.pet.name}
-                <Bessemer.Field name="name" friendlyName="Pet Name"
-                                validators={[Validation.requiredValidator]}
+                <Bessemer.Field name={this.props.pet.id + 'name'} friendlyName="Pet Name"
                                 defaultVal={this.props.pet.name}
+                                value={this.props.pet.name}
                 />
 
-                <Bessemer.Field name="type" friendlyName="Type"/*Todo Radio box*/
-                                validators={[Validation.requiredValidator]}
+                <Bessemer.Field name={this.props.pet.id + 'type'} friendlyName="Type"/*Todo Radio box*/
                                 defaultVal={this.props.pet.type}
                 />
 
-                <Bessemer.Field name="subtype" friendlyName="Sub Type"
-                                validators={[Validation.requiredValidator]}
+                <Bessemer.Field name={this.props.pet.id + 'subtype'} friendlyName="Sub Type"
                                 defaultVal={this.props.pet.subtype}
                 />
 
-                <Bessemer.Field name="preferences" friendlyName="Extra Preferences"
+                <Bessemer.Field name={this.props.pet.id + 'preferences'} friendlyName="Extra Preferences"
                                 defaultVal={this.props.pet.preferences}
                 />
 
