@@ -89,6 +89,10 @@ public class UserService {
 	}
 
 	public UserDto register(RegistrationRequest request) {
+		//see if the user already exists
+		if(findUserByPrincipal(request.getPrincipal()).isPresent()){
+			return null;
+		}
 		UserAuthenticationDto userAuthentication = new UserAuthenticationDto(
 				new UserDto(request.getPrincipal(), _Lists.list("ROLE_USER"), UserType.OWNER, request.getAttributes()), passwordEncoder.encode(request.getPassword()));
 

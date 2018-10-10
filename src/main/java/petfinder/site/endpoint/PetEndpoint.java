@@ -51,10 +51,12 @@ public class PetEndpoint {
 
 	@PostMapping(produces = "application/json")
 	public PetDto savePet(@RequestBody PetDto pet) {
-		long petID = new Random().nextLong();
-		if(petID < 0)
-			petID*=-1;
-		pet.setId(petID);
+		if(pet.getId() == null) {
+			long petID = new Random().nextLong();
+			if (petID < 0)
+				petID *= -1;
+			pet.setId(petID);
+		}
 		petService.save(pet);
 		return pet;
 	}
