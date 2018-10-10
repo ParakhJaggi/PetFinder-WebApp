@@ -40,7 +40,7 @@ public class PetEndpoint {
 		if(petID < 0)
 			petID*=-1;
 		petService.save(new PetDto(petID, "fluffy", "cat", "greg", "albino"));
-		petService.save(new PetDto((long)2, "pupperino", "dog"));
+		petService.save(new PetDto((long)2, "doggo", "dog"));
 		petService.save(new PetDto((long)3, "ratto", "rodent"));
 	}
 

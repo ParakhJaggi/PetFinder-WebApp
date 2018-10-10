@@ -35,4 +35,9 @@ public class UserEndpoint {
 	public UserDto register(@RequestBody RegistrationRequest request) {
 		return userService.register(request);
 	}
+
+	@PostMapping(value = "/updatePassword")
+	public UserDto updatePassword(@RequestBody UserService.PasswordChangeRequest req){
+		return userService.changePassword(req);
+	}
 }
