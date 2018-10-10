@@ -16,10 +16,22 @@ public class UserDTO_tester {
         user = new UserDto(PRINCIPAL, null, userType, null);
     }
     @Test
-    public void testGetters(){
+    public void testType(){
         assertEquals(userType.getClass().toString(), UserDto.UserType.SITTER.getClass().toString());
-        assertEquals(user.getPrincipal(), PRINCIPAL);
-        assertEquals(user.getRoles(), null);
-        assertEquals(user.getAttributes(), null);
     }
+    @Test
+    public void testPrinciple(){
+        assertEquals(user.getPrincipal(), PRINCIPAL);
+    }
+    @Test
+    public void testRoles(){
+        assertEquals(user.getRoles(), null);
+    }
+    @Test
+    public void testAtributes(){
+        assertEquals(user.getAttributes(), null);
+
+    }
+
+
 }

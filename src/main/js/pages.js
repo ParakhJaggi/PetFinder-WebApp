@@ -140,54 +140,58 @@ export class LoginPage extends React.Component {
 }
 
 var myData;
+
 function loadScheduleFromDatabase() {
-    try {
-        /*TODO Retrieve Serialized State*/
-        //if (serializedState === null)
+	try {
+		/*TODO Retrieve Serialized State*/
+		//if (serializedState === null)
 		// 		myData=null;
 		//else
-        //	myData=JSON.parse(serializedState);
-    } catch(e) {
-        console.log(e);
-        return undefined;
-    }
+		//	myData=JSON.parse(serializedState);
+	} catch (e) {
+		console.log(e);
+		return undefined;
+	}
 }
+
 class ProfilePage extends React.Component {
 	state = {
 		pets: []
 	};
+
 	componentDidMount() {
 		axios.get('/pets/all')
 			.then(res => {
 				const pets = res.pets;
 				this.setState({pets});
 			});
-		myData=loadScheduleFromDatabase();
-        window.addEventListener('beforeunload', this.saveToDB);
+		myData = loadScheduleFromDatabase();
+		window.addEventListener('beforeunload', this.saveToDB);
 
 	}
-    componentWillUnmount() {
-        this.saveToDB();
-        window.removeEventListener('beforeunload', this.saveToDB); // remove the event handler for normal unmounting
-    }
 
-    saveToDB() { // this will hold the cleanup code
-        try {
-            const serializedState = JSON.stringify(this.scheduler.state.days);
-            /*TODO Add serialized state to user's database*/
-        } catch(e) {
-            console.log(e);
-        }
-    }
+	componentWillUnmount() {
+		this.saveToDB();
+		window.removeEventListener('beforeunload', this.saveToDB); // remove the event handler for normal unmounting
+	}
+
+	saveToDB() { // this will hold the cleanup code
+		try {
+			const serializedState = JSON.stringify(this.scheduler.state.days);
+			/*TODO Add serialized state to user's database*/
+		} catch (e) {
+			console.log(e);
+		}
+	}
 
     onSubmit = pet => {
         return axios.post('/pets', pet);
     };
 
 	render() {
-        const startingDefault = { event: 'Not Available', color: '#faf1ff' };
-        const blockingEvent = { event: 'Available', color: '#00d7dd' };
-        const eventList = [startingDefault, blockingEvent];
+		const startingDefault = {event: 'Not Available', color: '#faf1ff'};
+		const blockingEvent = {event: 'Available', color: '#00d7dd'};
+		const eventList = [startingDefault, blockingEvent];
 
         let {handleSubmit, submitting} = this.props;
         let onSuccess = this.props.success;
@@ -198,8 +202,8 @@ class ProfilePage extends React.Component {
 				<NavBar/>
 				<SideBar/>
 				<div className="top-buffer shiftRight">
-				This is Profile Page.
-				This will let users edit photo/add other info
+					This is Profile Page.
+					This will let users edit photo/add other info
 
 				{_.isDefined(this.props.authentication)
 					//<div>{this.props.authentication['access_token']}</div>
@@ -210,11 +214,13 @@ class ProfilePage extends React.Component {
 				{this.state.pets.map(pet =>
                     <EditPetForm pet={pet}/>
 				)}
-                <WeeklyScheduler
-                    defaultEvent={startingDefault} selectedEvent={blockingEvent} events={eventList}
-					currentSchedule={myData}
-                    ref={(scheduler) => { this.scheduler = scheduler; }}
-                />
+					<WeeklyScheduler
+						defaultEvent={startingDefault} selectedEvent={blockingEvent} events={eventList}
+						currentSchedule={myData}
+						ref={(scheduler) => {
+							this.scheduler = scheduler;
+						}}
+					/>
 				</div>
 			</div>
 		);

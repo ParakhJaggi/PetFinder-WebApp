@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,9 @@ import alloy.util.AlloyAuthentication;
 import alloy.util.Wait;
 import alloy.util._Lists;
 import alloy.util._Maps;
+import petfinder.site.common.RestRequests.AnimalTypeRequestBuilder;
+import petfinder.site.common.pet.PetCollectionDTO;
+import petfinder.site.common.pet.PetDao;
 import petfinder.site.common.user.UserDto.UserType;
 
 /**
@@ -19,7 +23,12 @@ import petfinder.site.common.user.UserDto.UserType;
  */
 @Service
 public class UserService {
-	@Autowired
+    //ONLY FOR UNIT TESTING
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @Autowired
 	private UserDao userDao;
 
 	@Autowired
@@ -67,6 +76,18 @@ public class UserService {
 		}
 	}
 
+	public static class PasswordChangeRequest {
+		private String password;
+
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+	}
+
 	public UserDto register(RegistrationRequest request) {
 		UserAuthenticationDto userAuthentication = new UserAuthenticationDto(
 				new UserDto(request.getPrincipal(), _Lists.list("ROLE_USER"), UserType.OWNER, request.getAttributes()), passwordEncoder.encode(request.getPassword()));
@@ -74,4 +95,19 @@ public class UserService {
 		userDao.save(userAuthentication);
 		return userAuthentication.getUser();
 	}
+	public UserDto changePassword(PasswordChangeRequest req){
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserDto> user = findUserByPrincipal(principal);
+		if(user.isPresent()){
+			UserDto current = user.get();
+			UserAuthenticationDto userAuthentication = new UserAuthenticationDto(
+					current, passwordEncoder.encode(req.getPassword()));
+			return userAuthentication.getUser();
+		}
+		return null;
+	}
+	//For testing
+    public Optional<UserAuthenticationDto> findUsersTest(String principle){
+        return userDao.findUserByPrincipal(principle);
+    }
 }
