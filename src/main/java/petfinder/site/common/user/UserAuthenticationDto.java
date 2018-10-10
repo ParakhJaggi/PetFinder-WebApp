@@ -9,10 +9,10 @@ import alloy.util.Momento;
  * Created by jlutteringer on 1/15/18.
  */
 public class UserAuthenticationDto implements Momento<String> {
-	private UserDto user;
-	private String password;
+	protected UserDto user;
+	protected String password;
 
-	private UserAuthenticationDto() {
+	public UserAuthenticationDto() {
 
 	}
 
@@ -34,4 +34,9 @@ public class UserAuthenticationDto implements Momento<String> {
 	public String getMomento() {
 		return user.getMomento();
 	}
+	//ONLY FOR UNIT TESTING
+	public void setPrincicple(UserDto username, String pass){
+	    this.user = username;
+	    this.password = pass;
+    }
 }
