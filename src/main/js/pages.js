@@ -36,7 +36,6 @@ import {RegistrationPetForm} from 'js/pet';
 import axios from 'axios';
 
 function logout() {
-	console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 	cookie.remove('authentication', {path: '/'});
 	cookie.remove('user', {path: '/'});
 	window.location.reload(true);
