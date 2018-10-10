@@ -40,7 +40,12 @@ public class UserEndpointTester {
         assertEquals(service.findUsersTest("Linda_Livingstone@Outlook.com").get().getPassword(),
                 UserTester.emailEndings[4]);
     }
-
+    @Test
+    public void testPrincipleReturn(){
+        String test = "Linda_Livingstone@baylor.edu";
+        assertEquals(service.findUsersTest(test).get().getUser().getPrincipal(),
+              test );
+    }
 
 
 }

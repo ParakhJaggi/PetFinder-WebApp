@@ -26,6 +26,8 @@ public class UserTester extends UserDao {
             ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[3]);
         } else if(principal.toLowerCase().contains("@outlook")){
             ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[4]);
+        } else{
+            ret.setPrincicple(new UserDto(principal,null,null,null),"Test");
         }
 
 
