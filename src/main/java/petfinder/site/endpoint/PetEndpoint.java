@@ -2,6 +2,7 @@ package petfinder.site.endpoint;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Random;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,10 @@ public class PetEndpoint {
 	 */
 	@GetMapping(value = "/populateTestData")
 	public void popData(){
-		petService.save(new PetDto((long)1, "fluffy", "cat"));
+		long petID = new Random().nextLong();
+		if(petID < 0)
+			petID*=-1;
+		petService.save(new PetDto(petID, "fluffy", "cat", "greg", "albino"));
 		petService.save(new PetDto((long)2, "pupperino", "dog"));
 		petService.save(new PetDto((long)3, "ratto", "rodent"));
 	}
@@ -47,6 +51,10 @@ public class PetEndpoint {
 
 	@PostMapping(produces = "application/json")
 	public PetDto savePet(@RequestBody PetDto pet) {
+		long petID = new Random().nextLong();
+		if(petID < 0)
+			petID*=-1;
+		pet.setId(petID);
 		petService.save(pet);
 		return pet;
 	}
