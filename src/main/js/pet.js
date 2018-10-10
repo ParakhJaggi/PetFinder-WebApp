@@ -58,7 +58,7 @@ class EditPetForm extends React.Component {
             'subtype':(pet[this.props.pet.id + 'subtype'] == null)?this.props.pet.subtype:pet[this.props.pet.id + 'subtype'],
             'preferences':(pet[this.props.pet.id + 'preferences']==null)?this.props.pet.preferences:pet[this.props.pet.id + 'preferences']
         };
-        return axios.post('/pets', toPost);
+        return axios.post('/pets/edit', toPost);
     };
 
     render() {
