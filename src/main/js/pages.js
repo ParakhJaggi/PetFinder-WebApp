@@ -32,10 +32,11 @@ import {
 import Slider from 'react-rangeslider';
 import WeeklyScheduler from 'react-week-scheduler';
 import * as cookie from 'react-cookies';
-import {RegistrationPetForm} from 'js/pet';
+import {RegistrationPetForm, EditPetForm} from 'js/pet';
 import axios from 'axios';
 import * as Bessemer from 'js/alloy/bessemer/components';
 import * as Validation from 'js/alloy/utils/validation';
+import * as ReduxForm from 'redux-form';
 
 function logout() {
 	cookie.remove('authentication', {path: '/'});
@@ -207,30 +208,7 @@ class ProfilePage extends React.Component {
 				<div>Welcome, {this.props.user.principal}!</div>
 				}
 				{this.state.pets.map(pet =>
-					<div>
-                        <form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
-                            <Bessemer.Field name="name" friendlyName="Pet Name"
-                                            validators={[Validation.requiredValidator]}
-											value = {pet.name}
-							/>
-
-                            <Bessemer.Field name="type" friendlyName="Type"/*Todo Radio box*/
-                                            validators={[Validation.requiredValidator]}
-                                            value = {pet.type}
-                            />
-
-                            <Bessemer.Field name="subtype" friendlyName="Sub Type"
-                                            validators={[Validation.requiredValidator]}
-                                            value = {pet.subtype}
-                            />
-
-                            <Bessemer.Field name="preferences" friendlyName="Extra Preferences"
-                                            value = {pet.preferences}
-                            />
-
-                            <Bessemer.Button loading={submitting}>Register</Bessemer.Button>
-                        </form>
-					</div>
+                    <EditPetForm pet={pet}/>
 				)}
                 <WeeklyScheduler
                     defaultEvent={startingDefault} selectedEvent={blockingEvent} events={eventList}

@@ -11,42 +11,91 @@ class RegistrationPetForm extends React.Component {
         return axios.post('/pets', pet);
     };
 
-	render() {
-		let {handleSubmit, submitting} = this.props;
-		let onSuccess = this.props.success;
+    render() {
+        let {handleSubmit, submitting} = this.props;
+        let onSuccess = this.props.success;
 
-		return (
+        return (
 
             <form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
                 <Bessemer.Field name="name" friendlyName="Pet Name"
                                 validators={[Validation.requiredValidator]} />
 
-				<Bessemer.Field name="type" friendlyName="Type"/*Todo Radio box*/
-				                validators={[Validation.requiredValidator]}
-				/>
+                <Bessemer.Field name="type" friendlyName="Type"/*Todo Radio box*/
+                                validators={[Validation.requiredValidator]}
+                />
 
-				<Bessemer.Field name="subtype" friendlyName="Sub Type"
-				                validators={[Validation.requiredValidator]}/>
+                <Bessemer.Field name="subtype" friendlyName="Sub Type"
+                                validators={[Validation.requiredValidator]}/>
 
-				<Bessemer.Field name="preferences" friendlyName="Extra Preferences"/>
+                <Bessemer.Field name="preferences" friendlyName="Extra Preferences"/>
 
-				<Bessemer.Button loading={submitting}>Register</Bessemer.Button>
-			</form>
+                <Bessemer.Button loading={submitting}>Register</Bessemer.Button>
+            </form>
 
-		);
-	}
+        );
+    }
 }
 
 RegistrationPetForm = ReduxForm.reduxForm({form: 'register'})(RegistrationPetForm);
 
 RegistrationPetForm = connect(
-	state => ({}),
-	dispatch => ({
-		register: user => dispatch(Users.Actions.register(user))
-	})
+    state => ({}),
+    dispatch => ({
+        register: user => dispatch(Users.Actions.register(user))
+    })
 )(RegistrationPetForm);
 
 export {RegistrationPetForm};
+
+class EditPetForm extends React.Component {
+    onSubmit = pet => {
+        return axios.post('/pets', pet);
+    };
+
+    render() {
+        let {handleSubmit, submitting} = this.props;
+        let onSuccess = this.props.success;
+
+        return (
+            <form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
+				{'Your pet is named' + this.props.pet.name}
+                <Bessemer.Field name="name" friendlyName="Pet Name"
+                                validators={[Validation.requiredValidator]}
+                                defaultVal={this.props.pet.name}
+                />
+
+                <Bessemer.Field name="type" friendlyName="Type"/*Todo Radio box*/
+                                validators={[Validation.requiredValidator]}
+                                defaultVal={this.props.pet.type}
+                />
+
+                <Bessemer.Field name="subtype" friendlyName="Sub Type"
+                                validators={[Validation.requiredValidator]}
+                                defaultVal={this.props.pet.subtype}
+                />
+
+                <Bessemer.Field name="preferences" friendlyName="Extra Preferences"
+                                defaultVal={this.props.pet.preferences}
+                />
+
+                <Bessemer.Button loading={submitting}>Register</Bessemer.Button>
+            </form>
+
+        );
+    }
+}
+
+EditPetForm = ReduxForm.reduxForm({form: 'register'})(EditPetForm);
+
+EditPetForm = connect(
+    state => ({}),
+    dispatch => ({
+        register: user => dispatch(Users.Actions.register(user))
+    })
+)(EditPetForm);
+
+export {EditPetForm};
 
 const $ = require('jquery');
 $.DataTable = require('datatables.net');
