@@ -1,8 +1,17 @@
-image: java:10
+image: openjdk:10
+test:
+  stage: test
+  script:
+  - ./gradlew test
+  artifacts:
+    reports:
+      junit: build/test-results/test/TEST-*.xml
 
 deploy:
   stage: deploy
   image: ruby:2.3
+
+
 
   script:
     - apt-get update -qy
