@@ -61,7 +61,11 @@ export class Field extends React.Component {
 	getReifiedProps = () => {
 		let reifiedProps = _.clone(this.props);
 		if(_.isNil(reifiedProps.field)) {
-			reifiedProps.field = <input className="form-control" placeholder="Value" />;
+			if(_.isNil(reifiedProps.defaultVal)) {
+                reifiedProps.field = <input className="form-control" placeholder="Value"/>;
+            }else{
+                reifiedProps.field = <input className="form-control" placeholder={reifiedProps.defaultVal} value="Defcoooon 5"/>; //{reifiedProps.defaultVal}
+			}
 		}
 
 		if(_.isNil(reifiedProps.label)) {
@@ -160,9 +164,18 @@ export class Field extends React.Component {
 	render() {
 		let props = this.getReifiedProps();
 
-		return <ReduxForm.Field name={ props.name }
-		              component={ this.renderField }
-		              validate={ props.validators.map(validator => buildReduxValidator(validator, props)) } />;
+        console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+        console.log(this.props.defaultVal);
+		if(this.props.defaultVal && this.props.defaultVal != null) {
+            return <ReduxForm.Field name={props.name}
+                                    component={this.renderField}
+                                    validate={props.validators.map(validator => buildReduxValidator(validator, props))}
+                                    defaultValue={this.props.defaultVal}/>;
+        }else{
+            return <ReduxForm.Field name={props.name}
+                                    component={this.renderField}
+                                    validate={props.validators.map(validator => buildReduxValidator(validator, props))}/>;
+		}
 	}
 }
 

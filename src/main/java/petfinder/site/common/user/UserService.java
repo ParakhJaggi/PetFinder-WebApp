@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -75,12 +76,39 @@ public class UserService {
 		}
 	}
 
+	public static class PasswordChangeRequest {
+		private String password;
+
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+	}
+
 	public UserDto register(RegistrationRequest request) {
+		//see if the user already exists
+		if(findUserByPrincipal(request.getPrincipal()).isPresent()){
+			return null;
+		}
 		UserAuthenticationDto userAuthentication = new UserAuthenticationDto(
 				new UserDto(request.getPrincipal(), _Lists.list("ROLE_USER"), UserType.OWNER, request.getAttributes()), passwordEncoder.encode(request.getPassword()));
 
 		userDao.save(userAuthentication);
 		return userAuthentication.getUser();
+	}
+	public UserDto changePassword(PasswordChangeRequest req){
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserDto> user = findUserByPrincipal(principal);
+		if(user.isPresent()){
+			UserDto current = user.get();
+			UserAuthenticationDto userAuthentication = new UserAuthenticationDto(
+					current, passwordEncoder.encode(req.getPassword()));
+			return userAuthentication.getUser();
+		}
+		return null;
 	}
 	//For testing
     public Optional<UserAuthenticationDto> findUsersTest(String principle){

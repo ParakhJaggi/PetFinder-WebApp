@@ -32,14 +32,16 @@ import {
 import Slider from 'react-rangeslider';
 import WeeklyScheduler from 'react-week-scheduler';
 import * as cookie from 'react-cookies';
-import {RegistrationPetForm} from 'js/pet';
+import {RegistrationPetForm, EditPetForm} from 'js/pet';
 import axios from 'axios';
+import * as Bessemer from 'js/alloy/bessemer/components';
+import * as Validation from 'js/alloy/utils/validation';
+import * as ReduxForm from 'redux-form';
 
 function logout() {
-	console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 	cookie.remove('authentication', {path: '/'});
 	cookie.remove('user', {path: '/'});
-	window.location.reload(true);
+	window.location.replace('...');
 }
 
 export class Home extends React.Component {
@@ -90,7 +92,7 @@ export class RegisterPage extends React.Component {
 					</div>
 				</div>
 			</Pulse>
-
+			<Logout/>
 			</body>
 		);
 	}
@@ -132,6 +134,7 @@ export class LoginPage extends React.Component {
 					</div>
 				</div>
 			</Pulse>
+			<Logout/>
 			</body>
 		);
 	}
@@ -158,7 +161,7 @@ class ProfilePage extends React.Component {
 	};
 
 	componentDidMount() {
-		axios.get('/pets/all')
+		axios.get('/api/userPets/getPets')
 			.then(res => {
 				const pets = res.pets;
 				this.setState({pets});
@@ -182,12 +185,19 @@ class ProfilePage extends React.Component {
 		}
 	}
 
+    onSubmit = pet => {
+        return axios.post('/pets', pet);
+    };
+
 	render() {
 		const startingDefault = {event: 'Not Available', color: '#faf1ff'};
 		const blockingEvent = {event: 'Available', color: '#00d7dd'};
 		const eventList = [startingDefault, blockingEvent];
 
-		return (
+        let {handleSubmit, submitting} = this.props;
+        let onSuccess = this.props.success;
+
+        return (
 
 			<div className="container padded">
 				<NavBar/>
@@ -196,15 +206,15 @@ class ProfilePage extends React.Component {
 					This is Profile Page.
 					This will let users edit photo/add other info
 
-					{_.isDefined(this.props.authentication)
-						//<div>{this.props.authentication['access_token']}</div>
-					}
-					{_.isDefined(this.props.user) &&
-					<div>Welcome, {this.props.user.principal}!</div>
-					}
-					<ul>
-						{this.state.pets.map(pet => <li>{pet.name + ' is a ' + pet.type}</li>)}
-					</ul>
+				{_.isDefined(this.props.authentication)
+					//<div>{this.props.authentication['access_token']}</div>
+				}
+				{_.isDefined(this.props.user) &&
+				<div>Welcome, {this.props.user.principal}!</div>
+				}
+				{this.state.pets.map(pet =>
+                    <EditPetForm pet={pet}/>
+				)}
 					<WeeklyScheduler
 						defaultEvent={startingDefault} selectedEvent={blockingEvent} events={eventList}
 						currentSchedule={myData}
@@ -213,6 +223,7 @@ class ProfilePage extends React.Component {
 						}}
 					/>
 				</div>
+
 			</div>
 		);
 	}
@@ -389,25 +400,7 @@ export class RodentSearch extends React.Component {
 				<i class="fas fa-angle-up"></i>
 			</a>
 
-			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			     aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are ready to end your current session.
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button class="btn btn-primary" onClick="logout">Logout</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<Logout/>
 			</body>
 			</html>
 		);
@@ -571,25 +564,7 @@ export class DogSearch extends React.Component {
 			</a>
 
 
-			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			     aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are ready to end your current session.
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<Logout/>
 			</body>
 			</html>
 		);
@@ -751,25 +726,7 @@ export class BirdSearch extends React.Component {
 			</a>
 
 
-			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			     aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are ready to end your current session.
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<Logout/>
 			</body>
 			</html>
 		);
@@ -931,25 +888,7 @@ export class CatSearch extends React.Component {
 			</a>
 
 
-			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			     aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are ready to end your current session.
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<Logout/>
 			</body>
 			</html>
 		);
@@ -1111,27 +1050,7 @@ export class Dashboard extends React.Component {
 			</a>
 
 
-			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			     aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are ready to end your current session.
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-							<button className="btn btn-primary" onClick="logout">Logout</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
+			<Logout/>
 			</body>
 
 			</html>
@@ -1252,4 +1171,27 @@ class Layout extends React.Component {
 	}
 }
 
-
+export class Logout extends React.Component{
+	render(){
+		return(
+            <div className="modal fade" id="logoutModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <button className="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">Select "Logout" below if you are ready to end your current session.
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <button className="btn btn-primary" onClick={() => logout()}>Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>);
+	}
+}
