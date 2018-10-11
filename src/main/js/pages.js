@@ -160,7 +160,7 @@ class ProfilePage extends React.Component {
 	};
 
 	componentDidMount() {
-		axios.get('/pets/all')
+		axios.get('/api/userPets/getPets')
 			.then(res => {
 				const pets = res.pets;
 				this.setState({pets});
