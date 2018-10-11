@@ -31,7 +31,6 @@ export class MySwitch extends React.Component {
 					className="react-switch"
 					id="material-switch"
 				/>
-
 			</div>
 		);
 	}
