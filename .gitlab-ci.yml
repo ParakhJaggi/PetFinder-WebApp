@@ -1,4 +1,4 @@
-image: java:10
+image: openjdk:10
 test:
   stage: test
   script:
