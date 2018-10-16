@@ -38,4 +38,9 @@ public class UserDao {
 
 		repository.save(userAuthentication);
 	}
+	public boolean delete(String principal){
+		repository.delete(principal);
+		//now see if the removal was successful by checking if the user can now be found
+		return findUserByPrincipal(principal).isPresent();
+	}
 }
