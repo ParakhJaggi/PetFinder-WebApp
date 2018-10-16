@@ -408,9 +408,20 @@ export class RodentSearch extends React.Component {
 }
 
 export class DogSearch extends React.Component {
+    state = {
+        dogs: []
+    };
+
+    componentDidMount() {
+        axios.get('/pets/all')
+            .then(res => {
+                const pets = res.data.results;
+                this.setState({dogs: pets});
+            });
+    }
+
 	render() {
 		return (
-			<html lang="en">
 			<body id="page-top">
 			<div id="wrapper">
 				<NavBar></NavBar>
@@ -435,8 +446,19 @@ export class DogSearch extends React.Component {
 									<Pulse>
 										<thead>
 										<tr>
+											<td>Name</td>
 										</tr>
 										</thead>
+										<tbody>
+										<tr>
+											<td>hi</td>
+										</tr>
+										{this.state.dogs.map(pet =>
+                                            <tr>
+                                                <td>{pet.name}</td>
+                                            </tr>)
+                                        }
+										</tbody>
 									</Pulse>
 								</table>
 								<LocationSlider/>
@@ -562,11 +584,8 @@ export class DogSearch extends React.Component {
 			<a class="scroll-to-top rounded" href="#page-top">
 				<i class="fas fa-angle-up"></i>
 			</a>
-
-
 			<Logout/>
 			</body>
-			</html>
 		);
 	}
 }
@@ -721,11 +740,6 @@ export class BirdSearch extends React.Component {
 					</footer>
 				</div>
 			</div>
-			<a class="scroll-to-top rounded" href="#page-top">
-				<i class="fas fa-angle-up"></i>
-			</a>
-
-
 			<Logout/>
 			</body>
 			</html>
@@ -759,10 +773,8 @@ export class CatSearch extends React.Component {
 							<div class="card-body">
 								<table className="table" id="dataTable" width="100%" cellSpacing="0">
 									<thead>
-
 									</thead>
 								</table>
-
 								<LocationSlider/>
 								<div class="table-responsive">
 									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -883,11 +895,6 @@ export class CatSearch extends React.Component {
 					</footer>
 				</div>
 			</div>
-			<a class="scroll-to-top rounded" href="#page-top">
-				<i class="fas fa-angle-up"></i>
-			</a>
-
-
 			<Logout/>
 			</body>
 			</html>
@@ -1040,66 +1047,13 @@ export class Dashboard extends React.Component {
 					</footer>
 
 				</div>
-
-
 			</div>
-
-
-			<a class="scroll-to-top rounded" href="#page-top">
-				<i class="fas fa-angle-up"></i>
-			</a>
-
-
 			<Logout/>
 			</body>
-
 			</html>
-
-
 		);
 	}
 
-}
-
-export class Hello extends React.Component {
-
-	constructor(props) {
-		super(props);
-
-		this.state = {data: null};
-	}
-
-	componentDidMount() {
-		this._getData();
-	}
-
-
-	_getData = () => {
-		fetch('/hello/')
-			.then(response => {
-				if (response.ok) {
-					return response;
-				} else {
-					let errorMessage =
-							'${response.status(${response.statusText})',
-						error = new Error(errorMessage);
-					throw(error);
-				}
-			})
-			.then(response => response.json())
-			.then(json => {
-				console.log(json);
-				this.setState({data: json.data});
-			});
-	}
-
-	render() {
-		return (
-			<div>
-				<h1>{this.state.data}</h1>
-			</div>
-		);
-	}
 }
 
 var Chart = require('chart.js');
