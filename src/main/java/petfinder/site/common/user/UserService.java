@@ -50,6 +50,31 @@ public class UserService {
 		private String principal;
 		private String password;
 		private Map<String, Object> attributes;
+		private String city, state, address;
+
+		public String getCity() {
+			return city;
+		}
+
+		public void setCity(String city) {
+			this.city = city;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		public String getAddress() {
+			return address;
+		}
+
+		public void setAddress(String address) {
+			this.address = address;
+		}
 
 		public String getPrincipal() {
 			return principal;
@@ -89,13 +114,18 @@ public class UserService {
 	}
 
 	public UserDto register(RegistrationRequest request) {
+		UserAuthenticationDto userAuthentication = null;
 		//see if the user already exists
 		if(findUserByPrincipal(request.getPrincipal()).isPresent()){
 			return null;
 		}
-		UserAuthenticationDto userAuthentication = new UserAuthenticationDto(
-				new UserDto(request.getPrincipal(), _Lists.list("ROLE_USER"), UserType.OWNER, request.getAttributes()), passwordEncoder.encode(request.getPassword()));
-
+		userAuthentication = new UserAuthenticationDto(
+				new UserDto(request.getPrincipal(),
+						_Lists.list("ROLE_USER"),
+						UserType.OWNER, request.getAttributes(),
+						request.getAddress(), request.getCity(),
+						request.getState()),
+				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);
 		return userAuthentication.getUser();
 	}
@@ -106,9 +136,13 @@ public class UserService {
 			UserDto current = user.get();
 			UserAuthenticationDto userAuthentication = new UserAuthenticationDto(
 					current, passwordEncoder.encode(req.getPassword()));
+			userDao.save(userAuthentication);
 			return userAuthentication.getUser();
 		}
 		return null;
+	}
+	public boolean deleteUser(String principal){
+		return userDao.delete(principal);
 	}
 	//For testing
     public Optional<UserAuthenticationDto> findUsersTest(String principle){
