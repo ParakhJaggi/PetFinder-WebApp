@@ -415,7 +415,8 @@ export class DogSearch extends React.Component {
     componentDidMount() {
         axios.get('/pets/all')
             .then(res => {
-                const pets = res.data.results;
+                const pets = res.pets;
+                console.log(pets);
                 this.setState({dogs: pets});
             });
     }
@@ -446,18 +447,19 @@ export class DogSearch extends React.Component {
 									<Pulse>
 										<thead>
 										<tr>
-											<td>Name</td>
+                                            <td>Name</td>
+                                            <td>Subtype</td>
+                                            <td>Preferences</td>
 										</tr>
 										</thead>
 										<tbody>
-										<tr>
-											<td>hi</td>
-										</tr>
 										{this.state.dogs.map(pet =>
                                             <tr>
                                                 <td>{pet.name}</td>
-                                            </tr>)
-                                        }
+                                                <td>{pet.subtype}</td>
+                                                <td>{pet.preferences}</td>
+                                            </tr>
+										)}
 										</tbody>
 									</Pulse>
 								</table>
