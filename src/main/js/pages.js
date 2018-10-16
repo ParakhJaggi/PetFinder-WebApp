@@ -41,7 +41,7 @@ import * as ReduxForm from 'redux-form';
 function logout() {
 	cookie.remove('authentication', {path: '/'});
 	cookie.remove('user', {path: '/'});
-	window.location.reload(true);
+	window.location.replace('...');
 }
 
 export class Home extends React.Component {
@@ -92,7 +92,7 @@ export class RegisterPage extends React.Component {
 					</div>
 				</div>
 			</Pulse>
-
+			<Logout/>
 			</body>
 		);
 	}
@@ -134,6 +134,7 @@ export class LoginPage extends React.Component {
 					</div>
 				</div>
 			</Pulse>
+			<Logout/>
 			</body>
 		);
 	}
@@ -222,6 +223,7 @@ class ProfilePage extends React.Component {
 						}}
 					/>
 				</div>
+
 			</div>
 		);
 	}
@@ -398,25 +400,7 @@ export class RodentSearch extends React.Component {
 				<i class="fas fa-angle-up"></i>
 			</a>
 
-			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			     aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are ready to end your current session.
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <button class="btn btn-primary" onClick={()=>logout()}>Logout</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<Logout/>
 			</body>
 			</html>
 		);
@@ -580,25 +564,7 @@ export class DogSearch extends React.Component {
 			</a>
 
 
-			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			     aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are ready to end your current session.
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<Logout/>
 			</body>
 			</html>
 		);
@@ -760,25 +726,7 @@ export class BirdSearch extends React.Component {
 			</a>
 
 
-			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			     aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are ready to end your current session.
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<Logout/>
 			</body>
 			</html>
 		);
@@ -940,25 +888,7 @@ export class CatSearch extends React.Component {
 			</a>
 
 
-			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			     aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are ready to end your current session.
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<Logout/>
 			</body>
 			</html>
 		);
@@ -1120,27 +1050,7 @@ export class Dashboard extends React.Component {
 			</a>
 
 
-			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			     aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are ready to end your current session.
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <button className="btn btn-primary" onClick={()=>logout()}>Logout</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
+			<Logout/>
 			</body>
 
 			</html>
@@ -1261,4 +1171,27 @@ class Layout extends React.Component {
 	}
 }
 
-
+export class Logout extends React.Component{
+	render(){
+		return(
+            <div className="modal fade" id="logoutModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <button className="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">Select "Logout" below if you are ready to end your current session.
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <button className="btn btn-primary" onClick={() => logout()}>Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>);
+	}
+}

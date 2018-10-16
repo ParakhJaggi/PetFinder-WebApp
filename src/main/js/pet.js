@@ -143,7 +143,9 @@ export class PetTable extends React.Component {
 	render() {
 		return (
 			<div>
-				<table ref="main"/>
+				<table>
+
+                </table>
 			</div>);
 	}
 }
