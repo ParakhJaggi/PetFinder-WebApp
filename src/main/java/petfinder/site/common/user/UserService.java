@@ -50,7 +50,15 @@ public class UserService {
 		private String principal;
 		private String password;
 		private Map<String, Object> attributes;
-		private String city, state, address;
+		private String city, state, address, zip;
+
+		public String getZip() {
+			return zip;
+		}
+
+		public void setZip(String zip) {
+			this.zip = zip;
+		}
 
 		public String getCity() {
 			return city;
@@ -124,7 +132,7 @@ public class UserService {
 						_Lists.list("ROLE_USER"),
 						UserType.OWNER, request.getAttributes(),
 						request.getAddress(), request.getCity(),
-						request.getState()),
+						request.getState(), request.getZip()),
 				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);
 		return userAuthentication.getUser();
