@@ -19,7 +19,7 @@ public class UserDto implements Momento<String> {
 	private boolean [] days;
 	private List<BookingDTO> bookings;
 	private List<BookingDTO> requestedBookings;
-    private String notification;
+    private String notification = "no notification";
 
     public String getNotification() {
         return notification;

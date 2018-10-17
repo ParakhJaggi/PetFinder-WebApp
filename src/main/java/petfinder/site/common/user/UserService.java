@@ -250,8 +250,11 @@ public class UserService {
 		//first see if the current user is a sitter and exists
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
-         sitter.get().getUser().setNotification();
-        if(!sitter.isPresent() || sitter.get().user.getType() == UserType.OWNER){
+		System.out.println(sitter.get().getUser().getNotification());
+		sitter.get().getUser().setNotification();
+		System.out.println(sitter.get().getUser().getNotification());
+
+		if(!sitter.isPresent() || sitter.get().user.getType() == UserType.OWNER){
 			return false;
 		}
 		//now see if that was an actually existant request
