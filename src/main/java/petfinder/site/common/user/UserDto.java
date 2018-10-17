@@ -19,12 +19,22 @@ public class UserDto implements Momento<String> {
 	private boolean [] days;
 	private List<BookingDTO> bookings;
 	private List<BookingDTO> requestedBookings;
+    private String notification;
+
+    public String getNotification() {
+        return notification;
+    }
+
+    public void setNotification() {
+        this.notification = "You have a notification";
+    }
+
 
 	public UserDto() {
 
 	}
 
-	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes) {
+	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String notification) {
 		this.principal = principal;
 		this.roles = roles;
 		this.attributes = attributes;
@@ -32,6 +42,7 @@ public class UserDto implements Momento<String> {
 		this.bookings = new ArrayList<>();
 		this.requestedBookings = new ArrayList<>();
 		this.days=new boolean[7];
+		this.notification = notification;
 	}
 	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip) {
 		this.principal = principal;
@@ -46,6 +57,13 @@ public class UserDto implements Momento<String> {
 		this.requestedBookings = new ArrayList<>();
 		this.days=new boolean[7];
 	}
+
+    public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes) {
+        this.principal = principal;
+        this.roles = roles;
+        this.attributes = attributes;
+        this.type = type;
+    }
 
 	public String getPrincipal() {
 		return principal;
