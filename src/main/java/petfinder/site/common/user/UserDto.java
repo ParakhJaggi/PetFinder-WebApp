@@ -24,7 +24,7 @@ public class UserDto implements Momento<String> {
 
 	}
 
-	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes) {
+	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String notification) {
 		this.principal = principal;
 		this.roles = roles;
 		this.attributes = attributes;
@@ -46,6 +46,13 @@ public class UserDto implements Momento<String> {
 		this.requestedBookings = new ArrayList<>();
 		this.days=new boolean[7];
 	}
+
+    public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes) {
+        this.principal = principal;
+        this.roles = roles;
+        this.attributes = attributes;
+        this.type = type;
+    }
 
 	public String getPrincipal() {
 		return principal;
