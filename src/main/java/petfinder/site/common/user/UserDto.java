@@ -18,7 +18,7 @@ public class UserDto implements Momento<String> {
 	private List<String> roles;
 	private UserType type;
 	private Map<String, Object> attributes;
-	private String address, city, state;
+	private String address, city, state, zip;
 
 	public UserDto() {
 
@@ -30,7 +30,7 @@ public class UserDto implements Momento<String> {
 		this.attributes = attributes;
 		this.type = type;
 	}
-	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state) {
+	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip) {
 		this.principal = principal;
 		this.roles = roles;
 		this.attributes = attributes;
@@ -38,6 +38,7 @@ public class UserDto implements Momento<String> {
 		this.address = address;
 		this.city = city;
 		this.state = state;
+		this.zip = zip;
 	}
 
 	public String getPrincipal() {
