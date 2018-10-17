@@ -67,7 +67,7 @@ public class UserEndpoint {
 	@GetMapping(value = "/getDays")
 	public UserTimesDTO getDays(){
 		//this is for all users
-		userService.getDays();
+		return userService.getTimes();
 	}
 
 	@PostMapping(value = "/requestBooking/{userName}")
