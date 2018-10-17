@@ -176,6 +176,16 @@ public class UserService {
 				.distinct()
 				.filter(x->x.getPrincipal() != user.getPrincipal()
 						&& x.getType() == UserType.SITTER)
+				//see if the owner and sitter have at least one day in common
+				.filter(x->{
+					boolean flag = false;
+					for(int i = 0; i < x.getDays().length; i++){
+						if(x.getDays()[i] && userp.get().getDays()[i]){
+							flag = true;
+						}
+					}
+					return flag;
+				})
 				.sorted((x,y) -> x.getCity().compareTo(y.getCity()))
 				.collect(Collectors.toList());
 		users.setUsers(filtered);
