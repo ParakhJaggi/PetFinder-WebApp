@@ -1,5 +1,5 @@
-import React from "react";
-import axios from "axios";
+import React from 'react';
+import axios from 'axios';
 
 class SitterRow extends React.Component{
     render(){
@@ -16,25 +16,30 @@ class SitterRow extends React.Component{
                         axios.post('/api/book', {
                             sitter:this.props.sitter.name,
                             day: index
-                        })} {!available && disabled}
+                        })} disabled={!available}
                      /></ti>
                 )}
             </tr>
-        )
+        );
     }
 }
 
 export class SitterTable extends React.Component{
+    state = {
+        sitters: []
+    };
+
     componentDidMount() {
-        axios.get('/api/sitters')
+        axios.get('/api/user/getavailablesitters')
             .then(res => {
-                const sitters = res.data;
+                const sitters = res.users;
                 this.setState({sitters: sitters});
             });
     }
     render(){
         return (
             <table>
+                <thead>
                 <tr>
                     <th>Name</th>
                     <th>Location</th>
@@ -46,10 +51,13 @@ export class SitterTable extends React.Component{
                     <th>Friday</th>
                     <th>Saturday</th>
                 </tr>
-                {this.state.sitters.map(sitter =>
-                    <SitterRow sitter={sitter}/>
-                )}
+                </thead>
+                <tbody>
+                    {this.state.sitters.map(sitter =>
+                        <SitterRow sitter={sitter}/>
+                    )}
+                </tbody>
             </table>
-        )
+        );
     }
 }

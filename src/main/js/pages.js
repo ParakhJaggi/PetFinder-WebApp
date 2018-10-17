@@ -37,6 +37,7 @@ import axios from 'axios';
 import * as Bessemer from 'js/alloy/bessemer/components';
 import * as Validation from 'js/alloy/utils/validation';
 import * as ReduxForm from 'redux-form';
+import {SitterTable} from 'js/sitters';
 
 function logout() {
 	cookie.remove('authentication', {path: '/'});
@@ -330,6 +331,7 @@ class ProfilePage extends React.Component {
                         </form>
                     </div>
 				</div>
+				<SitterTable />
 
 			</div>
 		);
