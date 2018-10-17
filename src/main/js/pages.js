@@ -165,7 +165,6 @@ class ProfilePage extends React.Component {
 			});
 		myData = loadScheduleFromDatabase();
 		window.addEventListener('beforeunload', this.saveToDB);
-
 	}
 
 	componentWillUnmount() {
@@ -202,6 +201,11 @@ class ProfilePage extends React.Component {
 					{_.isDefined(this.props.user) &&
 					<div>Welcome, {this.props.user.principal}!</div>
 					}
+
+					{_.isDefined(this.props.user) &&
+					<div>Notification? {this.props.user.notification}!</div>
+					}
+
 					<ul>
 						{this.state.pets.map(pet => <li>{pet.name + ' is a ' + pet.type}</li>)}
 					</ul>

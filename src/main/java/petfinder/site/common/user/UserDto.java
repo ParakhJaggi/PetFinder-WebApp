@@ -18,16 +18,24 @@ public class UserDto implements Momento<String> {
 	private List<String> roles;
 	private UserType type;
 	private Map<String, Object> attributes;
+    private String notification;
+
+    public String getNotification() {
+        return notification;
+    }
+
+
 
 	public UserDto() {
 
 	}
 
-	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes) {
+	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String notification) {
 		this.principal = principal;
 		this.roles = roles;
 		this.attributes = attributes;
 		this.type = type;
+		this.notification = notification;
 	}
 
 	public String getPrincipal() {
