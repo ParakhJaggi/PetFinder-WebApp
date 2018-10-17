@@ -254,6 +254,10 @@ public class UserService {
 		//first see if the current user is a sitter and exists
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
+		System.out.println(sitter.get().getUser().getNotification());
+		sitter.get().getUser().setNotification();
+		System.out.println(sitter.get().getUser().getNotification());
+
 		if(!sitter.isPresent() || sitter.get().user.getType() == UserType.OWNER){
 			return false;
 		}
@@ -268,4 +272,5 @@ public class UserService {
     public Optional<UserAuthenticationDto> findUsersTest(String principle){
         return userDao.findUserByPrincipal(principle);
     }
+
 }
