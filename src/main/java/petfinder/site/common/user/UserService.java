@@ -258,10 +258,12 @@ public class UserService {
 			return false;
 		sitter.get().getUser().getRequestedBookings().remove(bd);
 		sitter.get().getUser().getBookings().add(bd);
+		sitter.get().user.setNotification();
 		return true;
 	}
 	//For testing
     public Optional<UserAuthenticationDto> findUsersTest(String principle){
         return userDao.findUserByPrincipal(principle);
     }
+
 }
