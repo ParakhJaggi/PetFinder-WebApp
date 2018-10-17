@@ -2,22 +2,22 @@ import React from 'react';
 import axios from 'axios';
 
 class SitterRow extends React.Component{
+    onClick(index){
+        let days = [false, false, false, false, false, false, false];
+        days[index] = true;
+        axios.post('/api/user/requestBooking/'+this.props.sitter.principal, {
+            bools: days
+        });
+    }
     render(){
         return (
             <tr>
-                <ti>
-                    {this.props.sitter.name}
-                </ti>
-                <ti>
-                    {this.props.sitter.location}
-                </ti>
-                {this.props.sitter.map((available, index) =>
-                    <ti><button onClick={
-                        axios.post('/api/book', {
-                            sitter:this.props.sitter.name,
-                            day: index
-                        })} disabled={!available}
-                     /></ti>
+                <td>
+                    {this.props.sitter.principal}
+                </td>
+                {this.props.sitter.days.map((available, index) =>
+                    <td><button onClick={this.onClick.bind(this, index)} disabled={!available}
+                     >Book</button></td>
                 )}
             </tr>
         );
@@ -33,6 +33,7 @@ export class SitterTable extends React.Component{
         axios.get('/api/user/getavailablesitters')
             .then(res => {
                 const sitters = res.users;
+                console.log(res);
                 this.setState({sitters: sitters});
             });
     }
@@ -42,14 +43,13 @@ export class SitterTable extends React.Component{
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Location</th>
-                    <th>Sunday</th>
                     <th>Monday</th>
                     <th>Tuesday</th>
                     <th>Wednesday</th>
                     <th>Thursday</th>
                     <th>Friday</th>
                     <th>Saturday</th>
+                    <th>Sunday</th>
                 </tr>
                 </thead>
                 <tbody>
