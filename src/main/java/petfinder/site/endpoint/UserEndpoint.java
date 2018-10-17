@@ -56,7 +56,8 @@ public class UserEndpoint {
 
 	@GetMapping(value = "/getavailablesitters")
 	public UserCollectionDTO getSitters() throws UserException {
-		return userService.getAvailableSitters(SecurityContextHolder.getContext().getAuthentication().getName());
+		return userService.getAvailableSitters("sitter1@sitter.com");
+		//return userService.getAvailableSitters(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	@PostMapping(value = "/setdays")
@@ -71,9 +72,9 @@ public class UserEndpoint {
 		return userService.getTimes();
 	}
 
-	@PostMapping(value = "/requestBooking/{userName}")
-	public boolean requestBooking(@PathVariable("userName") String principal, @RequestBody UserTimesDTO utd){
-		return userService.requestBooking(principal, utd);
+	@PostMapping(value = "/requestBooking")
+	public boolean requestBooking(@RequestBody makebookingDTO utd){
+		return userService.requestBooking(utd.getUserName(), utd.getTimes());
 	}
 
 	@PostMapping(value = "/confirmBooking")
