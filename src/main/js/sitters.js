@@ -5,8 +5,9 @@ class SitterRow extends React.Component{
     onClick(index){
         let days = [false, false, false, false, false, false, false];
         days[index] = true;
-        axios.post('/api/user/requestBooking/'+this.props.sitter.principal, {
-            bools: days
+        axios.post('/api/user/requestBooking', {
+            userName: this.props.sitter.principal,
+            time:{bools: days}
         });
     }
     render(){
