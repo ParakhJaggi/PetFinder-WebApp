@@ -174,7 +174,8 @@ public class UserService {
 		//now remove the current user
 		List<UserDto> filtered = users.getUsers().stream()
 				.distinct()
-				.filter(x->x.getPrincipal() != user.getPrincipal() && x.getType() == UserType.SITTER)
+				.filter(x->x.getPrincipal() != user.getPrincipal()
+						&& x.getType() == UserType.SITTER)
 				.sorted((x,y) -> x.getCity().compareTo(y.getCity()))
 				.collect(Collectors.toList());
 		users.setUsers(filtered);
@@ -210,6 +211,12 @@ public class UserService {
 		//See if the desired user exists and is a sitter
 		if(!sitter.isPresent() || sitter.get().user.getType() != UserType.SITTER){
 			return false;
+		}
+		//see if the sitter is available for those days
+		for(int i = 0; i < utd.getBools().length; i++){
+			if(utd.getBools()[i] && !sitter.get().getUser().getDays()[i]){
+				return false;
+			}
 		}
 		//now add the booking request to the sitter
 		sitter.get().user.getRequestedBookings().add(new BookingDTO(principal, utd.getBools()));
