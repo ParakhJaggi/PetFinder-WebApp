@@ -1,9 +1,6 @@
 package petfinder.site.common.user;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -19,6 +16,9 @@ public class UserDto implements Momento<String> {
 	private UserType type;
 	private Map<String, Object> attributes;
 	private String address, city, state, zip;
+	private boolean [] days;
+	private List<BookingDTO> bookings;
+	private List<BookingDTO> requestedBookings;
 
 	public UserDto() {
 
@@ -29,6 +29,8 @@ public class UserDto implements Momento<String> {
 		this.roles = roles;
 		this.attributes = attributes;
 		this.type = type;
+		this.bookings = new ArrayList<>();
+		this.requestedBookings = new ArrayList<>();
 	}
 	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip) {
 		this.principal = principal;
@@ -39,6 +41,9 @@ public class UserDto implements Momento<String> {
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
+		this.bookings = new ArrayList<>();
+		this.requestedBookings = new ArrayList<>();
+
 	}
 
 	public String getPrincipal() {
@@ -73,5 +78,45 @@ public class UserDto implements Momento<String> {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public boolean[] getDays() {
+		return days;
+	}
+
+	public void setDays(boolean[] days) {
+		this.days = days;
+	}
+
+	public List<BookingDTO> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<BookingDTO> bookings) {
+		this.bookings = bookings;
+	}
+
+	public List<BookingDTO> getRequestedBookings() {
+		return requestedBookings;
+	}
+
+	public void setRequestedBookings(List<BookingDTO> requestedBookings) {
+		this.requestedBookings = requestedBookings;
 	}
 }

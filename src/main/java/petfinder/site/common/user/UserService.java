@@ -1,8 +1,11 @@
 package petfinder.site.common.user;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -151,6 +154,86 @@ public class UserService {
 	}
 	public boolean deleteUser(String principal){
 		return userDao.delete(principal);
+	}
+
+	public UserCollectionDTO getAvailableSitters(String principal){
+		Optional<UserDto> userp = findUserByPrincipal(principal);
+		if(!userp.isPresent()){
+			return null;
+		}
+		UserDto user = userp.get();
+		//make sure that the user is a owner
+		if(!(user.getType() == UserType.OWNER)){
+			return null;
+		}
+		List<Object> zipMatch = new ArrayList<>();
+		zipMatch.add(user.getZip());
+		//first get all users within the same zip
+		UserCollectionDTO users = userDao.findByFieldMatch("city", zipMatch );
+
+		//now remove the current user
+		List<UserDto> filtered = users.getUsers().stream()
+				.distinct()
+				.filter(x->x.getPrincipal() != user.getPrincipal() && x.getType() == UserType.SITTER)
+				.sorted((x,y) -> x.getCity().compareTo(y.getCity()))
+				.collect(Collectors.toList());
+		users.setUsers(filtered);
+		return users;
+	}
+	public UserDto setUserTimes(UserTimesDTO utd){
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserAuthenticationDto> a = userDao.findUserByPrincipal(principal);
+		if(a.isPresent()){
+			UserDto current = a.get().user;
+			current.setDays(utd.getBools());
+			userDao.save(a.get());
+			return a.get().user;
+		}
+		return null;
+	}
+	public boolean requestBooking(String s, UserTimesDTO utd){
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserAuthenticationDto> owner = userDao.findUserByPrincipal(principal);
+		//see if the current user is an owner
+		if(!owner.isPresent() || owner.get().user.getType() == UserType.SITTER){
+			return false;
+		}
+		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(s);
+		//See if the desired user exists and is a sitter
+		if(!sitter.isPresent() || sitter.get().user.getType() != UserType.SITTER){
+			return false;
+		}
+		//now add the booking request to the sitter
+		sitter.get().user.getRequestedBookings().add(new BookingDTO(principal, utd.getBools()));
+		userDao.save(sitter.get());
+		return true;
+	}
+
+	public List<BookingDTO> getMySits(boolean confirmed){
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
+		if(!sitter.isPresent() || sitter.get().user.getType() == UserType.OWNER){
+			return null;
+		}
+		if(confirmed) {
+			return sitter.get().user.getBookings();
+		}
+		return sitter.get().user.getRequestedBookings();
+	}
+
+	public boolean confirmBooking (BookingDTO bd){
+		//first see if the current user is a sitter and exists
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
+		if(!sitter.isPresent() || sitter.get().user.getType() == UserType.OWNER){
+			return false;
+		}
+		//now see if that was an actually existant request
+		if(!sitter.get().getUser().getRequestedBookings().contains(bd))
+			return false;
+		sitter.get().getUser().getRequestedBookings().remove(bd);
+		sitter.get().getUser().getBookings().add(bd);
+		return true;
 	}
 	//For testing
     public Optional<UserAuthenticationDto> findUsersTest(String principle){
