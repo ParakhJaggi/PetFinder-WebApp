@@ -19,14 +19,14 @@ public class UserDto implements Momento<String> {
 	private boolean [] days;
 	private List<BookingDTO> bookings;
 	private List<BookingDTO> requestedBookings;
-    private String notification = "no notification";
+    private String notification = "";
 
     public String getNotification() {
-        return notification;
+        return this.notification;
     }
 
-    public void setNotification() {
-        this.notification = "You have a notification";
+    public void setNotification(String notification) {
+        this.notification = notification;
     }
 
 
@@ -139,4 +139,7 @@ public class UserDto implements Momento<String> {
 		this.requestedBookings = requestedBookings;
 	}
 
+	public void setType(UserType type) {
+		this.type = type;
+	}
 }
