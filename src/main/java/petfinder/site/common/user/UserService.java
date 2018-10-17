@@ -234,6 +234,7 @@ public class UserService {
 		}
 		//now add the booking request to the sitter
 		sitter.get().user.getRequestedBookings().add(new BookingDTO(principal, utd.getBools()));
+		sitter.get().getUser().setNotification("You have a requested booking");
 		userDao.save(sitter.get());
 		return true;
 	}
@@ -254,9 +255,6 @@ public class UserService {
 		//first see if the current user is a sitter and exists
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
-		System.out.println(sitter.get().getUser().getNotification());
-		sitter.get().getUser().setNotification();
-		System.out.println(sitter.get().getUser().getNotification());
 
 		if(!sitter.isPresent() || sitter.get().user.getType() == UserType.OWNER){
 			return false;
@@ -266,6 +264,8 @@ public class UserService {
 			return false;
 		sitter.get().getUser().getRequestedBookings().remove(bd);
 		sitter.get().getUser().getBookings().add(bd);
+		sitter.get().getUser().setNotification("booking confirmed");
+		userDao.save(sitter.get());
 		return true;
 	}
 	//For testing
