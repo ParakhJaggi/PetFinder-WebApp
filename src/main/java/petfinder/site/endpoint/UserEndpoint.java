@@ -77,6 +77,7 @@ public class UserEndpoint {
 
 	@PostMapping(value = "/confirmBooking")
 	public boolean confirmBooking(@RequestBody BookingDTO bd){
+
 		return userService.confirmBooking(bd);
 	}
 

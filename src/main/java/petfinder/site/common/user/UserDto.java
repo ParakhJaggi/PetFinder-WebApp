@@ -20,6 +20,16 @@ public class UserDto implements Momento<String> {
 	private List<BookingDTO> bookings;
 	private List<BookingDTO> requestedBookings;
 
+    public String getNotification() {
+        return notification;
+    }
+
+    public void setNotification() {
+        this.notification = "You have a notification";
+    }
+
+    private String notification;
+
 	public UserDto() {
 
 	}
