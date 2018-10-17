@@ -140,62 +140,149 @@ export class LoginPage extends React.Component {
 	}
 }
 
-var myData;
 
-function loadScheduleFromDatabase() {
-	try {
-		/*TODO Retrieve Serialized State*/
-		//if (serializedState === null)
-		// 		myData=null;
-		//else
-		//	myData=JSON.parse(serializedState);
-	} catch (e) {
-		console.log(e);
-		return undefined;
-	}
-}
 
 class ProfilePage extends React.Component {
-	state = {
-		pets: []
-	};
+    constructor(props) {
+        super(props);
+        /* set the initial checkboxState to true */
+        this.state = {
+            mon: true,
+			tues:true,
+			wed:true,
+			thurs:true,
+			fri:true,
+			sat:true,
+			sun:true,
+            pets: []
+        };
+    }
 
 	componentDidMount() {
-		axios.get('/api/userPets/getPets')
+		axios.get('/endpoint')
 			.then(res => {
-				const pets = res.pets;
-				this.setState({pets});
+				const user = res;
+				this.setState({});
 			});
-		myData = loadScheduleFromDatabase();
 		window.addEventListener('beforeunload', this.saveToDB);
 
 	}
-
+    onSubmit(event) {
+        event.preventDefault();
+        /*todo save*/
+    }
+    /* callback to change the checkboxState to false when the checkbox is checked */
+    toggleMonday(event) {
+        this.setState({
+            mon: !this.state.mon
+        });
+    }
+    toggleTuesday(event) {
+        this.setState({
+            tues: !this.state.tues
+        });
+    }
+    toggleWednesday(event) {
+        this.setState({
+            wed: !this.state.wed
+        });
+    }
+    toggleThursday(event) {
+        this.setState({
+            thurs: !this.state.thurs
+        });
+    }
+    toggleFriday(event) {
+        this.setState({
+            fri: !this.state.fri
+        });
+    }
+    toggleSaturday(event) {
+        this.setState({
+            sat: !this.state.sat
+        });
+    }
+    toggleSunday(event) {
+        this.setState({
+            sun: !this.state.sun
+        });
+    }
 	componentWillUnmount() {
 		this.saveToDB();
 		window.removeEventListener('beforeunload', this.saveToDB); // remove the event handler for normal unmounting
 	}
 
-	saveToDB() { // this will hold the cleanup code
-		try {
-			const serializedState = JSON.stringify(this.scheduler.state.days);
-			/*TODO Add serialized state to user's database*/
-		} catch (e) {
-			console.log(e);
-		}
-	}
-
-    onSubmit = pet => {
-        return axios.post('/pets', pet);
-    };
-
 	render() {
-		const startingDefault = {event: 'Not Available', color: '#faf1ff'};
-		const blockingEvent = {event: 'Available', color: '#00d7dd'};
-		const eventList = [startingDefault, blockingEvent];
-
-        let {handleSubmit, submitting} = this.props;
-        let onSuccess = this.props.success;
+        const Mondaycheckbox = (
+            <span>
+        <input
+            type="checkbox"
+			checked={this.state.mon}
+            onClick={this.toggleMonday.bind(this)}
+        />
+        <label>Monday</label>
+      </span>
+        );
+        const Tuesdaycheckbox = (
+            <span>
+        <input
+            type="checkbox"
+            checked={this.state.tues}
+            onClick={this.toggleTuesday.bind(this)}
+        />
+        <label>Tuesday</label>
+      </span>
+        );
+        const Wednesdaycheckbox = (
+            <span>
+        <input
+            type="checkbox"
+            checked={this.state.wed}
+            onClick={this.toggleWednesday.bind(this)}
+        />
+        <label>Wednesday</label>
+      </span>
+        );
+        const Thursdaycheckbox = (
+            <span>
+        <input
+            type="checkbox"
+            checked={this.state.thurs}
+            onClick={this.toggleThursday.bind(this)}
+        />
+        <label>Thursday</label>
+      </span>
+        );
+        const Fridaycheckbox = (
+            <span>
+        <input
+            type="checkbox"
+            checked={this.state.fri}
+            onClick={this.toggleFriday.bind(this)}
+        />
+        <label>Friday</label>
+      </span>
+        );
+        const Saturdaycheckbox = (
+            <span>
+        <input
+            type="checkbox"
+            checked={this.state.sat}
+            onClick={this.toggleSaturday.bind(this)}
+        />
+        <label>Saturday</label>
+      </span>
+        );
+        const Sundaycheckbox = (
+            <span>
+        <input
+            type="checkbox"
+            checked={this.state.sun}
+            onClick={this.toggleSunday.bind(this)}
+        />
+        <label>Sunday</label>
+      </span>
+        );
 
         return (
 
@@ -215,13 +302,20 @@ class ProfilePage extends React.Component {
 				{this.state.pets.map(pet =>
                     <EditPetForm pet={pet}/>
 				)}
-					<WeeklyScheduler
-						defaultEvent={startingDefault} selectedEvent={blockingEvent} events={eventList}
-						currentSchedule={myData}
-						ref={(scheduler) => {
-							this.scheduler = scheduler;
-						}}
-					/>
+                    <div>
+                        <form onSubmit={this.onSubmit.bind(this)}>
+							<ul>
+								<li>{Mondaycheckbox}</li>
+                                <li>{Tuesdaycheckbox}</li>
+                                <li>{Wednesdaycheckbox}</li>
+                                <li>{Thursdaycheckbox}</li>
+                                <li>{Fridaycheckbox}</li>
+                                <li>{Saturdaycheckbox}</li>
+                                <li>{Sundaycheckbox}</li>
+							</ul>
+                            <button type="submit">Save</button>
+                        </form>
+                    </div>
 				</div>
 
 			</div>
@@ -239,6 +333,23 @@ ProfilePage = connect(
 export {ProfilePage};
 
 export class RodentSearch extends React.Component {
+    state = {
+        rodents: []
+    };
+
+    componentDidMount() {
+        axios.get('/pets/rodents')
+            .then(res => {
+                const pets = res.pets;
+                console.log(pets);
+                this.setState({rodents: pets});
+            });
+    }
+	filterHamster(){
+    	this.setState({rodents: this.state.rodents.filter(rodent => rodent.subtype == 'hamster')});
+    	console.log('hi');
+    	window.reload();
+	}
 	render() {
 		return (
 			<html lang="en">
@@ -277,112 +388,30 @@ export class RodentSearch extends React.Component {
 									</thead>
 								</table>
 								<LocationSlider/>
-								<div class="table-responsive">
-									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-										<thead>
-										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											<th>Office</th>
-											<th>Age</th>
-											<th>Start date</th>
-											<th>Salary</th>
-										</tr>
-										</thead>
-										<tfoot>
-										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											<th>Office</th>
-											<th>Age</th>
-											<th>Start date</th>
-											<th>Salary</th>
-										</tr>
-										</tfoot>
-										<tbody>
-										<tr>
-											<td>Jena Gaines</td>
-											<td>Office Manager</td>
-											<td>London</td>
-											<td>30</td>
-											<td>2008/12/19</td>
-											<td>$90,560</td>
-										</tr>
-										<tr>
-											<td>Quinn Flynn</td>
-											<td>Support Lead</td>
-											<td>Edinburgh</td>
-											<td>22</td>
-											<td>2013/03/03</td>
-											<td>$342,000</td>
-										</tr>
-										<tr>
-											<td>Charde Marshall</td>
-											<td>Regional Director</td>
-											<td>San Francisco</td>
-											<td>36</td>
-											<td>2008/10/16</td>
-											<td>$470,600</td>
-										</tr>
-										<tr>
-											<td>Haley Kennedy</td>
-											<td>Senior Marketing Designer</td>
-											<td>London</td>
-											<td>43</td>
-											<td>2012/12/18</td>
-											<td>$313,500</td>
-										</tr>
-										<tr>
-											<td>Tatyana Fitzpatrick</td>
-											<td>Regional Director</td>
-											<td>London</td>
-											<td>19</td>
-											<td>2010/03/17</td>
-											<td>$385,750</td>
-										</tr>
-										<tr>
-											<td>Michael Silva</td>
-											<td>Marketing Designer</td>
-											<td>London</td>
-											<td>66</td>
-											<td>2012/11/27</td>
-											<td>$198,500</td>
-										</tr>
-										<tr>
-											<td>Paul Byrd</td>
-											<td>Chief Financial Officer (CFO)</td>
-											<td>New York</td>
-											<td>64</td>
-											<td>2010/06/09</td>
-											<td>$725,000</td>
-										</tr>
-										<tr>
-											<td>Gloria Little</td>
-											<td>Systems Administrator</td>
-											<td>New York</td>
-											<td>59</td>
-											<td>2009/04/10</td>
-											<td>$237,500</td>
-										</tr>
-										<tr>
-											<td>Bradley Greer</td>
-											<td>Software Engineer</td>
-											<td>London</td>
-											<td>41</td>
-											<td>2012/10/13</td>
-											<td>$132,000</td>
-										</tr>
-										<tr>
-											<td>Dai Rios</td>
-											<td>Personnel Lead</td>
-											<td>Edinburgh</td>
-											<td>35</td>
-											<td>2012/09/26</td>
-											<td>$217,500</td>
-										</tr>
-										</tbody>
-									</table>
-								</div>
+                                <div className="table-responsive">
+                                    <table className="table table-bordered" id="dataTable" width="90%" cellSpacing="0">
+                                        <Pulse>
+                                            <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Owner</td>
+                                                <td>Subtype</td>
+                                                <td>Preferences</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {this.state.rodents.sort((a, b) => a.name > b.name).map(pet =>
+                                                <tr>
+                                                    <td>{pet.name}</td>
+                                                    <td>{pet.owner}</td>
+                                                    <td>{pet.subtype}</td>
+                                                    <td>{pet.preferences}</td>
+                                                </tr>
+                                            )}
+                                            </tbody>
+                                        </Pulse>
+                                    </table>
+                                </div>
 							</div>
 							<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 						</div>
@@ -413,7 +442,7 @@ export class DogSearch extends React.Component {
     };
 
     componentDidMount() {
-        axios.get('/pets/all')
+        axios.get('/pets/dogs')
             .then(res => {
                 const pets = res.pets;
                 console.log(pets);
@@ -443,133 +472,31 @@ export class DogSearch extends React.Component {
 								Dogs
 							</div>
 							<div class="card-body">
-								<table className="table" id="dataTable" width="100%" cellSpacing="0">
-									<Pulse>
-										<thead>
-										<tr>
-                                            <td>Name</td>
-                                            <td>Subtype</td>
-                                            <td>Preferences</td>
-										</tr>
-										</thead>
-										<tbody>
-										{this.state.dogs.map(pet =>
-                                            <tr>
-                                                <td>{pet.name}</td>
-                                                <td>{pet.subtype}</td>
-                                                <td>{pet.preferences}</td>
-                                            </tr>
-										)}
-										</tbody>
-									</Pulse>
-								</table>
 								<LocationSlider/>
-								<div class="table-responsive">
-									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-										<thead>
-										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											<th>Office</th>
-											<th>Age</th>
-											<th>Start date</th>
-											<th>Salary</th>
-										</tr>
-										</thead>
-										<tfoot>
-										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											<th>Office</th>
-											<th>Age</th>
-											<th>Start date</th>
-											<th>Salary</th>
-										</tr>
-										</tfoot>
-										<tbody>
-										<tr>
-											<td>Jena Gaines</td>
-											<td>Office Manager</td>
-											<td>London</td>
-											<td>30</td>
-											<td>2008/12/19</td>
-											<td>$90,560</td>
-										</tr>
-										<tr>
-											<td>Quinn Flynn</td>
-											<td>Support Lead</td>
-											<td>Edinburgh</td>
-											<td>22</td>
-											<td>2013/03/03</td>
-											<td>$342,000</td>
-										</tr>
-										<tr>
-											<td>Charde Marshall</td>
-											<td>Regional Director</td>
-											<td>San Francisco</td>
-											<td>36</td>
-											<td>2008/10/16</td>
-											<td>$470,600</td>
-										</tr>
-										<tr>
-											<td>Haley Kennedy</td>
-											<td>Senior Marketing Designer</td>
-											<td>London</td>
-											<td>43</td>
-											<td>2012/12/18</td>
-											<td>$313,500</td>
-										</tr>
-										<tr>
-											<td>Tatyana Fitzpatrick</td>
-											<td>Regional Director</td>
-											<td>London</td>
-											<td>19</td>
-											<td>2010/03/17</td>
-											<td>$385,750</td>
-										</tr>
-										<tr>
-											<td>Michael Silva</td>
-											<td>Marketing Designer</td>
-											<td>London</td>
-											<td>66</td>
-											<td>2012/11/27</td>
-											<td>$198,500</td>
-										</tr>
-										<tr>
-											<td>Paul Byrd</td>
-											<td>Chief Financial Officer (CFO)</td>
-											<td>New York</td>
-											<td>64</td>
-											<td>2010/06/09</td>
-											<td>$725,000</td>
-										</tr>
-										<tr>
-											<td>Gloria Little</td>
-											<td>Systems Administrator</td>
-											<td>New York</td>
-											<td>59</td>
-											<td>2009/04/10</td>
-											<td>$237,500</td>
-										</tr>
-										<tr>
-											<td>Bradley Greer</td>
-											<td>Software Engineer</td>
-											<td>London</td>
-											<td>41</td>
-											<td>2012/10/13</td>
-											<td>$132,000</td>
-										</tr>
-										<tr>
-											<td>Dai Rios</td>
-											<td>Personnel Lead</td>
-											<td>Edinburgh</td>
-											<td>35</td>
-											<td>2012/09/26</td>
-											<td>$217,500</td>
-										</tr>
-										</tbody>
-									</table>
-								</div>
+                                <div className="table-responsive">
+                                    <table className="table table-bordered" id="dataTable" width="90%" cellSpacing="0">
+                                        <Pulse>
+                                            <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Owner</td>
+                                                <td>Subtype</td>
+                                                <td>Preferences</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {this.state.dogs.sort((a, b) => a.name > b.name).map(pet =>
+                                                <tr>
+                                                    <td>{pet.name}</td>
+                                                    <td>{pet.owner}</td>
+                                                    <td>{pet.subtype}</td>
+                                                    <td>{pet.preferences}</td>
+                                                </tr>
+                                            )}
+                                            </tbody>
+                                        </Pulse>
+                                    </table>
+                                </div>
 							</div>
 							<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 						</div>
@@ -750,6 +677,18 @@ export class BirdSearch extends React.Component {
 }
 
 export class CatSearch extends React.Component {
+    state = {
+        cats: []
+    };
+
+    componentDidMount() {
+        axios.get('/pets/cats')
+            .then(res => {
+                const pets = res.pets;
+                console.log(pets);
+                this.setState({cats: pets});
+            });
+    }
 	render() {
 		return (
 			<html lang="en">
@@ -778,113 +717,31 @@ export class CatSearch extends React.Component {
 									</thead>
 								</table>
 								<LocationSlider/>
-								<div class="table-responsive">
-									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-										<thead>
-										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											<th>Office</th>
-											<th>Age</th>
-											<th>Start date</th>
-											<th>Salary</th>
-										</tr>
-										</thead>
-										<tfoot>
-										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											<th>Office</th>
-											<th>Age</th>
-											<th>Start date</th>
-											<th>Salary</th>
-										</tr>
-										</tfoot>
-										<tbody>
-										<tr>
-											<td>Jena Gaines</td>
-											<td>Office Manager</td>
-											<td>London</td>
-											<td>30</td>
-											<td>2008/12/19</td>
-											<td>$90,560</td>
-										</tr>
-										<tr>
-											<td>Quinn Flynn</td>
-											<td>Support Lead</td>
-											<td>Edinburgh</td>
-											<td>22</td>
-											<td>2013/03/03</td>
-											<td>$342,000</td>
-										</tr>
-										<tr>
-											<td>Charde Marshall</td>
-											<td>Regional Director</td>
-											<td>San Francisco</td>
-											<td>36</td>
-											<td>2008/10/16</td>
-											<td>$470,600</td>
-										</tr>
-										<tr>
-											<td>Haley Kennedy</td>
-											<td>Senior Marketing Designer</td>
-											<td>London</td>
-											<td>43</td>
-											<td>2012/12/18</td>
-											<td>$313,500</td>
-										</tr>
-										<tr>
-											<td>Tatyana Fitzpatrick</td>
-											<td>Regional Director</td>
-											<td>London</td>
-											<td>19</td>
-											<td>2010/03/17</td>
-											<td>$385,750</td>
-										</tr>
-										<tr>
-											<td>Michael Silva</td>
-											<td>Marketing Designer</td>
-											<td>London</td>
-											<td>66</td>
-											<td>2012/11/27</td>
-											<td>$198,500</td>
-										</tr>
-										<tr>
-											<td>Paul Byrd</td>
-											<td>Chief Financial Officer (CFO)</td>
-											<td>New York</td>
-											<td>64</td>
-											<td>2010/06/09</td>
-											<td>$725,000</td>
-										</tr>
-										<tr>
-											<td>Gloria Little</td>
-											<td>Systems Administrator</td>
-											<td>New York</td>
-											<td>59</td>
-											<td>2009/04/10</td>
-											<td>$237,500</td>
-										</tr>
-										<tr>
-											<td>Bradley Greer</td>
-											<td>Software Engineer</td>
-											<td>London</td>
-											<td>41</td>
-											<td>2012/10/13</td>
-											<td>$132,000</td>
-										</tr>
-										<tr>
-											<td>Dai Rios</td>
-											<td>Personnel Lead</td>
-											<td>Edinburgh</td>
-											<td>35</td>
-											<td>2012/09/26</td>
-											<td>$217,500</td>
-										</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="90%" cellspacing="0">
+                                        <Pulse>
+                                            <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Owner</td>
+                                                <td>Subtype</td>
+                                                <td>Preferences</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {this.state.cats.sort((a, b) => a.name > b.name).map(pet =>
+                                                <tr>
+                                                    <td>{pet.name}</td>
+                                                    <td>{pet.owner}</td>
+                                                    <td>{pet.subtype}</td>
+                                                    <td>{pet.preferences}</td>
+                                                </tr>
+                                            )}
+                                            </tbody>
+                                        </Pulse>
+                                    </table>
+                                </div>
+                            </div>
 							<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 						</div>
 					</div>
