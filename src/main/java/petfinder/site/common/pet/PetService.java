@@ -82,4 +82,8 @@ public class PetService {
 			return null;
 		}
 	}
+	public void editPet(PetDto newPet){
+		petDao.deletePet(newPet.getId());
+		petDao.save(newPet);
+	}
 }

@@ -9,13 +9,26 @@ public class PetDto implements Identifiable {
 	private Long id;
 	private String name;
 	private String type;
+	private String owner;
+	private String subtype;
+	private String preferences;
 	public PetDto(){}
 	public PetDto(Long id, String name, String type) {
 		this.id = id;
 		this.name = name;
 		this.type = type;
+		this.owner = null;
+		this.subtype = null;
+		preferences = "";
 	}
-
+	public PetDto(Long id, String name, String type, String owner, String subtype) {
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.owner = owner;
+		this.subtype = subtype;
+		preferences = "";
+	}
 
 	@Override
 	public Long getId() {
@@ -40,5 +53,29 @@ public class PetDto implements Identifiable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public String getSubtype() {
+		return subtype;
+	}
+
+	public void setSubtype(String subtype) {
+		this.subtype = subtype;
+	}
+
+	public String getPreferences() {
+		return preferences;
+	}
+
+	public void setPreferences(String preferences) {
+		this.preferences = preferences;
 	}
 }
