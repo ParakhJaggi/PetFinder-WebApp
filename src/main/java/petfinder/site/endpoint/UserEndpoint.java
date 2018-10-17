@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import petfinder.site.common.Exceptions.UserException;
 import petfinder.site.common.user.*;
 import petfinder.site.common.user.UserService.RegistrationRequest;
 
@@ -15,7 +16,7 @@ import petfinder.site.common.user.UserService.RegistrationRequest;
  * Created by jlutteringer on 8/23/17.
  */
 @RestController
-@RequestMapping(value = "/api/user")
+@RequestMapping(value = "/ap1/user")
 public class UserEndpoint {
 	@Autowired
 	private UserService userService;
@@ -54,7 +55,7 @@ public class UserEndpoint {
 	}
 
 	@GetMapping(value = "/getavailablesitters")
-	public UserCollectionDTO getSitters(){
+	public UserCollectionDTO getSitters() throws UserException {
 		return userService.getAvailableSitters(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
