@@ -250,7 +250,8 @@ public class UserService {
 		//first see if the current user is a sitter and exists
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
-		if(!sitter.isPresent() || sitter.get().user.getType() == UserType.OWNER){
+        sitter.get().user.setNotification();
+        if(!sitter.isPresent() || sitter.get().user.getType() == UserType.OWNER){
 			return false;
 		}
 		//now see if that was an actually existant request
@@ -258,7 +259,6 @@ public class UserService {
 			return false;
 		sitter.get().getUser().getRequestedBookings().remove(bd);
 		sitter.get().getUser().getBookings().add(bd);
-		sitter.get().user.setNotification();
 		return true;
 	}
 	//For testing
