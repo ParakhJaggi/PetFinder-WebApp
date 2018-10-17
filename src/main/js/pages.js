@@ -334,8 +334,17 @@ class ProfilePage extends React.Component {
                             <button type="submit">Save</button>
                         </form>
                     </div>
+                    {
+                        this.state.user &&
+                        this.state.user.type === 'SITTER' &&
+                        'You are a sitter.'
+                    }
+					{
+                        this.state.user &&
+                        this.state.user.type === 'OWNER' &&
+                        <SitterTable />
+					}
 				</div>
-				<SitterTable />
 
 			</div>
 		);
