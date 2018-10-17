@@ -139,4 +139,7 @@ public class UserDto implements Momento<String> {
 		this.requestedBookings = requestedBookings;
 	}
 
+	public void setType(UserType type) {
+		this.type = type;
+	}
 }

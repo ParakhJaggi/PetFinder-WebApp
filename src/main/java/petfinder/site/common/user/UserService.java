@@ -54,7 +54,7 @@ public class UserService {
 		private String principal;
 		private String password;
 		private Map<String, Object> attributes;
-		private String city, state, address, zip;
+		private String city, state, address, zip, type;
 
 		public String getZip() {
 			return zip;
@@ -111,6 +111,14 @@ public class UserService {
 		public void setAttributes(Map<String, Object> attributes) {
 			this.attributes = attributes;
 		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
 	}
 
 	public static class PasswordChangeRequest {
@@ -131,12 +139,18 @@ public class UserService {
 		if(findUserByPrincipal(request.getPrincipal()).isPresent()){
 			return null;
 		}
-		userAuthentication = new UserAuthenticationDto(
-				new UserDto(request.getPrincipal(),
-						_Lists.list("ROLE_USER"),
-						UserType.OWNER, request.getAttributes(),
-						request.getAddress(), request.getCity(),
-						request.getState(), request.getZip()),
+		UserDto toSet = new UserDto(request.getPrincipal(),
+				_Lists.list("ROLE_USER"),
+				UserType.OWNER, request.getAttributes(),
+				request.getAddress(), request.getCity(),
+				request.getState(), request.getZip());
+		if(request.getType().equals("SITTER")){
+			toSet.setType(UserType.SITTER);
+		}
+		else{
+			toSet.setType(UserType.OWNER);
+		}
+		userAuthentication = new UserAuthenticationDto(toSet,
 				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);
 		return userAuthentication.getUser();
