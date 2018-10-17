@@ -13,4 +13,8 @@ public class UserTimesDTO {
     public void setBools(boolean[] bools) {
         this.bools = bools;
     }
+
+    public UserTimesDTO(boolean[] bools) {
+        this.bools = bools;
+    }
 }

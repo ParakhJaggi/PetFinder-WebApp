@@ -191,6 +191,14 @@ public class UserService {
 		}
 		return null;
 	}
+	public UserTimesDTO getTimes(){
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserAuthenticationDto> a = userDao.findUserByPrincipal(principal);
+		if(a.isPresent()){
+			return new UserTimesDTO(a.get().getUser().getDays());
+		}
+		return null;
+	}
 	public boolean requestBooking(String s, UserTimesDTO utd){
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> owner = userDao.findUserByPrincipal(principal);

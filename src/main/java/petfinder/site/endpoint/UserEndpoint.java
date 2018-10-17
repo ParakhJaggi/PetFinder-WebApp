@@ -64,6 +64,12 @@ public class UserEndpoint {
 		userService.setUserTimes(utd);
 	}
 
+	@GetMapping(value = "/getDays")
+	public UserTimesDTO getDays(){
+		//this is for all users
+		userService.getDays();
+	}
+
 	@PostMapping(value = "/requestBooking/{userName}")
 	public boolean requestBooking(@PathVariable("userName") String principal, @RequestBody UserTimesDTO utd){
 		return userService.requestBooking(principal, utd);

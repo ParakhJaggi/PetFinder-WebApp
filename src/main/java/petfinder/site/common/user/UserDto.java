@@ -119,4 +119,5 @@ public class UserDto implements Momento<String> {
 	public void setRequestedBookings(List<BookingDTO> requestedBookings) {
 		this.requestedBookings = requestedBookings;
 	}
+
 }
