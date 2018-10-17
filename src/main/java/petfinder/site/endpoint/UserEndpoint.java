@@ -56,8 +56,8 @@ public class UserEndpoint {
 
 	@GetMapping(value = "/getavailablesitters")
 	public UserCollectionDTO getSitters() throws UserException {
-		return userService.getAvailableSitters("sitter1@sitter.com");
-		//return userService.getAvailableSitters(SecurityContextHolder.getContext().getAuthentication().getName());
+		//return userService.getAvailableSitters("sitter1@sitter.com");
+		return userService.getAvailableSitters(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	@PostMapping(value = "/setdays")
