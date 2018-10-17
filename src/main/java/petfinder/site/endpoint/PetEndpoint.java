@@ -60,7 +60,7 @@ public class PetEndpoint {
 		petService.save(pet);
 		return pet;
 	}
-	@PostMapping(value = "/{edit}", produces = "application/json")
+	@PostMapping(value = "/edit", produces = "application/json")
 	public PetDto editPet(@RequestBody PetDto pet) {
 		petService.editPet(pet);
 		return pet;
