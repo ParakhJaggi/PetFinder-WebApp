@@ -31,6 +31,7 @@ public class UserDto implements Momento<String> {
 		this.type = type;
 		this.bookings = new ArrayList<>();
 		this.requestedBookings = new ArrayList<>();
+		this.days=new boolean[7];
 	}
 	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip) {
 		this.principal = principal;
@@ -43,7 +44,7 @@ public class UserDto implements Momento<String> {
 		this.zip = zip;
 		this.bookings = new ArrayList<>();
 		this.requestedBookings = new ArrayList<>();
-
+		this.days=new boolean[7];
 	}
 
 	public String getPrincipal() {
