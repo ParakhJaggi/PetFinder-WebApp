@@ -8,7 +8,7 @@ import axios from 'axios';
 
 class RegistrationPetForm extends React.Component {
     onSubmit = pet => {
-        return axios.post('/pets', pet);
+        return axios.post('/api/userPets/savePet', pet);
     };
 
     render() {

@@ -37,6 +37,7 @@ import axios from 'axios';
 import * as Bessemer from 'js/alloy/bessemer/components';
 import * as Validation from 'js/alloy/utils/validation';
 import * as ReduxForm from 'redux-form';
+import {SitterTable} from 'js/sitters';
 
 function logout() {
 	cookie.remove('authentication', {path: '/'});
@@ -148,12 +149,12 @@ class ProfilePage extends React.Component {
         /* set the initial checkboxState to true */
         this.state = {
             mon: true,
-			tues:true,
-			wed:true,
-			thurs:true,
-			fri:true,
-			sat:true,
-			sun:true,
+            tues: true,
+            wed: true,
+            thurs: true,
+            fri: true,
+            sat: true,
+            sun: true,
             pets: []
         };
     }
@@ -161,7 +162,8 @@ class ProfilePage extends React.Component {
 	componentDidMount() {
 		axios.get('/api/user')
 			.then(res => {
-				const user = res.data;
+				const user = res;
+				console.log(res);
 				this.setState({mon: user.days[0]});
                 this.setState({tues: user.days[1]});
                 this.setState({wed: user.days[2]});
@@ -169,20 +171,23 @@ class ProfilePage extends React.Component {
                 this.setState({fri: user.days[4]});
                 this.setState({sat: user.days[5]});
                 this.setState({sun: user.days[6]});
+                this.setState({user: user});
 			});
 	}
 
     onSubmit(event) {
+    	console.log('Submitting');
         event.preventDefault();
         let toPost = {
-            'days[0]':this.state.mon,
-            'days[1]':this.state.tues,
-            'days[2]':this.state.wed,
-            'days[3]':this.state.thurs,
-            'days[4]':this.state.fri,
-            'days[5]':this.state.sat,
-            'days[6]':this.state.sun
+            'bools':[this.state.mon,
+            this.state.tues,
+            this.state.wed,
+            this.state.thurs,
+            this.state.fri,
+            this.state.sat,
+			this.state.sun]
         };
+        console.log(toPost);
         axios.post('/api/user/setdays',toPost);
     }
     /* callback to change the checkboxState to false when the checkbox is checked */
@@ -329,6 +334,16 @@ class ProfilePage extends React.Component {
                             <button type="submit">Save</button>
                         </form>
                     </div>
+                    {
+                        this.state.user &&
+                        this.state.user.type === 'SITTER' &&
+                        'You are a sitter.'
+                    }
+					{
+                        this.state.user &&
+                        this.state.user.type === 'OWNER' &&
+                        <SitterTable />
+					}
 				</div>
 
 			</div>
