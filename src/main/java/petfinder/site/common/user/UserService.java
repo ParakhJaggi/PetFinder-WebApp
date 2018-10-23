@@ -192,7 +192,7 @@ public class UserService {
 		//now remove the current user
 		List<UserDto> filtered = users.getUsers().stream()
 				.distinct()
-				.filter(x->x.getPrincipal() != user.getPrincipal()
+				.filter(x-> !x.getPrincipal().equals(user.getPrincipal())
 						&& x.getType() == UserType.SITTER)
 				//see if the owner and sitter have at least one day in common
 				.filter(x->{
@@ -253,13 +253,13 @@ public class UserService {
 		return true;
 	}
 
-	public List<BookingDTO> getMySits(boolean confirmed){
+	public List<BookingDTO> getMySits(boolean isConfirmed){
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
 		if(!sitter.isPresent() || sitter.get().user.getType() == UserType.OWNER){
 			return null;
 		}
-		if(confirmed) {
+		if(isConfirmed) {
 			return sitter.get().user.getBookings();
 		}
 		return sitter.get().user.getRequestedBookings();
