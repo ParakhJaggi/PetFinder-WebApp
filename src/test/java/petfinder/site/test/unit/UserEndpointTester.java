@@ -2,7 +2,13 @@ package petfinder.site.test.unit;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import petfinder.site.common.Exceptions.UserException;
+import petfinder.site.common.user.UserCollectionDTO;
+import petfinder.site.common.user.UserDto;
 import petfinder.site.common.user.UserService;
+
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 
 
@@ -16,36 +22,21 @@ public class UserEndpointTester {
     }
 
     @Test
-    public void testBaylorEmails(){
-        assertEquals(service.findUsersTest("Linda_Livingstone@baylor.edu").get().getPassword(),
-                UserTester.emailEndings[0]);
-    }
-    @Test
-    public void testGoogleEmails(){
-        assertEquals(service.findUsersTest("Linda_Livingstone@Gmail.com").get().getPassword(),
-                UserTester.emailEndings[1]);
-    }
-    @Test
-    public void testYahooEmails(){
-        assertEquals(service.findUsersTest("Linda_Livingstone@Yahoo.com").get().getPassword(),
-                UserTester.emailEndings[2]);
-    }
-    @Test
-    public void testHotmailEmails(){
-        assertEquals(service.findUsersTest("Linda_Livingstone@Hotmail.com").get().getPassword(),
-                UserTester.emailEndings[3]);
-    }
-    @Test
-    public void testOutlookEmails(){
-        assertEquals(service.findUsersTest("Linda_Livingstone@Outlook.com").get().getPassword(),
-                UserTester.emailEndings[4]);
-    }
-    @Test
-    public void testPrincipleReturn(){
-        String test = "Linda_Livingstone@baylor.edu";
-        assertEquals(service.findUsersTest(test).get().getUser().getPrincipal(),
-              test );
-
+    public void testDoesExist(){
+        Optional<UserDto> o = service.findUserByPrincipal("bob@test.com");
+        assertTrue(o.isPresent());
     }
 
+    @Test
+    public void testDoesNotExist(){
+        Optional<UserDto> o = service.findUserByPrincipal("DOES_NOT_EXIST@NOPE.com");
+        assertFalse(o.isPresent());
+    }
+
+    @Test
+    public void getAvailableSitters() throws UserException {
+        //i will test to see if it is finding them for zip code 59718
+        UserCollectionDTO o = service.getAvailableSitters("bob@test.com");
+        assertEquals(o.getUsers().size(), UserTester.ZIP_59718_COUNT_SITTER);
+    }
 }
