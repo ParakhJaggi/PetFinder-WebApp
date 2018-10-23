@@ -142,4 +142,16 @@ public class UserDto implements Momento<String> {
 	public void setType(UserType type) {
 		this.type = type;
 	}
+
+	public void setPrincipal(String principal) {
+		this.principal = principal;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
 }
