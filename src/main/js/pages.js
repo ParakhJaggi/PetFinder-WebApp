@@ -159,16 +159,17 @@ class ProfilePage extends React.Component {
     }
 
 	componentDidMount() {
-		axios.get('/api/user')
+		axios.get('/api/user/getDays')
 			.then(res => {
 				const user = res.data;
-				this.setState({mon: user.days[0]});
-                this.setState({tues: user.days[1]});
-                this.setState({wed: user.days[2]});
-                this.setState({thurs: user.days[3]});
-                this.setState({fri: user.days[4]});
-                this.setState({sat: user.days[5]});
-                this.setState({sun: user.days[6]});
+                    console.log(JSON.stringify(user));
+                    this.setState({mon: user.days[0]});
+                    this.setState({tues: user.days[1]});
+                    this.setState({wed: user.days[2]});
+                    this.setState({thurs: user.days[3]});
+                    this.setState({fri: user.days[4]});
+                    this.setState({sat: user.days[5]});
+                    this.setState({sun: user.days[6]});
 			});
 	}
 
@@ -183,6 +184,7 @@ class ProfilePage extends React.Component {
             'days[5]':this.state.sat,
             'days[6]':this.state.sun
         };
+        window.alert(JSON.stringify(toPost));
         axios.post('/api/user/setdays',toPost);
     }
     /* callback to change the checkboxState to false when the checkbox is checked */
