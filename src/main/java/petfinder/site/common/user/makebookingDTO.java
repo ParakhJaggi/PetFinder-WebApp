@@ -1,15 +1,15 @@
 package petfinder.site.common.user;
 
 public class makebookingDTO {
-    private UserTimesDTO times;
+    private boolean [] bools;
     private String userName;
 
-    public UserTimesDTO getTimes() {
-        return times;
+    public boolean[] getBools() {
+        return bools;
     }
 
-    public void setTimes(UserTimesDTO times) {
-        this.times = times;
+    public void setBools(boolean[] bools) {
+        this.bools = bools;
     }
 
     public String getUserName() {
