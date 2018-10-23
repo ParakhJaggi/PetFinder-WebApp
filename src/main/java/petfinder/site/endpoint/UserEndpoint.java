@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import petfinder.site.common.Exceptions.UserException;
 import petfinder.site.common.user.*;
 import petfinder.site.common.user.UserService.RegistrationRequest;
 
@@ -54,7 +55,8 @@ public class UserEndpoint {
 	}
 
 	@GetMapping(value = "/getavailablesitters")
-	public UserCollectionDTO getSitters(){
+	public UserCollectionDTO getSitters() throws UserException {
+		//return userService.getAvailableSitters("sitter1@sitter.com");
 		return userService.getAvailableSitters(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
@@ -70,14 +72,13 @@ public class UserEndpoint {
 		return userService.getTimes();
 	}
 
-	@PostMapping(value = "/requestBooking/{userName}")
-	public boolean requestBooking(@PathVariable("userName") String principal, @RequestBody UserTimesDTO utd){
-		return userService.requestBooking(principal, utd);
+	@PostMapping(value = "/requestBooking")
+	public boolean requestBooking(@RequestBody makebookingDTO utd){
+		return userService.requestBooking(utd.getUserName(), new UserTimesDTO(utd.getBools()));
 	}
 
 	@PostMapping(value = "/confirmBooking")
 	public boolean confirmBooking(@RequestBody BookingDTO bd){
-		System.out.println("here");
 		return userService.confirmBooking(bd);
 	}
 
