@@ -1,11 +1,8 @@
 package petfinder.site.common.user;
 
-public class UserTimesDTO {
+public class makebookingDTO {
     private boolean [] bools;
-
-    public UserTimesDTO(){
-        bools = new boolean[7];
-    }
+    private String userName;
 
     public boolean[] getBools() {
         return bools;
@@ -15,7 +12,11 @@ public class UserTimesDTO {
         this.bools = bools;
     }
 
-    public UserTimesDTO(boolean[] bools) {
-        this.bools = bools;
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
