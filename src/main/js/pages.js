@@ -148,32 +148,29 @@ class ProfilePage extends React.Component {
         super(props);
         /* set the initial checkboxState to true */
         this.state = {
-            mon: true,
-            tues: true,
-            wed: true,
-            thurs: true,
-            fri: true,
-            sat: true,
-            sun: true,
-            pets: []
+            mon: false,
+            tues: false,
+            wed: false,
+            thurs: false,
+            fri: false,
+            sat: false,
+            sun: false,
+            pets: [],
         };
+
+        axios.get('/api/user/getDays')
+            .then(res => {
+                const bools = res.bools;
+                this.setState({mon: bools[0]});
+                this.setState({tues: bools[1]});
+                this.setState({wed: bools[2]});
+                this.setState({thurs: bools[3]});
+                this.setState({fri: bools[4]});
+                this.setState({sat: bools[5]});
+                this.setState({sun: bools[6]});
+            });
     }
 
-	componentDidMount() {
-		axios.get('/api/user/getDays')
-			.then(res => {
-				const user = res;
-				console.log(res);
-				this.setState({mon: user.days[0]});
-                this.setState({tues: user.days[1]});
-                this.setState({wed: user.days[2]});
-                this.setState({thurs: user.days[3]});
-                this.setState({fri: user.days[4]});
-                this.setState({sat: user.days[5]});
-                this.setState({sun: user.days[6]});
-                this.setState({user: user});
-			});
-	}
 
     onSubmit(event) {
     	console.log('Submitting');
@@ -187,11 +184,8 @@ class ProfilePage extends React.Component {
             this.state.sat,
 			this.state.sun]
         };
-<<<<<<< HEAD
-        window.alert(JSON.stringify(toPost));
-=======
         console.log(toPost);
->>>>>>> 2964b2df6201abcd3cd6cd6972ff2ed22112ca36
+
         axios.post('/api/user/setdays',toPost);
     }
     /* callback to change the checkboxState to false when the checkbox is checked */
@@ -232,61 +226,62 @@ class ProfilePage extends React.Component {
     }
 
 	render() {
-        const Mondaycheckbox = (
+        {console.log(this.state.tues);}
+        let Mondaycheckbox = (
             <span>
         <input
             type="checkbox"
-			defaultChecked={this.state.mon}
+			checked={this.state.mon}
             onClick={this.toggleMonday.bind(this)}
         />
         <label>Monday</label>
       </span>
         );
-        const Tuesdaycheckbox = (
+        let Tuesdaycheckbox = (
             <span>
         <input
             type="checkbox"
-            defaultChecked={this.state.tues}
+            checked={this.state.tues}
             onClick={this.toggleTuesday.bind(this)}
         />
         <label>Tuesday</label>
       </span>
         );
-        const Wednesdaycheckbox = (
+        let Wednesdaycheckbox = (
             <span>
         <input
             type="checkbox"
-            defaultChecked={this.state.wed}
+            checked={this.state.wed}
             onClick={this.toggleWednesday.bind(this)}
         />
         <label>Wednesday</label>
       </span>
         );
-        const Thursdaycheckbox = (
+        let Thursdaycheckbox = (
             <span>
         <input
             type="checkbox"
-            defaultChecked={this.state.thurs}
+            checked={this.state.thurs}
             onClick={this.toggleThursday.bind(this)}
         />
         <label>Thursday</label>
       </span>
         );
-        const Fridaycheckbox = (
+        let Fridaycheckbox = (
             <span>
         <input
             type="checkbox"
-            defaultChecked={this.state.fri}
+            checked={this.state.fri}
             onClick={this.toggleFriday.bind(this)}
         />
         <label>Friday</label>
       </span>
         );
-        const Saturdaycheckbox = (
+        let Saturdaycheckbox = (
             <span>
         <input
             type="checkbox"
-            defaultChecked={this.state.sat}
+            checked={this.state.sat}
             onClick={this.toggleSaturday.bind(this)}
         />
         <label>Saturday</label>
