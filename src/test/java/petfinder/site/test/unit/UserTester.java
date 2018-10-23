@@ -13,118 +13,112 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserTester extends UserDao {
-     public static final String emailEndings[] = {"baylor password","gmail password", "yahoo password", "hotmail password","outlook password"};
+    // public static final String emailEndings[] = {"baylor password","gmail password", "yahoo password", "hotmail password","outlook password"};
+     private static List<UserDto> usersTotal = null;
+     public static final int ZIP_59718_COUNT_SITTER = 4;
+     static {
+         usersTotal = new ArrayList<>();
+         boolean [] allDays = {true, true, true, true, true, true, true};
+         usersTotal.add(new UserDto("bob@test.com",
+                 null,
+                 UserDto.UserType.OWNER,
+                 null,
+                 "1000 west wallaby way",
+                 "clemson",
+                 "NC",
+                 "59718", allDays
+                 ));
+         usersTotal.add(new UserDto("fred@test.com",
+                 null,
+                 UserDto.UserType.OWNER,
+                 null,
+                 "1001 west wallaby way",
+                 "clemson",
+                 "NC",
+                 "12345", allDays));
+         usersTotal.add(new UserDto("freddy@test.com",
+                 null,
+                 UserDto.UserType.OWNER,
+                 null,
+                 "none of your business road",
+                 "bozeman",
+                 "MT",
+                 "59718", allDays));
+         usersTotal.add(new UserDto("plop@plop.com",
+                 null,
+                 UserDto.UserType.OWNER,
+                 null,
+                 "pennsylvania avenue",
+                 "washington D.C.",
+                 "DC",
+                 "99999", allDays));
+
+         usersTotal.add(new UserDto("one@sitter.com",
+                 null,
+                 UserDto.UserType.SITTER,
+                 null,
+                 "one",
+                 "BOZEMAN",
+                 "MT",
+                 "59718", allDays));
+         usersTotal.add(new UserDto("two@sitter.com",
+                 null,
+                 UserDto.UserType.SITTER,
+                 null,
+                 "one",
+                 "BOZEMAN",
+                 "MT",
+                 "59718", allDays));
+         usersTotal.add(new UserDto("three@sitter.com",
+                 null,
+                 UserDto.UserType.SITTER,
+                 null,
+                 "one",
+                 "BOZEMAN",
+                 "MT",
+                 "59718", allDays));
+         usersTotal.add(new UserDto("four@sitter.com",
+                 null,
+                 UserDto.UserType.SITTER,
+                 null,
+                 "one",
+                 "BOZEMAN",
+                 "MT",
+                 "59718", allDays));
+
+         usersTotal.add(new UserDto("five@sitter.com",
+                 null,
+                 UserDto.UserType.SITTER,
+                 null,
+                 "one",
+                 "Butte",
+                 "MT",
+                 "59701", allDays));
+
+         usersTotal.add(new UserDto("six@sitter.com",
+                 null,
+                 UserDto.UserType.SITTER,
+                 null,
+                 "one",
+                 "Waco",
+                 "TX",
+                 "76798", allDays));
+     }
+
     @Override
     public Optional<UserAuthenticationDto> findUserByPrincipal(String principal) {
-        UserAuthenticationDto ret = new UserAuthenticationDto();
-        if(principal.toLowerCase().contains("@baylor")){
-            ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[0]);
-        } else if(principal.toLowerCase().contains("@gmail")){
-            ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[1]);
-        } else if(principal.toLowerCase().contains("@yahoo")){
-            ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[2]);
-        } else if(principal.toLowerCase().contains("@hotmail")){
-            ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[3]);
-        } else if(principal.toLowerCase().contains("@outlook")){
-            ret.setPrincicple(new UserDto(principal,null,null,null),emailEndings[4]);
-        } else{
-            ret.setPrincicple(new UserDto(principal,null,null,null),"Test");
+        for(UserDto u : usersTotal){
+            if(u.getPrincipal().equals(principal)){
+                return Optional.of(new UserAuthenticationDto(u, null));
+            }
         }
-
-
-
-    return Optional.of(ret);
+        return Optional.empty();
     }
 
     @Override
     public UserCollectionDTO findByFieldMatch(String term, List<Object> toMatch)  {
         UserCollectionDTO toReturn = new UserCollectionDTO();
-        List<UserDto> users = new ArrayList<>(), usersTotal = new ArrayList<>();
-        usersTotal.add(new UserDto("bob@test.com",
-                null,
-                UserDto.UserType.OWNER,
-                null,
-                "1000 west wallaby way",
-                "clemson",
-                "NC",
-                "12345"));
-        usersTotal.add(new UserDto("fred@test.com",
-                null,
-                UserDto.UserType.OWNER,
-                null,
-                "1001 west wallaby way",
-                "clemson",
-                "NC",
-                "12345"));
-        usersTotal.add(new UserDto("freddy@test.com",
-                null,
-                UserDto.UserType.OWNER,
-                null,
-                "none of your business road",
-                "bozeman",
-                "MT",
-                "59718"));
-        usersTotal.add(new UserDto("plop@plop.com",
-                null,
-                UserDto.UserType.OWNER,
-                null,
-                "pennsylvania avenue",
-                "washington D.C.",
-                "DC",
-                "99999"));
-
-        usersTotal.add(new UserDto("one@sitter.com",
-                null,
-                UserDto.UserType.SITTER,
-                null,
-                "one",
-                "BOZEMAN",
-                "MT",
-                "59718"));
-        usersTotal.add(new UserDto("two@sitter.com",
-                null,
-                UserDto.UserType.SITTER,
-                null,
-                "one",
-                "BOZEMAN",
-                "MT",
-                "59718"));
-        usersTotal.add(new UserDto("three@sitter.com",
-                null,
-                UserDto.UserType.SITTER,
-                null,
-                "one",
-                "BOZEMAN",
-                "MT",
-                "59718"));
-        usersTotal.add(new UserDto("four@sitter.com",
-                null,
-                UserDto.UserType.SITTER,
-                null,
-                "one",
-                "BOZEMAN",
-                "MT",
-                "59718"));
-
-        usersTotal.add(new UserDto("five@sitter.com",
-                null,
-                UserDto.UserType.SITTER,
-                null,
-                "one",
-                "Butte",
-                "MT",
-                "59701"));
-
-        usersTotal.add(new UserDto("six@sitter.com",
-                null,
-                UserDto.UserType.SITTER,
-                null,
-                "one",
-                "Waco",
-                "TX",
-                "76798"));
-
-
+        List<UserDto> users = new ArrayList<>();
         if(term.contains( "zip")) {
             usersTotal.stream().filter(s -> toMatch.contains(s.getZip())).forEach(users::add);
         } else if(term.contains("principal")){
