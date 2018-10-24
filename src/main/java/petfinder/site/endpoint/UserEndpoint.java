@@ -1,19 +1,15 @@
 package petfinder.site.endpoint;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import petfinder.site.common.user.UserDao;
-import petfinder.site.common.user.UserDto;
-import petfinder.site.common.user.UserService;
+import petfinder.site.common.Exceptions.UserException;
+import petfinder.site.common.user.*;
 import petfinder.site.common.user.UserService.RegistrationRequest;
 
 /**
@@ -40,4 +36,50 @@ public class UserEndpoint {
 	public UserDto updatePassword(@RequestBody UserService.PasswordChangeRequest req){
 		return userService.changePassword(req);
 	}
+
+	@DeleteMapping(value = "/deleteThisUser")
+	public boolean deleteCurrentUser(){
+		return userService.deleteUser(SecurityContextHolder.getContext().getAuthentication().getName());
+	}
+
+	@GetMapping(value = "/getSits")
+	public List<BookingDTO> getMySits(){
+		//this is for sitters
+		return userService.getMySits(true);
+	}
+
+	@GetMapping(value = "/getRequestedSits")
+	public List<BookingDTO> getRequestedSits(){
+		//this is for sitters
+		return userService.getMySits(false);
+	}
+
+	@GetMapping(value = "/getavailablesitters")
+	public UserCollectionDTO getSitters() throws UserException {
+		//return userService.getAvailableSitters("sitter1@sitter.com");
+		return userService.getAvailableSitters(SecurityContextHolder.getContext().getAuthentication().getName());
+	}
+
+	@PostMapping(value = "/setdays")
+	public void setTimes(@RequestBody UserTimesDTO utd){
+		//this is for all users
+		userService.setUserTimes(utd);
+	}
+
+	@GetMapping(value = "/getDays")
+	public UserTimesDTO getDays(){
+		//this is for all users
+		return userService.getTimes();
+	}
+
+	@PostMapping(value = "/requestBooking")
+	public boolean requestBooking(@RequestBody makebookingDTO utd){
+		return userService.requestBooking(utd.getUserName(), new UserTimesDTO(utd.getBools()));
+	}
+
+	@PostMapping(value = "/confirmBooking")
+	public boolean confirmBooking(@RequestBody BookingDTO bd){
+		return userService.confirmBooking(bd);
+	}
+
 }

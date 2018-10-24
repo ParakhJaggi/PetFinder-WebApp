@@ -57,6 +57,9 @@ class RegistrationForm extends React.Component {
 		return (
 
 			<form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
+                <Bessemer.Field name="type" friendlyName="type"
+
+                                validators={[Validation.requiredValidator]}/>
 				<Bessemer.Field name="principal" friendlyName="Email Address"
 				                validators={[Validation.requiredValidator, Validation.emailValidator]}/>
 
@@ -64,9 +67,18 @@ class RegistrationForm extends React.Component {
 				                validators={[Validation.requiredValidator, Validation.passwordValidator]}
 				                field={<input className="form-control" type="password"/>}/>
 
-				<Bessemer.Field name="Secondpassword" friendlyName="Confirm Password"
+				<Bessemer.Field name="Secondpassword" friendlyName="Confirm"
 				                validators={[Validation.requiredValidator, Validation.passwordValidator]}
 				                field={<input className="form-control" type="password"/>}/>
+
+                <Bessemer.Field name="address" friendlyName="Address"
+                                validators={[Validation.requiredValidator]}/>
+                <Bessemer.Field name="city" friendlyName="City"
+                                validators={[Validation.requiredValidator]}/>
+                <Bessemer.Field name="state" friendlyName="State"
+                                validators={[Validation.requiredValidator]}/>
+                <Bessemer.Field name="zip" friendlyName="Zip code"
+                                validators={[Validation.requiredValidator]}/>
 
 				<Bessemer.Button loading={submitting}>Register</Bessemer.Button>
 			</form>
