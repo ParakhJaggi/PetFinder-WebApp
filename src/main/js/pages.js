@@ -226,7 +226,6 @@ class ProfilePage extends React.Component {
     }
 
 	render() {
-        {console.log(this.state.tues);}
         let Mondaycheckbox = (
             <label className="container-checkbox">Monday
                 <input type="checkbox" checked={this.state.mon}
