@@ -7,6 +7,10 @@ public class BookingDTO {
     private String principal;
     private boolean [] days;
 
+    public BookingDTO(){
+
+    }
+
     public BookingDTO(String principal, boolean[] days) {
         this.principal = principal;
         this.days = days;
