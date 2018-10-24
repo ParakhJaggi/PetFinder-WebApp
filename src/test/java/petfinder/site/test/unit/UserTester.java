@@ -15,10 +15,13 @@ import java.util.Optional;
 public class UserTester extends UserDao {
     // public static final String emailEndings[] = {"baylor password","gmail password", "yahoo password", "hotmail password","outlook password"};
      private static List<UserDto> usersTotal = null;
-     public static final int ZIP_59718_COUNT_SITTER = 4;
+     public static final int ZIP_59718_COUNT_SITTER_ALL_DAYS = 4,
+                             ZIP_59718_COUNT_SITTER_WEEKENDS = 1;
      static {
          usersTotal = new ArrayList<>();
-         boolean [] allDays = {true, true, true, true, true, true, true};
+         boolean [] allDays = {true, true, true, true, true, true, true},
+                    weekdays = {true, true, true, true, true, false, false},
+                    weekEnds = {false, false, false, false, false, true, true};
          usersTotal.add(new UserDto("bob@test.com",
                  null,
                  UserDto.UserType.OWNER,
@@ -35,7 +38,7 @@ public class UserTester extends UserDao {
                  "1001 west wallaby way",
                  "clemson",
                  "NC",
-                 "12345", allDays));
+                 "12345", weekdays));
          usersTotal.add(new UserDto("freddy@test.com",
                  null,
                  UserDto.UserType.OWNER,
@@ -43,7 +46,7 @@ public class UserTester extends UserDao {
                  "none of your business road",
                  "bozeman",
                  "MT",
-                 "59718", allDays));
+                 "59718", weekEnds));
          usersTotal.add(new UserDto("plop@plop.com",
                  null,
                  UserDto.UserType.OWNER,
@@ -103,6 +106,15 @@ public class UserTester extends UserDao {
                  "Waco",
                  "TX",
                  "76798", allDays));
+
+         usersTotal.add(new UserDto("seven@sitter.com",
+                 null,
+                 UserDto.UserType.SITTER,
+                 null,
+                 "one",
+                 "Waco",
+                 "TX",
+                 "59718", weekdays));
      }
 
     @Override
