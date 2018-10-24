@@ -24,6 +24,8 @@ import petfinder.site.common.user.UserDto.UserType;
 
 /**
  * Created by jlutteringer on 8/23/17.
+ *
+ * laird added many features
  */
 @Service
 public class UserService {
@@ -280,8 +282,44 @@ public class UserService {
 		sitter.get().getUser().getBookings().add(bd);
 		sitter.get().getUser().setNotification("booking confirmed");
 		userDao.save(sitter.get());
+
+		//also add this to the owner that requested the booking
+		Optional<UserAuthenticationDto> owner = userDao.findUserByPrincipal(bd.getPrincipal());
+		owner.get().getUser().getBookings().add(new BookingDTO(principal, bd.getDays()));
+		userDao.save(owner.get());
 		return true;
 	}
+
+	public boolean cancelBooking (BookingDTO bd){
+		//first get the current user
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserAuthenticationDto> user = userDao.findUserByPrincipal(principal);
+		Optional<UserAuthenticationDto> other = userDao.findUserByPrincipal(bd.getPrincipal());
+
+		if(!user.isPresent() ){
+			return false;
+		}
+		//now see if that was an actually existant request
+		if(!user.get().getUser().getRequestedBookings().contains(bd))
+			return false;
+
+		//figure out which one is the sitter
+		UserAuthenticationDto sitter = (user.get().user.getType() == UserType.SITTER ? user.get() : other.get());
+		UserAuthenticationDto owner =  (user.get().user.getType() == UserType.OWNER ? user.get() : other.get());
+
+		if(sitter.getUser().getRequestedBookings().contains(bd)) {
+			sitter.getUser().getRequestedBookings().remove(bd);
+		}
+		else {
+			sitter.getUser().getBookings().remove(bd);
+			owner.getUser().getBookings().remove(new BookingDTO(owner.getUser().getPrincipal(), bd.getDays()));
+		}
+
+		userDao.save(sitter);
+		userDao.save(owner);
+		return true;
+	}
+
 	//For testing
     public Optional<UserAuthenticationDto> findUsersTest(String principle){
         return userDao.findUserByPrincipal(principle);
