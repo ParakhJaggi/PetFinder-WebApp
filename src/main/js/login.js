@@ -125,9 +125,11 @@ class RegistrationForm extends React.Component {
 		return (
 
 			<form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
-                <span>Type</span>
-                <Bessemer.Select className="pull-right"name="type" friendlyName="Type" options={options2}  value={this.state.selectedOption2} onChange={this.handleChange2}
-                                 validators={[Validation.requiredValidator]}  style={{width: 220}}/>
+                <Bessemer.Field name="Type" friendlyName="Type"
+                                validators={[Validation.requiredValidator]}
+                                field={ <Bessemer.Select className="pull-right"name="type" friendlyName="Type" options={options2}  value={this.state.selectedOption2} onChange={this.handleChange2}
+                                                         style={{width: 220}}/>}/>
+
                 <br/><br/>
 				<Bessemer.Field name="principal" friendlyName="Email Address"
 				                validators={[Validation.requiredValidator, Validation.emailValidator]}/>
@@ -144,9 +146,11 @@ class RegistrationForm extends React.Component {
                                 validators={[Validation.requiredValidator]}/>
                 <Bessemer.Field name="city" friendlyName="City"
                                 validators={[Validation.requiredValidator]}/>
-                <span>State</span>
-                <Bessemer.Select className="pull-right"name="state" friendlyName="State" options={options}  value={this.state.selectedOption} onChange={this.handleChange}
-                                validators={[Validation.requiredValidator]}  style={{width: 220}}/>
+                <Bessemer.Field name="State" friendlyName="State"
+                                validators={[Validation.requiredValidator]}
+                                field={<Bessemer.Select className="pull-right"name="state" friendlyName="State" options={options}  value={this.state.selectedOption} onChange={this.handleChange}
+                                                          style={{width: 220}}/>}/>
+
 				<br/><br/>
                 <Bessemer.Field name="zip" friendlyName="Zip code"
                                 validators={[Validation.requiredValidator]}/>
