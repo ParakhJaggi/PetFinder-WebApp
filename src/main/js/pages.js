@@ -37,7 +37,7 @@ import axios from 'axios';
 import * as Bessemer from 'js/alloy/bessemer/components';
 import * as Validation from 'js/alloy/utils/validation';
 import * as ReduxForm from 'redux-form';
-import {SitterTable} from 'js/sitters';
+import {SitterTable} from 'js/profilemodules/sitters';
 
 function logout() {
 	cookie.remove('authentication', {path: '/'});
