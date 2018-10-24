@@ -196,8 +196,6 @@ class ProfilePage extends React.Component {
                 this.state.sat,
                 this.state.sun]
         };
-        console.log(toPost);
-
         axios.post('/api/user/setdays', toPost);
     }
 
