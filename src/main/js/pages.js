@@ -169,6 +169,11 @@ class ProfilePage extends React.Component {
                 this.setState({sat: bools[5]});
                 this.setState({sun: bools[6]});
             });
+        axios.get('/api/user')
+            .then(res => {
+            	console.log(res);
+                this.setState({user: res});
+            });
     }
 
 
