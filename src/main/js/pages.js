@@ -155,9 +155,11 @@ class ProfilePage extends React.Component {
             fri: false,
             sat: false,
             sun: false,
-            pets: [],
+            pets: []
         };
+    }
 
+    componentDidMount(){
         axios.get('/api/user/getDays')
             .then(res => {
                 const bools = res.bools;
@@ -173,6 +175,11 @@ class ProfilePage extends React.Component {
             .then(res => {
                 console.log(res);
                 this.setState({user: res});
+            });
+        axios.get('/api/userPets/getPets')
+            .then(res => {
+                console.log(res);
+                this.setState({pets: res.pets});
             });
     }
 
