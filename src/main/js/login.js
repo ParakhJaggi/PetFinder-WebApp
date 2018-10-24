@@ -51,10 +51,15 @@ class RegistrationForm extends React.Component {
 	};
     state = {
         selectedOption: null,
+		selectedOption2: null
     }
     handleChange = (selectedOption) => {
         this.setState({ selectedOption });
         console.log('Option selected:', selectedOption);
+    };
+    handleChange2 = (selectedOption2) => {
+        this.setState({ selectedOption2 });
+        console.log('Option selected:', selectedOption2);
     };
 	render() {
 		let {handleSubmit, submitting} = this.props;
@@ -113,13 +118,17 @@ class RegistrationForm extends React.Component {
             { value: 'Wyoming', label: 'Wyoming' },
             { value: 'Non-US', label: 'Non-US' }
         ];
-
+        const options2 = [
+            { value: 'SITTER', label: 'Sitter' },
+            { value: 'OWNER', label: 'Owner' }
+        ];
 		return (
 
 			<form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
-                <Bessemer.Field name="type" friendlyName="type"
-
-                                validators={[Validation.requiredValidator]}/>
+                <span>Type</span>
+                <Bessemer.Select className="pull-right"name="type" friendlyName="Type" options={options2}  value={this.state.selectedOption2} onChange={this.handleChange2}
+                                 validators={[Validation.requiredValidator]}  style={{width: 220}}/>
+                <br/><br/>
 				<Bessemer.Field name="principal" friendlyName="Email Address"
 				                validators={[Validation.requiredValidator, Validation.emailValidator]}/>
 
