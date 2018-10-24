@@ -2,13 +2,6 @@ import React from 'react';
 import axios from 'axios';
 
 class BookingRow extends React.Component{
-    constructor(props) {
-        super(props)
-        this.state = {
-            user: this.props.user,
-            days: [0,0,0,0,0,0,0]
-        }
-    }
     renderDay(index, val){
         switch(val){
             case 1:
@@ -27,9 +20,9 @@ class BookingRow extends React.Component{
         return (
             <tr>
                 <td>
-                    {this.state.user}
+                    {this.props.user}
                 </td>
-                {this.state.days.map((index, val) =>
+                {this.props.data.map((val, index) =>
                     <td>
                         {this.renderDay(index, val)}
                     </td>
@@ -38,14 +31,23 @@ class BookingRow extends React.Component{
         );
     }
 }
-class BookingTable extends React.Component{
+export class BookingTable extends React.Component{
+    state = {
+        rowdata: new Map()
+    };
+    updateDays(principal, data, val){
+        for(let i = 0; i < 7; i++){
+            if(data[i])
+                this.state.rowdata.get(principal)[i] = val;
+        }
+    }
     render(){
-        let rows = {};
+        let self = this;
         this.props.user.requestedBookings.forEach(function(request) {
-            if(!rows.hasOwnProperty(request.principal)){
-                rows[request.principal] = <BookingRow user=request.principal/>;
+            if(!(self.state.rowdata.has(request.principal))){
+                self.state.rowdata.set(request.principal, [0,0,0,0,0,0,0]);
             }
-            rows[request.principal].update(request);
+            self.updateDays(request.principal, request.days, 1);
         });
         return (
             <table>
@@ -62,8 +64,8 @@ class BookingTable extends React.Component{
                 </tr>
                 </thead>
                 <tbody>
-                    {rows.map((user, row) =>
-                        row
+                    {Array.from(this.state.rowdata).map((pair) =>
+                        <BookingRow user={pair[0]} data={pair[1]}/>
                     )}
                 </tbody>
             </table>
