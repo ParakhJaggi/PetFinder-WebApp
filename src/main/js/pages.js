@@ -228,74 +228,53 @@ class ProfilePage extends React.Component {
 	render() {
         {console.log(this.state.tues);}
         let Mondaycheckbox = (
-            <span>
-        <input
-            type="checkbox"
-			checked={this.state.mon}
-            onClick={this.toggleMonday.bind(this)}
-        />
-        <label>Monday</label>
-      </span>
+            <label className="container-checkbox">Monday
+                <input type="checkbox" checked={this.state.mon}
+                       onClick={this.toggleMonday.bind(this)}/>
+                <span className="checkmark"></span>
+            </label>
         );
         let Tuesdaycheckbox = (
-            <span>
-        <input
-            type="checkbox"
-            checked={this.state.tues}
-            onClick={this.toggleTuesday.bind(this)}
-        />
-        <label>Tuesday</label>
-      </span>
+            <label className="container-checkbox">Tuesday
+                <input type="checkbox" checked={this.state.tues}
+                       onClick={this.toggleTuesday.bind(this)}/>
+                    <span className="checkmark"></span>
+            </label>
         );
         let Wednesdaycheckbox = (
-            <span>
-        <input
-            type="checkbox"
-            checked={this.state.wed}
-            onClick={this.toggleWednesday.bind(this)}
-        />
-        <label>Wednesday</label>
-      </span>
+            <label className="container-checkbox">Wednesday
+                <input type="checkbox" checked={this.state.wed}
+                       onClick={this.toggleWednesday.bind(this)}/>
+                <span className="checkmark"></span>
+            </label>
         );
         let Thursdaycheckbox = (
-            <span>
-        <input
-            type="checkbox"
-            checked={this.state.thurs}
-            onClick={this.toggleThursday.bind(this)}
-        />
-        <label>Thursday</label>
-      </span>
+            <label className="container-checkbox">Thursday
+                <input type="checkbox" checked={this.state.thurs}
+                       onClick={this.toggleThursday.bind(this)}/>
+                <span className="checkmark"></span>
+            </label>
         );
         let Fridaycheckbox = (
-            <span>
-        <input
-            type="checkbox"
-            checked={this.state.fri}
-            onClick={this.toggleFriday.bind(this)}
-        />
-        <label>Friday</label>
-      </span>
+            <label className="container-checkbox">Friday
+                <input type="checkbox" checked={this.state.fri}
+                       onClick={this.toggleFriday.bind(this)}/>
+                <span className="checkmark"></span>
+            </label>
         );
         let Saturdaycheckbox = (
-            <span>
-        <input
-            type="checkbox"
-            checked={this.state.sat}
-            onClick={this.toggleSaturday.bind(this)}
-        />
-        <label>Saturday</label>
-      </span>
+            <label className="container-checkbox">Saturday
+                <input type="checkbox" checked={this.state.sat}
+                       onClick={this.toggleSaturday.bind(this)}/>
+                <span className="checkmark"></span>
+            </label>
         );
         const Sundaycheckbox = (
-            <span>
-        <input
-            type="checkbox"
-            defaultChecked={this.state.sun}
-            onClick={this.toggleSunday.bind(this)}
-        />
-        <label>Sunday</label>
-      </span>
+            <label className="container-checkbox">Sunday
+                <input type="checkbox" checked={this.state.sun}
+                       onClick={this.toggleSunday.bind(this)}/>
+                <span className="checkmark"></span>
+            </label>
         );
 
         return (
@@ -319,19 +298,19 @@ class ProfilePage extends React.Component {
 				{this.state.pets.map(pet =>
                     <EditPetForm pet={pet}/>
 				)}
-                    <div>
+                    <div className="card">
+						<div className="card-body justify-content-center">
                         <form onSubmit={this.onSubmit.bind(this)}>
-							<ul>
-								<li>{Mondaycheckbox}</li>
-                                <li>{Tuesdaycheckbox}</li>
-                                <li>{Wednesdaycheckbox}</li>
-                                <li>{Thursdaycheckbox}</li>
-                                <li>{Fridaycheckbox}</li>
-                                <li>{Saturdaycheckbox}</li>
-                                <li>{Sundaycheckbox}</li>
-							</ul>
+							<h3>{Mondaycheckbox}</h3>
+							<h3>{Tuesdaycheckbox}</h3>
+							<h3>{Wednesdaycheckbox}</h3>
+							<h3>{Thursdaycheckbox}</h3>
+							<h3>{Fridaycheckbox}</h3>
+							<h3>{Saturdaycheckbox}</h3>
+							<h3>{Sundaycheckbox}</h3>
                             <button type="submit">Save</button>
                         </form>
+						</div>
                     </div>
                     {
                         this.state.user &&
