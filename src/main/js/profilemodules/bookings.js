@@ -23,8 +23,8 @@ class BookingRow extends React.Component{
                 );
             case 2:
                 return(
-                    <button disabled
-                    >Booked, cancel not implemented</button>
+                    <button onClick={this.onClick.bind(this, index, 'delete')}
+                    >Cancel</button>
                 );
             default:
                 return;
