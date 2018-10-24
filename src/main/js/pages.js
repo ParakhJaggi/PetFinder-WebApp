@@ -164,13 +164,7 @@ class ProfilePage extends React.Component {
             .then(res => {
                 const bools = res.bools;
                 this.setState({
-                    mon: bools[0],
-                    tues: bools[1],
-                    wed: bools[2],
-                    thurs: bools[3],
-                    fri: bools[4],
-                    sat: bools[5],
-                    sun: bools[6]
+                    available: bools
                 });
             });
         axios.get('/api/user')
@@ -190,107 +184,67 @@ class ProfilePage extends React.Component {
         console.log('Submitting');
         event.preventDefault();
         let toPost = {
-            'bools': [this.state.mon,
-                this.state.tues,
-                this.state.wed,
-                this.state.thurs,
-                this.state.fri,
-                this.state.sat,
-                this.state.sun]
+            'bools': available
         };
         axios.post('/api/user/setdays', toPost);
     }
 
     /* callback to change the checkboxState to false when the checkbox is checked */
-    toggleMonday(event) {
+    toggleAvailable(event, day) {
+        let newAvailable = this.state.available;
+        newAvailable[day] = !newAvailable[day];
         this.setState({
-            mon: !this.state.mon
-        });
-    }
-
-    toggleTuesday(event) {
-        this.setState({
-            tues: !this.state.tues
-        });
-    }
-
-    toggleWednesday(event) {
-        this.setState({
-            wed: !this.state.wed
-        });
-    }
-
-    toggleThursday(event) {
-        this.setState({
-            thurs: !this.state.thurs
-        });
-    }
-
-    toggleFriday(event) {
-        this.setState({
-            fri: !this.state.fri
-        });
-    }
-
-    toggleSaturday(event) {
-        this.setState({
-            sat: !this.state.sat
-        });
-    }
-
-    toggleSunday(event) {
-        this.setState({
-            sun: !this.state.sun
+            available: newAvailable
         });
     }
 
     render() {
         let Mondaycheckbox = (
             <label className="container-checkbox">Monday
-                <input type="checkbox" checked={this.state.mon}
-                       onClick={this.toggleMonday.bind(this)}/>
+                <input type="checkbox" checked={this.state.available[0]}
+                       onClick={this.toggleAvailable.bind(this, 0)}/>
                 <span className="checkmark"></span>
             </label>
         );
         let Tuesdaycheckbox = (
             <label className="container-checkbox">Tuesday
-                <input type="checkbox" checked={this.state.tues}
-                       onClick={this.toggleTuesday.bind(this)}/>
+                <input type="checkbox" checked={this.state.available[1]}
+                       onClick={this.toggleAvailable.bind(this, 1)}/>
                 <span className="checkmark"></span>
             </label>
         );
         let Wednesdaycheckbox = (
             <label className="container-checkbox">Wednesday
-                <input type="checkbox" checked={this.state.wed}
-                       onClick={this.toggleWednesday.bind(this)}/>
+                <input type="checkbox" checked={this.state.available[2]}
+                       onClick={this.toggleAvailable.bind(this, 2)}/>
                 <span className="checkmark"></span>
             </label>
         );
         let Thursdaycheckbox = (
             <label className="container-checkbox">Thursday
-                <input type="checkbox" checked={this.state.thurs}
-                       onClick={this.toggleThursday.bind(this)}/>
+                <input type="checkbox" checked={this.state.available[3]}
+                       onClick={this.toggleAvailable.bind(this, 3)}/>
                 <span className="checkmark"></span>
             </label>
         );
         let Fridaycheckbox = (
             <label className="container-checkbox">Friday
-                <input type="checkbox" checked={this.state.fri}
-                       onClick={this.toggleFriday.bind(this)}/>
+                <input type="checkbox" checked={this.state.available[4]}
+                       onClick={this.toggleAvailable.bind(this, 4)}/>
                 <span className="checkmark"></span>
             </label>
         );
         let Saturdaycheckbox = (
             <label className="container-checkbox">Saturday
-                <input type="checkbox" checked={this.state.sat}
-                       onClick={this.toggleSaturday.bind(this)}/>
+                <input type="checkbox" checked={this.state.available[5]}
+                       onClick={this.toggleAvailable.bind(this, 5)}/>
                 <span className="checkmark"></span>
             </label>
         );
         const Sundaycheckbox = (
             <label className="container-checkbox">Sunday
-                <input type="checkbox" checked={this.state.sun}
-                       onClick={this.toggleSunday.bind(this)}/>
+                <input type="checkbox" checked={this.state.available[6]}
+                       onClick={this.toggleAvailable.bind(this, 6)}/>
                 <span className="checkmark"></span>
             </label>
         );
