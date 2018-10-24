@@ -2,15 +2,29 @@ import React from 'react';
 import axios from 'axios';
 
 class BookingRow extends React.Component{
+    onClick(index, action){
+        let days = [false, false, false, false, false, false, false];
+        days[index] = true;
+        axios.post('/api/user/' + action + 'Booking', {
+            principal: this.props.pair[0],
+            days: days
+        });
+    }
     renderDay(index, val){
         switch(val){
             case 1:
                 return(
-                    'Accept'
+                    <React.Fragment>
+                        <button onClick={this.onClick.bind(this, index, 'confirm')}
+                        >Confirm</button>
+                        <button onClick={this.onClick.bind(this, index, 'delete')}
+                        >Reject</button>
+                    </React.Fragment>
                 );
             case 2:
                 return(
-                    'Cancel'
+                    <button disabled
+                    >Booked, cancel not implemented</button>
                 );
             default:
                 return;
@@ -20,9 +34,9 @@ class BookingRow extends React.Component{
         return (
             <tr>
                 <td>
-                    {this.props.user}
+                    {this.props.pair[0]}
                 </td>
-                {this.props.data.map((val, index) =>
+                {this.props.pair[1].map((val, index) =>
                     <td>
                         {this.renderDay(index, val)}
                     </td>
@@ -49,6 +63,12 @@ export class BookingTable extends React.Component{
             }
             self.updateDays(request.principal, request.days, 1);
         });
+        this.props.user.bookings.forEach(function(request) {
+            if(!(self.state.rowdata.has(request.principal))){
+                self.state.rowdata.set(request.principal, [0,0,0,0,0,0,0]);
+            }
+            self.updateDays(request.principal, request.days, 2);
+        });
         return (
             <table>
                 <thead>
@@ -65,7 +85,7 @@ export class BookingTable extends React.Component{
                 </thead>
                 <tbody>
                     {Array.from(this.state.rowdata).map((pair) =>
-                        <BookingRow user={pair[0]} data={pair[1]}/>
+                        <BookingRow user={this.props.user} pair={pair}/>
                     )}
                 </tbody>
             </table>
