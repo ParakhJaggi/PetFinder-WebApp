@@ -163,13 +163,15 @@ class ProfilePage extends React.Component {
         axios.get('/api/user/getDays')
             .then(res => {
                 const bools = res.bools;
-                this.setState({mon: bools[0]});
-                this.setState({tues: bools[1]});
-                this.setState({wed: bools[2]});
-                this.setState({thurs: bools[3]});
-                this.setState({fri: bools[4]});
-                this.setState({sat: bools[5]});
-                this.setState({sun: bools[6]});
+                this.setState({
+                    mon: bools[0],
+                    tues: bools[1],
+                    wed: bools[2],
+                    thurs: bools[3],
+                    fri: bools[4],
+                    sat: bools[5],
+                    sun: bools[6]
+                });
             });
         axios.get('/api/user')
             .then(res => {
