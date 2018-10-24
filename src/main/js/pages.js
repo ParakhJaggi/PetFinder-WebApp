@@ -148,14 +148,7 @@ class ProfilePage extends React.Component {
         super(props);
         /* set the initial checkboxState to true */
         this.state = {
-            mon: false,
-            tues: false,
-            wed: false,
-            thurs: false,
-            fri: false,
-            sat: false,
-            sun: false,
-            pets: []
+            available: [false, false, false, false, false, false, false]
         };
     }
 
@@ -184,7 +177,7 @@ class ProfilePage extends React.Component {
         console.log('Submitting');
         event.preventDefault();
         let toPost = {
-            'bools': available
+            'bools': this.state.available
         };
         axios.post('/api/user/setdays', toPost);
     }
@@ -199,55 +192,17 @@ class ProfilePage extends React.Component {
     }
 
     render() {
-        let Mondaycheckbox = (
-            <label className="container-checkbox">Monday
-                <input type="checkbox" checked={this.state.available[0]}
-                       onClick={this.toggleAvailable.bind(this, 0)}/>
-                <span className="checkmark"></span>
-            </label>
-        );
-        let Tuesdaycheckbox = (
-            <label className="container-checkbox">Tuesday
-                <input type="checkbox" checked={this.state.available[1]}
-                       onClick={this.toggleAvailable.bind(this, 1)}/>
-                <span className="checkmark"></span>
-            </label>
-        );
-        let Wednesdaycheckbox = (
-            <label className="container-checkbox">Wednesday
-                <input type="checkbox" checked={this.state.available[2]}
-                       onClick={this.toggleAvailable.bind(this, 2)}/>
-                <span className="checkmark"></span>
-            </label>
-        );
-        let Thursdaycheckbox = (
-            <label className="container-checkbox">Thursday
-                <input type="checkbox" checked={this.state.available[3]}
-                       onClick={this.toggleAvailable.bind(this, 3)}/>
-                <span className="checkmark"></span>
-            </label>
-        );
-        let Fridaycheckbox = (
-            <label className="container-checkbox">Friday
-                <input type="checkbox" checked={this.state.available[4]}
-                       onClick={this.toggleAvailable.bind(this, 4)}/>
-                <span className="checkmark"></span>
-            </label>
-        );
-        let Saturdaycheckbox = (
-            <label className="container-checkbox">Saturday
-                <input type="checkbox" checked={this.state.available[5]}
-                       onClick={this.toggleAvailable.bind(this, 5)}/>
-                <span className="checkmark"></span>
-            </label>
-        );
-        const Sundaycheckbox = (
-            <label className="container-checkbox">Sunday
-                <input type="checkbox" checked={this.state.available[6]}
-                       onClick={this.toggleAvailable.bind(this, 6)}/>
-                <span className="checkmark"></span>
-            </label>
-        );
+        let availableCheck = [];
+        const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        for(let i = 0; i < 7; i++){
+            availableCheck.push(
+                <h3><label className="container-checkbox">{week[i]}
+                    <input type="checkbox" checked={this.state.available[i]}
+                           onClick={this.toggleAvailable.bind(this, i)}/>
+                    <span className="checkmark"></span>
+                </label></h3>
+            );
+        }
 
         return (
 
@@ -267,19 +222,18 @@ class ProfilePage extends React.Component {
                     {_.isDefined(this.props.user) &&
                     <div>Do you have a notification? {this.props.user.notification}!</div>
                     }
-                    {this.state.pets.map(pet =>
-                        <EditPetForm pet={pet}/>
-                    )}
+                    {
+                        this.state.pets &&
+                        this.state.pets.map(pet =>
+                            <EditPetForm pet={pet}/>
+                        )
+                    }
                     <div className="card">
                         <div className="card-body justify-content-center">
                             <form onSubmit={this.onSubmit.bind(this)}>
-                                <h3>{Mondaycheckbox}</h3>
-                                <h3>{Tuesdaycheckbox}</h3>
-                                <h3>{Wednesdaycheckbox}</h3>
-                                <h3>{Thursdaycheckbox}</h3>
-                                <h3>{Fridaycheckbox}</h3>
-                                <h3>{Saturdaycheckbox}</h3>
-                                <h3>{Sundaycheckbox}</h3>
+                                {availableCheck.map(checkbox => {
+                                    return checkbox;
+                                })}
                                 <button type="submit">Save</button>
                             </form>
                         </div>
