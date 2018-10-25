@@ -125,7 +125,7 @@ class RegistrationForm extends React.Component {
 		return (
 
 			<form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
-                <Bessemer.Field name="Type" friendlyName="Type"
+                <Bessemer.Field name="type" friendlyName="Type"
                                 validators={[Validation.requiredValidator]}
                                 field={ <Bessemer.Select className="pull-right"name="type" friendlyName="Type" options={options2}  value={this.state.selectedOption2} onChange={this.handleChange2}
                                                          style={{width: 220}}/>}/>
@@ -146,7 +146,7 @@ class RegistrationForm extends React.Component {
                                 validators={[Validation.requiredValidator]}/>
                 <Bessemer.Field name="city" friendlyName="City"
                                 validators={[Validation.requiredValidator]}/>
-                <Bessemer.Field name="State" friendlyName="State"
+                <Bessemer.Field name="state" friendlyName="State"
                                 validators={[Validation.requiredValidator]}
                                 field={<Bessemer.Select className="pull-right"name="state" friendlyName="State" options={options}  value={this.state.selectedOption} onChange={this.handleChange}
                                                           style={{width: 220}}/>}/>
