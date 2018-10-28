@@ -34,9 +34,13 @@ public class UserEndpointTester {
     }
 
     @Test
-    public void getAvailableSitters() throws UserException {
+    public void testSitterCollection() throws UserException {
         //i will test to see if it is finding them for zip code 59718
         UserCollectionDTO o = service.getAvailableSitters("bob@test.com");
-        assertEquals(o.getUsers().size(), UserTester.ZIP_59718_COUNT_SITTER);
+        assertEquals(o.getUsers().size(), UserTester.ZIP_59718_COUNT_SITTER_ALL_DAYS + UserTester.ZIP_59718_COUNT_SITTER_WEEKENDS);
+
+        o = service.getAvailableSitters("freddy@test.com");
+        assertEquals(o.getUsers().size(),
+                UserTester.ZIP_59718_COUNT_SITTER_ALL_DAYS );
     }
 }

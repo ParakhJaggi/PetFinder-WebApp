@@ -82,4 +82,9 @@ public class UserEndpoint {
 		return userService.confirmBooking(bd);
 	}
 
+	@PostMapping(value = "/deleteBooking")
+	public boolean deleteBooking(@RequestBody BookingDTO bd){
+		return userService.cancelBooking(bd);
+	}
+
 }
