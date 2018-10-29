@@ -27,7 +27,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';
 
 axios.interceptors.request.use(request => {
-	let authentication = Users.State.getAuthentication(store.getState());
+	let authentication = cookie.load('authentication'); //Users.State.getAuthentication(store.getState());
 	if(_.isDefined(authentication)) {
 		request.headers.common['Authorization'] = 'Bearer ' + authentication['access_token'];
 	}
