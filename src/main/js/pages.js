@@ -269,9 +269,25 @@ ProfilePage = connect(
 export {ProfilePage};
 
 export class RodentSearch extends React.Component {
-    state = {
-        rodents: []
-    };
+    constructor() {
+        super();
+        this.state = {rodents:[],
+            allRodents:[],
+            hamsterChecked: true,
+            rabbitChecked: true,
+            guineaPigChecked: true,
+            ferretChecked: true,
+            chinchillaChecked:true,
+            otherChecked:true,
+        };
+        this.handleChangeHamster = this.handleChangeHamster.bind(this);
+        this.handleChangeOther = this.handleChangeOther.bind(this);
+        this.handleChangeChinchilla = this.handleChangeChinchilla.bind(this);
+        this.handleChangeFerret = this.handleChangeFerret.bind(this);
+        this.handleChangeRabbit = this.handleChangeRabbit.bind(this);
+        this.handleChangeGuineaPig = this.handleChangeGuineaPig.bind(this);
+    }
+
 
     componentDidMount() {
         axios.get('/pets/rodents')
@@ -279,13 +295,61 @@ export class RodentSearch extends React.Component {
                 const pets = res.pets;
                 console.log(pets);
                 this.setState({rodents: pets});
+                this.setState({allRodents: pets});
             });
     }
-
-    filterHamster() {
-        this.setState({rodents: this.state.rodents.filter(rodent => rodent.subtype == 'hamster')});
-        console.log('hi');
-        window.reload();
+    handleChangeHamster(checked) {
+        this.setState({checked});
+        this.setState({hamsterChecked: !this.state.hamsterChecked});
+        this.filterAnimals();
+    }
+    handleChangeRabbit(checked) {
+        this.setState({checked});
+        this.setState({rabbitChecked: !this.state.rabbitChecked});
+        this.filterAnimals();
+    }
+    handleChangeFerret(checked) {
+        this.setState({checked});
+        this.setState({ferretChecked: !this.state.ferretChecked});
+        this.filterAnimals();
+    }
+    handleChangeGuineaPig(checked) {
+        this.setState({checked});
+        this.setState({guineaPigChecked: !this.state.guineaPigChecked});
+        this.filterAnimals();
+    }
+    handleChangeChinchilla(checked) {
+        this.setState({checked});
+        this.setState({chinchillaChecked: !this.state.chinchillaChecked});
+        this.filterAnimals();
+    }
+    handleChangeOther(checked) {
+        this.setState({checked});
+        this.setState({otherChecked: !this.state.otherChecked});
+        this.filterAnimals();
+    }
+    filterAnimals() {
+        this.setState({rodents: this.state.allRodents});
+        if (!this.state.hamsterChecked) {
+            this.setState({rodents: this.state.rodents.filter(rodent => rodent.subtype != 'Hamster')});
+        }
+        if(!this.state.guineaPigChecked){
+            this.setState({rodents: this.state.rodents.filter(rodent => rodent.subtype != 'Guinea Pig')});
+        }
+        if(!this.state.rabbitChecked){
+            this.setState({rodents: this.state.rodents.filter(rodent => rodent.subtype != 'Rabbit')});
+        }
+        if(!this.state.otherChecked){
+            this.setState({rodents: this.state.rodents.filter(rodent => rodent.subtype != 'Other')});
+        }
+        if(!this.state.chinchillaChecked){
+            this.setState({rodents: this.state.rodents.filter(rodent => rodent.subtype != 'Chinchilla')});
+        }
+        if(!this.state.ferretChecked){
+            this.setState({rodents: this.state.rodents.filter(rodent => rodent.subtype != 'Ferret')});
+        }
+        //Note: You have to slide to fix, tap doesnt work
+        this.forceUpdate();
     }
 
     render() {
@@ -314,14 +378,98 @@ export class RodentSearch extends React.Component {
                                 <table className="table" id="dataTable" width="100%" cellSpacing="0">
                                     <thead>
                                     <tr>
-                                        <th className="pl-5"><span>Hamsters</span><HamsterSwitch/></th>
-                                        <th className="pl-5"><span>Rabbits</span><RabbitSwitch/></th>
-                                        <th className="pl-5"><span>Guinea Pigs</span><GuineaPigSwitch/></th>
+                                        <th className="pl-5"><span>Hamsters</span><Switch
+                                            checked={this.state.hamsterChecked}
+                                            onChange={this.handleChangeHamster}
+                                            onColor="#86d3ff"
+                                            onHandleColor="#2693e6"
+                                            handleDiameter={30}
+                                            uncheckedIcon={false}
+                                            checkedIcon={false}
+                                            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                                            activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                                            height={20}
+                                            width={48}
+                                            className="react-switch"
+                                            id="material-switch"
+                                        /></th>
+                                        <th className="pl-5"><span>Rabbits</span><Switch
+                                            checked={this.state.rabbitChecked}
+                                            onChange={this.handleChangeRabbit}
+                                            onColor="#86d3ff"
+                                            onHandleColor="#2693e6"
+                                            handleDiameter={30}
+                                            uncheckedIcon={false}
+                                            checkedIcon={false}
+                                            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                                            activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                                            height={20}
+                                            width={48}
+                                            className="react-switch"
+                                            id="material-switch"
+                                        /></th>
+                                        <th className="pl-5"><span>Guinea Pigs</span><Switch
+                                            checked={this.state.guineaPigChecked}
+                                            onChange={this.handleChangeGuineaPig}
+                                            onColor="#86d3ff"
+                                            onHandleColor="#2693e6"
+                                            handleDiameter={30}
+                                            uncheckedIcon={false}
+                                            checkedIcon={false}
+                                            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                                            activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                                            height={20}
+                                            width={48}
+                                            className="react-switch"
+                                            id="material-switch"
+                                        /></th>
                                     </tr>
                                     <tr>
-                                        <th className="pl-5"><span>Ferrets</span><FerretSwitch/></th>
-                                        <th className="pl-5"><span>Chinchillas</span><ChinchillaSwitch/></th>
-                                        <th className="pl-5"><span>Other</span><OtherRodentSwitch/></th>
+                                        <th className="pl-5"><span>Ferrets</span><Switch
+                                            checked={this.state.ferretChecked}
+                                            onChange={this.handleChangeFerret}
+                                            onColor="#86d3ff"
+                                            onHandleColor="#2693e6"
+                                            handleDiameter={30}
+                                            uncheckedIcon={false}
+                                            checkedIcon={false}
+                                            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                                            activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                                            height={20}
+                                            width={48}
+                                            className="react-switch"
+                                            id="material-switch"
+                                        /></th>
+                                        <th className="pl-5"><span>Chinchillas</span><Switch
+                                            checked={this.state.chinchillaChecked}
+                                            onChange={this.handleChangeChinchilla}
+                                            onColor="#86d3ff"
+                                            onHandleColor="#2693e6"
+                                            handleDiameter={30}
+                                            uncheckedIcon={false}
+                                            checkedIcon={false}
+                                            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                                            activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                                            height={20}
+                                            width={48}
+                                            className="react-switch"
+                                            id="material-switch"
+                                        /></th>
+                                        <th className="pl-5"><span>Other</span><Switch
+                                            checked={this.state.otherChecked}
+                                            onChange={this.handleChangeOther}
+                                            onColor="#86d3ff"
+                                            onHandleColor="#2693e6"
+                                            handleDiameter={30}
+                                            uncheckedIcon={false}
+                                            checkedIcon={false}
+                                            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                                            activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                                            height={20}
+                                            width={48}
+                                            className="react-switch"
+                                            id="material-switch"
+                                        /></th>
                                     </tr>
                                     </thead>
                                 </table>
@@ -366,7 +514,6 @@ export class RodentSearch extends React.Component {
             <a class="scroll-to-top rounded" href="#page-top">
                 <i class="fas fa-angle-up"></i>
             </a>
-
             <Logout/>
             </body>
             </html>
