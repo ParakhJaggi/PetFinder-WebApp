@@ -183,7 +183,7 @@ class ProfilePage extends React.Component {
     }
 
     /* callback to change the checkboxState to false when the checkbox is checked */
-    toggleAvailable(event, day) {
+    toggleAvailable(day, event) {
         let newAvailable = this.state.available;
         newAvailable[day] = !newAvailable[day];
         this.setState({
