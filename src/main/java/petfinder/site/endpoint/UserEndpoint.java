@@ -74,7 +74,7 @@ public class UserEndpoint {
 
 	@PostMapping(value = "/requestBooking")
 	public boolean requestBooking(@RequestBody makebookingDTO utd){
-		return userService.requestBooking(utd.getUserName(), new UserTimesDTO(utd.getBools()));
+		return userService.requestBooking(utd.getPrincipal(), new UserTimesDTO(utd.getDays()));
 	}
 
 	@PostMapping(value = "/confirmBooking")
