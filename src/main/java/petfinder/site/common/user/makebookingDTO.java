@@ -1,22 +1,22 @@
 package petfinder.site.common.user;
 
 public class makebookingDTO {
-    private boolean [] bools;
-    private String userName;
+    private boolean [] days;
+    private String principal;
 
-    public boolean[] getBools() {
-        return bools;
+    public boolean[] getDays() {
+        return days;
     }
 
-    public void setBools(boolean[] bools) {
-        this.bools = bools;
+    public void setDays(boolean[] days) {
+        this.days = days;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getPrincipal() {
+        return principal;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setPrincipal(String principal) {
+        this.principal = principal;
     }
 }
