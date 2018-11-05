@@ -299,9 +299,6 @@ public class UserService {
 		if(!user.isPresent() ){
 			return false;
 		}
-		//now see if that was an actually existant request
-		if(!user.get().getUser().getRequestedBookings().contains(bd))
-			return false;
 
 		//figure out which one is the sitter
 		UserAuthenticationDto sitter = (user.get().user.getType() == UserType.SITTER ? user.get() : other.get());

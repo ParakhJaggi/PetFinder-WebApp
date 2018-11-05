@@ -160,8 +160,8 @@ export class Field extends React.Component {
 	render() {
 		let props = this.getReifiedProps();
 
-        console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-        console.log(this.props.defaultVal);
+        //console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+        //console.log(this.props.defaultVal);
 		if(this.props.defaultVal && this.props.defaultVal != null) {
             return <ReduxForm.Field name={props.name}
                                     component={this.renderField}

@@ -6,8 +6,8 @@ class SitterRow extends React.Component{
         let days = [false, false, false, false, false, false, false];
         days[index] = true;
         axios.post('/api/user/requestBooking', {
-            userName: this.props.sitter.principal,
-            time:{bools: days}
+            principal: this.props.sitter.principal,
+            days: days
         });
     }
     render(){
@@ -18,7 +18,7 @@ class SitterRow extends React.Component{
                 </td>
                 {this.props.sitter.days.map((available, index) =>
                     <td><button onClick={this.onClick.bind(this, index)} disabled={!available}
-                     >Book</button></td>
+                     >Request Booking</button></td>
                 )}
             </tr>
         );
