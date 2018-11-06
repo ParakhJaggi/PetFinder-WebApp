@@ -219,8 +219,9 @@ class ProfilePage extends React.Component {
                     {_.isDefined(this.props.user) &&
                     <div>Welcome, {this.props.user.principal}!</div>
                     }
-                    {_.isDefined(this.props.user) &&
-                    <div>Do you have a notification? {this.props.user.notification}!</div>
+	                {
+	                	this.state.user &&
+                        <div>Do you have a notification? {this.state.user.notification}!</div>
                     }
                     {
                         this.state.pets &&
