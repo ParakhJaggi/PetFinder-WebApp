@@ -353,9 +353,14 @@ public class UserService {
 		//figure out which one is the sitter
 		UserAuthenticationDto sitter = (user.get().user.getType() == UserType.SITTER ? user.get() : other.get());
 		UserAuthenticationDto owner =  (user.get().user.getType() == UserType.OWNER ? user.get() : other.get());
-
-		if(sitter.getUser().getRequestedBookings().contains(bd)) {
-			sitter.getUser().getRequestedBookings().remove(bd);
+		//see if it is the owner cancelling a requested booking
+		if(principal.equals(owner.getUser().getPrincipal())){
+			if(sitter.getUser().getRequestedBookings().contains(bd))
+				sitter.getUser().getRequestedBookings().remove(bd);
+			else{
+				owner.getUser().getBookings().remove(bd);
+				sitter.getUser().getBookings().remove(new BookingDTO(owner.getUser().getPrincipal(), bd.getDays()));
+			}
 		}
 		else {
 			sitter.getUser().getBookings().remove(bd);
