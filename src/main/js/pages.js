@@ -199,7 +199,7 @@ class ProfilePage extends React.Component {
                 <h3><label className="container-checkbox">{week[i]}
                     <input type="checkbox" checked={this.state.available[i]}
                            onClick={this.toggleAvailable.bind(this, i)}/>
-                    <span className="checkmark"></span>
+                    <span className="checkmark"/>
                 </label></h3>
             );
         }
