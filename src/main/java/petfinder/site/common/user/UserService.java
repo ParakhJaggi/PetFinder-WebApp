@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -173,6 +174,14 @@ public class UserService {
 		return userDao.delete(principal);
 	}
 
+    /**
+     * Returns all possible sitters for the given user. Gives 20 users within the same zip code.
+     * Users within the same city are given higher priority than those who are not.
+     * @author Laird
+     * @param principal the owner
+     * @return all possible sitters for the owner
+     * @throws UserException if the user does not have an associated zip code
+     */
 	public UserCollectionDTO getAvailableSitters(String principal) throws UserException{
 		Optional<UserDto> userp = findUserByPrincipal(principal);
 		if(!userp.isPresent()){
@@ -207,10 +216,19 @@ public class UserService {
 					return flag;
 				})
 				.sorted((x,y) -> x.getCity().compareTo(y.getCity()))
+                .limit((long)20)
 				.collect(Collectors.toList());
 		users.setUsers(filtered);
 		return users;
 	}
+
+    /**
+     * @author Laird
+     * @param utd day availability
+     * @return the current user
+     * @see UserTimesDTO
+     * @see UserDto
+     */
 	public UserDto setUserTimes(UserTimesDTO utd){
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> a = userDao.findUserByPrincipal(principal);
@@ -222,6 +240,11 @@ public class UserService {
 		}
 		return null;
 	}
+
+    /**
+     * Returns the days that the current user is available.
+     * @author Laird
+     */
 	public UserTimesDTO getTimes(){
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> a = userDao.findUserByPrincipal(principal);
@@ -230,6 +253,13 @@ public class UserService {
 		}
 		return null;
 	}
+
+    /**
+     * @author laird
+     * @param s the principal of the sitter that the owner is requesting a booking of
+     * @param utd boolean array representing each day of the week
+     * @return true indicates that the booking has been successfully requested
+     */
 	public boolean requestBooking(String s, UserTimesDTO utd){
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> owner = userDao.findUserByPrincipal(principal);
@@ -255,6 +285,12 @@ public class UserService {
 		return true;
 	}
 
+    /**
+     * @author Laird
+     * @param isConfirmed true means that confimed bookings should be returned. False means that requested bookings should be returned.
+     * @return list of bookings
+     * @see BookingDTO
+     */
 	public List<BookingDTO> getMySits(boolean isConfirmed){
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
@@ -267,6 +303,13 @@ public class UserService {
 		return sitter.get().user.getRequestedBookings();
 	}
 
+    /**
+     * This method is used for a sitter to confirm a requestedbooking from an owner.
+     * @author Laird
+     * @param bd the bookig that the user will request
+     * @return true indicates that the booking was successfully confimed. False means the confirmation failed.
+     * @see BookingDTO
+     */
 	public boolean confirmBooking (BookingDTO bd){
 		//first see if the current user is a sitter and exists
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -290,6 +333,13 @@ public class UserService {
 		return true;
 	}
 
+    /**
+     * Method to cancel a booking. can be called by an owner or a sitter to cancel a requested or confirmed booking.
+     * @author Laird
+     * @param bd booking to cancel
+     * @return true indicates success in cancelling the @Link{bd}
+     * @see BookingDTO
+     */
 	public boolean cancelBooking (BookingDTO bd){
 		//first get the current user
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -299,9 +349,6 @@ public class UserService {
 		if(!user.isPresent() ){
 			return false;
 		}
-		//now see if that was an actually existant request
-		if(!user.get().getUser().getRequestedBookings().contains(bd))
-			return false;
 
 		//figure out which one is the sitter
 		UserAuthenticationDto sitter = (user.get().user.getType() == UserType.SITTER ? user.get() : other.get());
@@ -319,6 +366,39 @@ public class UserService {
 		userDao.save(owner);
 		return true;
 	}
+
+    /**
+     * Method for an owner to add a review to a sitter.
+     * @author Laird
+     * @param rd review that the current owner is adding.
+     * @see ReviewDTO
+     */
+	public void addReview (ReviewDTO rd){
+        String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+	    UserDto owner = userDao.findUserByPrincipal(principal).get().getUser();
+        if(owner.getType() != UserType.OWNER){
+            return;
+        }
+	    Optional<UserAuthenticationDto> op = userDao.findUserByPrincipal(rd.getUser());
+	    if(op.isPresent()){
+	        UserDto sitter = op.get().getUser();
+	        if(sitter.getType()!= UserType.SITTER){
+	            return;
+            }
+            //see if the owner has already left a review
+            ReviewDTO review = sitter.getReviews().stream().filter(x -> x.getUser().equals(principal)).findFirst().orElse(null);
+            if(review != null) {
+                //already exists
+                sitter.getReviews().remove(review);
+                sitter.setReviewSum(sitter.getReviewSum() - review.getAssignedScore());
+                sitter.setReviewCount(sitter.getReviewCount() - 1);
+            }
+            //now add the review
+            rd.setUser(principal);
+            sitter.getReviews().add(rd);
+            userDao.save(op.get());
+	    }
+    }
 
 	//For testing
     public Optional<UserAuthenticationDto> findUsersTest(String principle){

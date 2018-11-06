@@ -21,13 +21,11 @@ export class Select extends React.Component {
 
 		let mappedValues = _.mapValues(_.groupBy(options, option => resolvedMapper(option.value)), ([element]) => element);
 		let mappedOptions = _.map(options, ({label, value}) => ({label, value: resolvedMapper(value)}));
-
 		let wrappedChange = (value) => {
 			let resolvedValue = null;
 			if(!_.isNil(value)) {
 				resolvedValue = mappedValues[value.value].value;
 			}
-
 			onChange(resolvedValue);
 		};
 
@@ -88,11 +86,9 @@ export class Field extends React.Component {
 
 	buildField = ({ field }, input) => {
 		let resolvedField = null;
-
 		if(_.isObject(field)) {
 			resolvedField = Utils.extendComponent(field, input);
 		}
-
 		return resolvedField;
 	};
 
