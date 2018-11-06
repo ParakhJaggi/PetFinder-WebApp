@@ -24,7 +24,8 @@ public class UserEndpoint {
 	@GetMapping(value = "", produces = "application/json")
 	public Optional<UserDto> getUserDetails() {
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
-		return userService.findUserByPrincipal(principal);
+		Optional<UserDto> debug = userService.findUserByPrincipal(principal);
+		return debug;
 	}
 
 	@PostMapping(value = "/register")
