@@ -12,10 +12,10 @@ function buildReduxValidator(validator, props) {
 
 export class Select extends React.Component {
 	render() {
-		const { value, onBlur, onChange, mapper, options, clearable, ...props } = this.props;
+		const {value, onBlur, onChange, mapper, options, clearable, ...props} = this.props;
 
 		let resolvedMapper = i => i;
-		if(!_.isNil(mapper)) {
+		if (!_.isNil(mapper)) {
 			resolvedMapper = mapper;
 		}
 
@@ -23,24 +23,24 @@ export class Select extends React.Component {
 		let mappedOptions = _.map(options, ({label, value}) => ({label, value: resolvedMapper(value)}));
 		let wrappedChange = (value) => {
 			let resolvedValue = null;
-			if(!_.isNil(value)) {
+			if (!_.isNil(value)) {
 				resolvedValue = mappedValues[value.value].value;
 			}
 			onChange(resolvedValue);
 		};
 
 		let internalValue = '';
-		if(!_.isNil(value) && value !== '') {
+		if (!_.isNil(value) && value !== '') {
 			internalValue = resolvedMapper(value);
 		}
 
 		let wrappedOnBlur = null;
-		if(!_.isNil(onBlur)) {
+		if (!_.isNil(onBlur)) {
 			wrappedOnBlur = () => onBlur(value);
 		}
 
 		let clearAllowed = false;
-		if(!_.isNil(clearable)) {
+		if (!_.isNil(clearable)) {
 			clearAllowed = clearable;
 		}
 
@@ -58,15 +58,16 @@ export class Select extends React.Component {
 export class Field extends React.Component {
 	getReifiedProps = () => {
 		let reifiedProps = _.clone(this.props);
-		if(_.isNil(reifiedProps.field)) {
-			if(_.isNil(reifiedProps.defaultVal)) {
-                reifiedProps.field = <input className="form-control" placeholder="Value"/>;
-            }else{
-                reifiedProps.field = <input className="form-control" placeholder={reifiedProps.defaultVal} value="Defcoooon 5"/>; //{reifiedProps.defaultVal}
+		if (_.isNil(reifiedProps.field)) {
+			if (_.isNil(reifiedProps.defaultVal)) {
+				reifiedProps.field = <input className="form-control" placeholder="Value"/>;
+			} else {
+				reifiedProps.field =
+					<input className="form-control" placeholder={reifiedProps.defaultVal} value="Defcoooon 5"/>; //{reifiedProps.defaultVal}
 			}
 		}
 
-		if(_.isNil(reifiedProps.label)) {
+		if (_.isNil(reifiedProps.label)) {
 			reifiedProps.label = {type: 'text', text: reifiedProps.friendlyName};
 		}
 
@@ -75,81 +76,84 @@ export class Field extends React.Component {
 		return reifiedProps;
 	};
 
-	buildLabel = ({ label, validators }) => {
+	buildLabel = ({label, validators}) => {
 		return (
 			<label className={this.props.stacked ? '' : 'col-4 col-form-label'}>
-				{ label.text }
-				{ validators.map(validator => validator.spec).includes(Validation.required) && <span className="required">*</span> }
+				{label.text}
+				{validators.map(validator => validator.spec).includes(Validation.required) &&
+				<span className="required">*</span>}
 			</label>
 		);
 	};
 
-	buildField = ({ field }, input) => {
+	buildField = ({field}, input) => {
 		let resolvedField = null;
-		if(_.isObject(field)) {
+		if (_.isObject(field)) {
 			resolvedField = Utils.extendComponent(field, input);
 		}
 		return resolvedField;
 	};
 
-	hasError = ({ touched, error }) => {
+	hasError = ({touched, error}) => {
 		return touched && error;
 	};
 
 	buildMessaging = (props, meta) => {
-		if(!this.hasError(meta)) {
+		if (!this.hasError(meta)) {
 			return null;
 		}
 
 		return (
 			<div className="alert alert-danger">
-				<strong><span className="fa fa-warning" /></strong> { meta.error }
+				<strong><span className="fa fa-warning"/></strong> {meta.error}
 			</div>
 		);
 	};
 
 	//TODO this could be more efficient
-	renderField = ({ input, meta }) => {
+	renderField = ({input, meta}) => {
 		let props = this.getReifiedProps();
 
 		let field = this.buildField(props, input);
-		if(field.props.type === 'checkbox') {
-			let { label, validators } = props;
+		if (field.props.type === 'checkbox') {
+			let {label, validators} = props;
 			let resolvedCheckbox = null;
-			if(_.isObject(field)) {
+			if (_.isObject(field)) {
 				resolvedCheckbox = Utils.extendComponent(field, {checked: field.props.value});
 			}
 
 			return (
 				<div className={'form-group ' + this.props.className}>
 					<div className="form-check">
-						{ resolvedCheckbox }
+						{resolvedCheckbox}
 						{
 							<label className={'form-check-label'}>
-								{ label.text }
-								{ validators.map(validator => validator.spec).includes(Validation.required) && <span className="required">*</span> }
+								{label.text}
+								{validators.map(validator => validator.spec).includes(Validation.required) &&
+								<span className="required">*</span>}
 							</label>
 						}
-						{ this.buildMessaging(props, meta) }
+						{this.buildMessaging(props, meta)}
 					</div>
 				</div>
 			);
 		}
-		if(props.decorate) {
+		if (props.decorate) {
 			return (
 				<div>
-					<div className={'form-group' + (this.hasError(meta) ? ' has-error' : '') + (props.stacked ? '' : ' row')}>
-						{ props.showLabel && this.buildLabel(props) }
+					<div
+						className={'form-group' + (this.hasError(meta) ? ' has-error' : '') + (props.stacked ? '' : ' row')}>
+						{props.showLabel && this.buildLabel(props)}
 						<div className={props.stacked ? '' : ('col-' + (props.showLabel ? '8' : '12'))}>
-							{ field }
+							{field}
 						</div>
 					</div>
-					{ this.buildMessaging(props, meta) }
+					{this.buildMessaging(props, meta)}
 				</div>
 			);
 		}
 		else {
-			if(this.hasError(meta)) {
+			if (this.hasError(meta)) {
 				let className = field.props.className + ' has-error';
 				return Utils.extendComponent(field, {className});
 			}
@@ -160,17 +164,17 @@ export class Field extends React.Component {
 	render() {
 		let props = this.getReifiedProps();
 
-        //console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-        //console.log(this.props.defaultVal);
-		if(this.props.defaultVal && this.props.defaultVal != null) {
-            return <ReduxForm.Field name={props.name}
-                                    component={this.renderField}
-                                    validate={props.validators.map(validator => buildReduxValidator(validator, props))}
-                                    defaultValue={this.props.defaultVal}/>;
-        }else{
-            return <ReduxForm.Field name={props.name}
-                                    component={this.renderField}
-                                    validate={props.validators.map(validator => buildReduxValidator(validator, props))}/>;
+		//console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+		//console.log(this.props.defaultVal);
+		if (this.props.defaultVal && this.props.defaultVal != null) {
+			return <ReduxForm.Field name={props.name}
+			                        component={this.renderField}
+			                        validate={props.validators.map(validator => buildReduxValidator(validator, props))}
+			                        defaultValue={this.props.defaultVal}/>;
+		} else {
+			return <ReduxForm.Field name={props.name}
+			                        component={this.renderField}
+			                        validate={props.validators.map(validator => buildReduxValidator(validator, props))}/>;
 		}
 	}
 }
@@ -188,9 +192,9 @@ export class Button extends React.Component {
 	};
 
 	render() {
-		let { children, className, disabled, loadingText, loading, ...props } = this.props;
+		let {children, className, disabled, loadingText, loading, ...props} = this.props;
 		disabled = disabled || loading;
-		if(_.isNil(loadingText)) {
+		if (_.isNil(loadingText)) {
 			loadingText = children;
 		}
 
