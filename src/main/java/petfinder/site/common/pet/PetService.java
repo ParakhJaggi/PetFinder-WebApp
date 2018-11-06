@@ -34,26 +34,55 @@ public class PetService {
 		petDao.save(pet);
 	}
 
+	/**
+	 * @author Laird
+	 * @return
+	 */
 	public PetCollectionDTO findAllCats(){
 		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setCat().generate());
 	}
 
+	/**
+	 * @author Laird
+	 * @return
+	 */
 	public PetCollectionDTO findAllDogs(){
 		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setDog().generate());
 	}
 
+	/**
+	 * @author Laird
+	 * @return
+	 */
 	public PetCollectionDTO findAllRodents(){
 		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setRodent().generate());
 	}
 
+	/**
+	 * @author Laird
+	 * @return
+	 */
 	public PetCollectionDTO findAllBirds(){
 		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setBird().generate());
 	}
 
+	/**
+	 * @author Laird
+	 * @return
+	 */
 	public PetCollectionDTO findAllReptiles(){
 		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setReptile().generate());
 	}
 
+	/**
+	 * @author Laird
+	 * @param cat
+	 * @param dog
+	 * @param rodent
+	 * @param bird
+	 * @param reptile
+	 * @return
+	 */
 	public PetCollectionDTO findByCustomType(boolean cat, boolean dog,
 											 boolean rodent, boolean bird, boolean reptile){
 		AnimalTypeRequestBuilder buildRequest = AnimalTypeRequestBuilder.getInstance();
@@ -70,9 +99,21 @@ public class PetService {
 		return petDao.findByType(buildRequest.generate());
 	}
 
+	/**
+	 * @author Laird
+	 * @param atr
+	 * @return
+	 */
 	public PetCollectionDTO findByType(AnimalTypeRequest atr){
 		return petDao.findByType(atr);
 	}
+
+	/**
+	 * @author Laird
+	 * @param term
+	 * @param toMatch
+	 * @return
+	 */
 	public PetCollectionDTO findByFieldMatch(String term, List<Object> toMatch){
 		try{
 			return petDao.findByFieldMatch(term, toMatch);
@@ -82,6 +123,11 @@ public class PetService {
 			return null;
 		}
 	}
+
+	/**
+	 * @author Laird
+	 * @param newPet
+	 */
 	public void editPet(PetDto newPet){
 		petDao.deletePet(newPet.getId());
 		petDao.save(newPet);

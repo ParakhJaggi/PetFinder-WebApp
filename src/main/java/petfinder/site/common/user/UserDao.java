@@ -33,10 +33,9 @@ public class UserDao {
 	public Optional<UserAuthenticationDto> findUserByPrincipal(String principal) {
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		String queryString = String.format("user.principal=\"%s\"", principal.replace("\"", ""));
+		String queryString = String.format("user.principal===\"%s\"", principal.replace("\"", ""));
 		searchSourceBuilder.query(QueryBuilders.queryStringQuery(queryString));
-
-		return repository.search(searchSourceBuilder).stream().findFirst();
+		return repository.search(searchSourceBuilder).stream().filter(x->x.getMomento().equals(principal)).findFirst();
 	}
 
 	public void save(UserAuthenticationDto userAuthentication) {
