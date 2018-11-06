@@ -165,7 +165,7 @@ class ProfilePage extends React.Component {
 				console.log(res);
 				this.setState({user: res});
 			});
-		axios.get('/api/userPets/getPets')
+		axios.get('/api/userPets/ugly')
 			.then(res => {
 				console.log(res);
 				this.setState({pets: res.pets});
