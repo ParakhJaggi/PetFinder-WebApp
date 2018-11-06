@@ -67,37 +67,71 @@ public class PetEndpoint {
 	}
 
 
+	/**
+	 * @author Laird
+	 * @return
+	 */
 	@GetMapping(value = "/all", produces = "application/json")
 	public PetCollectionDTO getAll(){
 		return petService.findByType(AnimalTypeRequestBuilder.getInstance().generate());
 		//return petService.findByType(new AnimalTypeRequest(true, false, false, false, false));
 	}
 
+	/**
+	 * @author Laird
+	 * @return
+	 */
 	@GetMapping(value = "/cats", produces = "application/json")
 	public PetCollectionDTO getCats(){
 		//return petService.findByFieldMatch("type", AnimalTypeRequestBuilder.getInstance().setCat().generate().getObjects());
 		return petService.findAllCats();
 	}
 
+	/**
+	 * @author Laird
+	 * @return
+	 */
 	@GetMapping(value = "/dogs", produces = "application/json")
 	public PetCollectionDTO getDogs(){
 		return petService.findAllDogs();
 	}
 
+	/**
+	 * @author Laird
+	 * @return
+	 */
 	@GetMapping(value = "/reptiles", produces = "application/json")
 	public PetCollectionDTO getReptiles(){
 		return petService.findAllReptiles();
 	}
 
+	/**
+	 * @author Laird
+	 * @return
+	 */
 	@GetMapping(value = "/rodents", produces = "application/json")
 	public PetCollectionDTO getRodents(){
 		return petService.findAllRodents();
 	}
 
+	/**
+	 * @author Laird
+	 * @return
+	 */
 	@GetMapping(value = "/birds", produces = "application/json")
 	public PetCollectionDTO getBirds(){
 		return petService.findAllBirds();
 	}
+
+	/**
+	 * @author Laird
+	 * @param cat
+	 * @param dog
+	 * @param rodent
+	 * @param bird
+	 * @param reptile
+	 * @return
+	 */
 	@GetMapping(value = "/{cat}/{dog}/{rodent}/{bird}/{reptile}", produces = "application/json")
 	public PetCollectionDTO getBirds(@PathVariable("cat") Boolean cat, @PathVariable("dog") Boolean dog,
 									 @PathVariable("rodent") Boolean rodent, @PathVariable("bird") Boolean bird,
@@ -105,6 +139,11 @@ public class PetEndpoint {
 		return petService.findByCustomType(cat, dog, rodent, bird, reptile);
 	}
 
+	/**
+	 * @author Laird
+	 * @param request
+	 * @return
+	 */
 	@GetMapping(value = "/byType", produces = "application/json")
 	public PetCollectionDTO getByGenericType(@RequestBody SingleFieldRequest request) {
 		return petService.findByFieldMatch(request.getField(), request.getDesiredValues());

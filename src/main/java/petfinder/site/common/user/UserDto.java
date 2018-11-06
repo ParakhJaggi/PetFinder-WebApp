@@ -20,8 +20,34 @@ public class UserDto implements Momento<String> {
 	private List<BookingDTO> bookings;
 	private List<BookingDTO> requestedBookings;
     private String notification = "";
+    private int reviewCount, reviewSum;
+    private List<ReviewDTO> reviews;
 
-    public String getNotification() {
+	public int getReviewCount() {
+		return reviewCount;
+	}
+
+	public void setReviewCount(int reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+
+	public int getReviewSum() {
+		return reviewSum;
+	}
+
+	public void setReviewSum(int reviewSum) {
+		this.reviewSum = reviewSum;
+	}
+
+	public List<ReviewDTO> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<ReviewDTO> reviews) {
+		this.reviews = reviews;
+	}
+
+	public String getNotification() {
         return this.notification;
     }
 
@@ -31,10 +57,12 @@ public class UserDto implements Momento<String> {
 
 
 	public UserDto() {
-
+		this.reviewCount = 1;
+		this.reviewSum = 10;
 	}
 
 	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String notification) {
+		this();
 		this.principal = principal;
 		this.roles = roles;
 		this.attributes = attributes;
@@ -45,6 +73,7 @@ public class UserDto implements Momento<String> {
 		this.notification = notification;
 	}
 	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip, boolean [] b) {
+		this();
 		this.principal = principal;
 		this.roles = roles;
 		this.attributes = attributes;
@@ -58,6 +87,7 @@ public class UserDto implements Momento<String> {
 		this.days=b;
 	}
 	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip) {
+		this();
 		this.principal = principal;
 		this.roles = roles;
 		this.attributes = attributes;
@@ -72,7 +102,8 @@ public class UserDto implements Momento<String> {
 	}
 
     public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes) {
-        this.principal = principal;
+        this();
+		this.principal = principal;
         this.roles = roles;
         this.attributes = attributes;
         this.type = type;

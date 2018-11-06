@@ -20,6 +20,10 @@ public class UserPetEndpoint {
     @Autowired
     private PetService petService;
 
+    /**
+     * @author Laird
+     * @return
+     */
     @GetMapping("/getPets")
     public PetCollectionDTO getUsersPets(){
         List<Object> userName = new ArrayList<>();
@@ -34,6 +38,11 @@ public class UserPetEndpoint {
         return ret;
     }
 
+    /**
+     * @author Laird
+     * @param pet
+     * @return
+     */
     @PostMapping(value = "/savePet",produces = "application/json")
     public PetDto savePet(@RequestBody PetDto pet) {
         //if(pet.getId() == null) {
