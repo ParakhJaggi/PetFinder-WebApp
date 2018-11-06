@@ -401,6 +401,8 @@ public class UserService {
             //now add the review
             rd.setUser(principal);
             sitter.getReviews().add(rd);
+            sitter.setReviewCount(sitter.getReviewCount() + 1);
+            sitter.setReviewSum(sitter.getReviewSum() + rd.getAssignedScore());
             userDao.save(op.get());
 	    }
     }
