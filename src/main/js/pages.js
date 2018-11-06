@@ -1004,12 +1004,70 @@ export class Dashboard extends React.Component {
 var Chart = require('chart.js');
 
 export class AboutUs extends React.Component {
+    state = {
+        bookings: []
+    };
+
+    componentDidMount() {
+        axios.get('/api/user')
+            .then(res => {
+                const myBookings = res.bookings;
+                console.log(myBookings.size);
+                this.setState({bookings: myBookings});
+            });
+    }
+
     render() {
         return (
-            <div>
-                <NavBar/>
-                <SideBar/>
+            <body id="page-top">
+            <div id="wrapper">
+                <NavBar></NavBar>
+                <SideBar></SideBar>
+                <div id="content-wrapper">
+                    <div class="top-buffer">
+                    </div>
+                    <div class="container shiftRight">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">Bookings</li>
+                        </ol>
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fas fa-table"></i>
+                                Bookings
+                            </div>
+                            <div class="card-body">
+                                <div className="table-responsive">
+                                    <table className="table table-bordered" id="dataTable" width="90%" cellSpacing="0">
+                                        <Pulse>
+                                            <thead>
+                                            <tr>
+                                                <td>Sitter Name</td>
+                                                <td>Rating</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                           {this.state.bookings.map(bkings =>
+                                                <tr>
+                                                    <td>{bkings.principal}</td>
+                                                    <td>hi</td>
+                                                </tr>
+                                            )}
+                                           {this.state.bookings.principal}
+
+                                            </tbody>
+                                        </Pulse>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <Logout/>
+            </body>
         );
     }
 }
