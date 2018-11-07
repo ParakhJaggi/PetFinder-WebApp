@@ -83,6 +83,12 @@ public class UserEndpoint {
 		return userService.getAvailableSitters(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
+	@GetMapping(value = "/clearnotifications")
+	public void clearNotifications() throws UserException {
+		//return userService.getAvailableSitters("sitter1@sitter.com");
+		userService.ClearNotifications(SecurityContextHolder.getContext().getAuthentication().getName());
+	}
+
 	/**
 	 * @author Laird
 	 * @param utd
@@ -140,6 +146,7 @@ public class UserEndpoint {
 	@PostMapping(value = "/addReviewScore")
 	public void addReview(@RequestBody ReviewDTO rd){
 		userService.addReview(rd);
+
 	}
 
 }

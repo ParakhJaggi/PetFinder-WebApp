@@ -46,6 +46,11 @@ function logout() {
 	window.location.replace('...');
 }
 
+function ClearNotification() {
+	axios.get('/api/user/clearnotifications');
+	location.reload();
+}
+
 export class Home extends React.Component {
 	render() {
 		/*TODO edit*/
@@ -210,9 +215,6 @@ class ProfilePage extends React.Component {
 				<NavBar/>
 				<SideBar/>
 				<div className="top-buffer shiftRight">
-					This is Profile Page.
-					This will let users edit photo/add other info
-
 					{_.isDefined(this.props.authentication)
 						//<div>{this.props.authentication['access_token']}</div>
 					}
@@ -221,8 +223,14 @@ class ProfilePage extends React.Component {
 					}
 					{
 						this.state.user &&
-						<div>Do you have a notification? {this.state.user.notification}!</div>
+						<div>Your current notifications: {this.state.user.notification.map(test =>
+							<tr>
+								<td>{test.toString() }</td>
+							</tr>
+						)}</div>
 					}
+					<button className="btn btn-primary" onClick={() => ClearNotification()}>Clear Notifications</button>
+
 					{
 						this.state.pets &&
 						this.state.pets.map(pet =>
