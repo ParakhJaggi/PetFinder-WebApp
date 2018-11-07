@@ -102,9 +102,9 @@ export class SideBar extends React.Component {
 						<span>Add Pet</span></a>
 				</li>
 				<li className="nav-item">
-					<a className="nav-link" href="#/about-us">
+					<a className="nav-link" href="#/review-page">
 						<i className="fas fa-fw fa-table"></i>
-						<span>About Us</span></a>
+						<span>Leave a Review</span></a>
 				</li>
 			</ul>
 		);

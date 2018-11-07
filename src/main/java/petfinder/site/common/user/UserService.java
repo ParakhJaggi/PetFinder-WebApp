@@ -1,10 +1,7 @@
 package petfinder.site.common.user;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -192,16 +189,21 @@ public class UserService {
 		if(!(user.getType() == UserType.OWNER)){
 			return null;
 		}
-		List<Object> zipMatch = new ArrayList<>();
+		List<Object> zipMatch = new ArrayList<>(), cityMatch = new ArrayList<>();
 		if(user.getZip() == null){
 			throw new UserException("current user has no zip");
 		}
 		zipMatch.add(user.getZip());
+		cityMatch.add(user.getCity());
 		//first get all users within the same zip
 		UserCollectionDTO users = userDao.findByFieldMatch("user.zip", zipMatch );
+		UserCollectionDTO userCity = userDao.findByFieldMatch("user.city", cityMatch );
+
+		Set<UserDto> allObjects = new HashSet<>(users.getUsers());
+		allObjects.addAll(userCity.getUsers());
 
 		//now remove the current user
-		List<UserDto> filtered = users.getUsers().stream()
+		List<UserDto> filtered = allObjects.stream()
 				.distinct()
 				.filter(x-> !x.getPrincipal().equals(user.getPrincipal())
 						&& x.getType() == UserType.SITTER)
@@ -353,18 +355,18 @@ public class UserService {
 		//figure out which one is the sitter
 		UserAuthenticationDto sitter = (user.get().user.getType() == UserType.SITTER ? user.get() : other.get());
 		UserAuthenticationDto owner =  (user.get().user.getType() == UserType.OWNER ? user.get() : other.get());
-		//see if it is the owner cancelling a requested booking
-		if(principal.equals(owner.getUser().getPrincipal())){
-			if(sitter.getUser().getRequestedBookings().contains(bd))
-				sitter.getUser().getRequestedBookings().remove(bd);
-			else{
+		if(sitter.getUser().getRequestedBookings().contains(bd))
+			sitter.getUser().getRequestedBookings().remove(bd);
+		else {
+			//see if it is the owner cancelling a requested booking
+			if (principal.equals(owner.getUser().getPrincipal())) {
 				owner.getUser().getBookings().remove(bd);
 				sitter.getUser().getBookings().remove(new BookingDTO(owner.getUser().getPrincipal(), bd.getDays()));
 			}
-		}
-		else {
-			sitter.getUser().getBookings().remove(bd);
-			owner.getUser().getBookings().remove(new BookingDTO(owner.getUser().getPrincipal(), bd.getDays()));
+			else {
+				sitter.getUser().getBookings().remove(bd);
+				owner.getUser().getBookings().remove(new BookingDTO(owner.getUser().getPrincipal(), bd.getDays()));
+			}
 		}
 
 		userDao.save(sitter);

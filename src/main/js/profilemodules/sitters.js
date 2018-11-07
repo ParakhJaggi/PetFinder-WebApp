@@ -45,7 +45,13 @@ export class SitterTable extends React.Component {
 
 	render() {
 		return (
-			<table>
+            <div className="card mb-3">
+                <div className="card-header">
+                    <i className="fas fa-table"></i>
+                    Available Sitters
+                </div>
+                <div className="card-body">
+            <table className="table" id="dataTable" width="100%" cellSpacing="0">
 				<thead>
 				<tr>
 					<th>Name</th>
@@ -64,6 +70,7 @@ export class SitterTable extends React.Component {
 				)}
 				</tbody>
 			</table>
+				</div></div>
 		);
 	}
 }

@@ -58,7 +58,8 @@ public class UserDto implements Momento<String> {
 
 	public UserDto() {
 		this.reviewCount = 1;
-		this.reviewSum = 10;
+		this.reviewSum = 100;
+		this.reviews = new LinkedList<>();
 	}
 
 	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String notification) {
@@ -197,5 +198,34 @@ public class UserDto implements Momento<String> {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		UserDto userDto = (UserDto) o;
+		return reviewCount == userDto.reviewCount &&
+				reviewSum == userDto.reviewSum &&
+				Objects.equals(principal, userDto.principal) &&
+				Objects.equals(roles, userDto.roles) &&
+				type == userDto.type &&
+				Objects.equals(attributes, userDto.attributes) &&
+				Objects.equals(address, userDto.address) &&
+				Objects.equals(city, userDto.city) &&
+				Objects.equals(state, userDto.state) &&
+				Objects.equals(zip, userDto.zip) &&
+				Arrays.equals(days, userDto.days) &&
+				Objects.equals(bookings, userDto.bookings) &&
+				Objects.equals(requestedBookings, userDto.requestedBookings) &&
+				Objects.equals(notification, userDto.notification) &&
+				Objects.equals(reviews, userDto.reviews);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = Objects.hash(principal, roles, type, attributes, address, city, state, zip, bookings, requestedBookings, notification, reviewCount, reviewSum, reviews);
+		result = 31 * result + Arrays.hashCode(days);
+		return result;
 	}
 }

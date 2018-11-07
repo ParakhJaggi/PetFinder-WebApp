@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author Laird
+ */
 public class UserTester extends UserDao {
     // public static final String emailEndings[] = {"baylor password","gmail password", "yahoo password", "hotmail password","outlook password"};
      private static List<UserDto> usersTotal = null;
@@ -127,6 +130,14 @@ public class UserTester extends UserDao {
         return Optional.empty();
     }
 
+    /**
+     * This allows testing to be performed without actually using elasticsearch.
+     * Filtering is performed using streams.
+     * @author Laird
+     * @param term the attribute name to match by
+     * @param toMatch the allowable values for the field name
+     * @return all matches
+     */
     @Override
     public UserCollectionDTO findByFieldMatch(String term, List<Object> toMatch)  {
         UserCollectionDTO toReturn = new UserCollectionDTO();
