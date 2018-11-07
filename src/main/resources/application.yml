@@ -33,7 +33,7 @@ web:
 
 elastic-search:
   host: boxwood-9271516.us-east-1.bonsaisearch.net
-  port: 443
+  port:
   scheme: https
   user-name: zxnyitaja8
   password: me7jgdxlr1
