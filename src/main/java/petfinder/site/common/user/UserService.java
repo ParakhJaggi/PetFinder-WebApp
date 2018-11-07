@@ -389,7 +389,7 @@ public class UserService {
 				owner.getUser().getBookings().remove(new BookingDTO(owner.getUser().getPrincipal(), bd.getDays()));
 			}
 		}
-
+		sitter.getUser().setReviewSum(sitter.getUser().getReviewSum()-1);
 		userDao.save(sitter);
 		userDao.save(owner);
 		return true;

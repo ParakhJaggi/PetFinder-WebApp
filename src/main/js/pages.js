@@ -214,9 +214,6 @@ class ProfilePage extends React.Component {
 				<NavBar/>
 				<SideBar/>
 				<div className="top-buffer shiftRight">
-					This is Profile Page.
-					This will let users edit photo/add other info
-
 					{_.isDefined(this.props.authentication)
 						//<div>{this.props.authentication['access_token']}</div>
 					}
@@ -225,11 +222,11 @@ class ProfilePage extends React.Component {
 					}
 					{
 						this.state.user &&
-						<div>Do you have a notification? {this.state.user.notification.map(test =>
+						<div>Your current notifications: {this.state.user.notification.map(test =>
 							<tr>
 								<td>{test.toString() }</td>
 							</tr>
-						)}!</div>
+						)}</div>
 					}
 					<button className="btn btn-primary" onClick={() => ClearNotification()}>Clear Notifications</button>
 
