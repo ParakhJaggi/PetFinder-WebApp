@@ -221,7 +221,11 @@ class ProfilePage extends React.Component {
 					}
 					{
 						this.state.user &&
-						<div>Do you have a notification? {this.state.user.notification}!</div>
+						<div>Do you have a notification? {this.state.user.notification.map(test =>
+							<tr>
+								<td>{test.toString() }</td>
+							</tr>
+						)}!</div>
 					}
 					{
 						this.state.pets &&
