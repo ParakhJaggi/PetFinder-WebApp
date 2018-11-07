@@ -1004,16 +1004,55 @@ export class Dashboard extends React.Component {
 var Chart = require('chart.js');
 
 export class AboutUs extends React.Component {
-    state = {
-        bookings: []
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            bookings: [],
+            sitters: [],
+            score: '',
+            review:'',
+            name:'',
+            reload:''
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChange2 = this.handleChange2.bind(this);
+        this.handleChange3=this.handleChange3.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleChange(event) {
+        this.setState({name: event.target.value});
+    }
+    handleChange2(event) {
+        this.setState({score: event.target.value});
+    }
+    handleChange3(event){
+        this.setState({review: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        let toPost = {
+            'user': this.state.name,
+            'review': this.state.review,
+            'assignedScore': this.state.score
+        };
+        axios.post('/api/user/addReviewScore', toPost);
+        location.reload();
+        window.alert('Review sent');
+    }
+
+
 
     componentDidMount() {
         axios.get('/api/user')
             .then(res => {
                 const myBookings = res.bookings;
-                console.log(myBookings.size);
                 this.setState({bookings: myBookings});
+            });
+        axios.get('/api/user/getavailablesitters')
+            .then(res => {
+                const mySitters = res.users;
+                this.setState({sitters: mySitters});
             });
     }
 
@@ -1045,21 +1084,37 @@ export class AboutUs extends React.Component {
                                             <thead>
                                             <tr>
                                                 <td>Sitter Name</td>
-                                                <td>Rating</td>
+                                                <td># Ratings</td>
+                                                <td>Sitter Rating</td>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                           {this.state.bookings.map(bkings =>
+                                           {this.state.sitters.map(sitters =>
                                                 <tr>
-                                                    <td>{bkings.principal}</td>
-                                                    <td>hi</td>
+                                                    <td>{sitters.principal}</td>
+                                                    <td>{sitters.reviewCount-1}</td>
+                                                    <td>{parseInt(sitters.reviewSum/sitters.reviewCount)}</td>
                                                 </tr>
                                             )}
-                                           {this.state.bookings.principal}
 
                                             </tbody>
                                         </Pulse>
                                     </table>
+                                    <form onSubmit={this.handleSubmit}>
+                                        <label>
+                                            Enter name of Sitter you would like to review:
+                                            <input type="text" value={this.state.name} onChange={this.handleChange} />
+                                        </label>
+                                        <label>
+                                            Your Review (Optional):
+                                            <input type="textarea" value={this.state.review} onChange={this.handleChange3} />
+                                        </label>
+                                        <label>
+                                            Your Score:
+                                            <input type="text" value={this.state.score} onChange={this.handleChange2} />
+                                        </label>
+                                        <input type="submit" value="Submit" />
+                                    </form>
                                 </div>
                             </div>
                         </div>

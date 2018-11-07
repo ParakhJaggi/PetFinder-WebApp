@@ -59,6 +59,7 @@ public class UserDto implements Momento<String> {
 	public UserDto() {
 		this.reviewCount = 1;
 		this.reviewSum = 10;
+		this.reviews = new LinkedList<>();
 	}
 
 	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String notification) {
