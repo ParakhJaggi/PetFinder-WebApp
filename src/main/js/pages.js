@@ -48,6 +48,7 @@ function logout() {
 
 function ClearNotification() {
 	axios.get('/api/user/clearnotifications');
+	location.reload();
 }
 
 export class Home extends React.Component {
