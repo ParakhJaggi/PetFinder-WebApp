@@ -46,6 +46,10 @@ function logout() {
 	window.location.replace('...');
 }
 
+function ClearNotification() {
+	axios.get('/api/user/clearnotifications');
+}
+
 export class Home extends React.Component {
 	render() {
 		/*TODO edit*/
@@ -213,46 +217,53 @@ class ProfilePage extends React.Component {
 					This is Profile Page.
 					This will let users edit photo/add other info
 
-                    {_.isDefined(this.props.authentication)
-                        //<div>{this.props.authentication['access_token']}</div>
-                    }
-                    {_.isDefined(this.props.user) &&
-                    <div>Welcome, {this.props.user.principal}!</div>
-                    }
-                    {_.isDefined(this.props.user) &&
-                    <div>Do you have a notification? {this.props.user.notification}!</div>
-                    }
-                    {
-                        this.state.pets &&
-                        this.state.pets.map(pet =>
-                            <EditPetForm pet={pet}/>
-                        )
-                    }
-                    <div className="card">
-                        <div className="card-body justify-content-center">
-                            <form onSubmit={this.onSubmit.bind(this)}>
-                                {availableCheck.map(checkbox => {
-                                    return checkbox;
-                                })}
-                                <button type="submit">Save</button>
-                            </form>
-                        </div>
-                    </div>
-                    {
-                        this.state.user &&
-                        <React.Fragment>
-                            {
-                                this.state.user.type === 'SITTER' &&
-                                'You are a sitter.'
-                            }
-                            <BookingTable user={this.state.user}/>
-                            {
-                                this.state.user.type === 'OWNER' &&
-                                <SitterTable/>
-                            }
-                        </React.Fragment>
-                    }
-                </div>
+					{_.isDefined(this.props.authentication)
+						//<div>{this.props.authentication['access_token']}</div>
+					}
+					{_.isDefined(this.props.user) &&
+					<div>Welcome, {this.props.user.principal}!</div>
+					}
+					{
+						this.state.user &&
+						<div>Do you have a notification? {this.state.user.notification.map(test =>
+							<tr>
+								<td>{test.toString() }</td>
+							</tr>
+						)}!</div>
+					}
+					<button className="btn btn-primary" onClick={() => ClearNotification()}>Clear Notifications</button>
+
+					{
+						this.state.pets &&
+						this.state.pets.map(pet =>
+							<EditPetForm pet={pet}/>
+						)
+					}
+					<div className="card">
+						<div className="card-body justify-content-center">
+							<form onSubmit={this.onSubmit.bind(this)}>
+								{availableCheck.map(checkbox => {
+									return checkbox;
+								})}
+								<button type="submit">Save</button>
+							</form>
+						</div>
+					</div>
+					{
+						this.state.user &&
+						<React.Fragment>
+							{
+								this.state.user.type === 'SITTER' &&
+								'You are a sitter.'
+							}
+							<BookingTable user={this.state.user}/>
+							{
+								this.state.user.type === 'OWNER' &&
+								<SitterTable/>
+							}
+						</React.Fragment>
+					}
+				</div>
 
 			</div>
 		);

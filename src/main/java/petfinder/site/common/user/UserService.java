@@ -282,8 +282,16 @@ public class UserService {
 		}
 		//now add the booking request to the sitter
 		sitter.get().user.getRequestedBookings().add(new BookingDTO(principal, utd.getBools()));
-		sitter.get().getUser().setNotification("You have a requested booking");
+		List<String> test = sitter.get().getUser().getNotification();
+		List<String> test2 = owner.get().getUser().getNotification();
+		test.add("Booking confirmed");
+		test2.add("Booking confirmed");
+
+		sitter.get().getUser().setNotification(test);
+		owner.get().getUser().setNotification(test2);
 		userDao.save(sitter.get());
+		userDao.save(owner.get());
+
 		return true;
 	}
 
@@ -325,7 +333,9 @@ public class UserService {
 			return false;
 		sitter.get().getUser().getRequestedBookings().remove(bd);
 		sitter.get().getUser().getBookings().add(bd);
-		sitter.get().getUser().setNotification("booking confirmed");
+		List<String> test = sitter.get().getUser().getNotification();
+		test.add("Booking confirmed");
+		sitter.get().getUser().setNotification(test);
 		userDao.save(sitter.get());
 
 		//also add this to the owner that requested the booking
@@ -333,6 +343,14 @@ public class UserService {
 		owner.get().getUser().getBookings().add(new BookingDTO(principal, bd.getDays()));
 		userDao.save(owner.get());
 		return true;
+	}
+	public void ClearNotifications(String principle){
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
+
+		sitter.get().getUser().setNotification(new ArrayList<>());
+
+		userDao.save(sitter.get());
 	}
 
     /**
@@ -383,6 +401,7 @@ public class UserService {
 	public void addReview (ReviewDTO rd){
         String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 	    UserDto owner = userDao.findUserByPrincipal(principal).get().getUser();
+
         if(owner.getType() != UserType.OWNER){
             return;
         }
@@ -405,6 +424,9 @@ public class UserService {
             sitter.getReviews().add(rd);
             sitter.setReviewCount(sitter.getReviewCount() + 1);
             sitter.setReviewSum(sitter.getReviewSum() + rd.getAssignedScore());
+            List<String> l = sitter.getNotification();
+            l.add("Review added! Current Score = " + sitter.getReviewSum());
+            op.get().getUser().setNotification(l);
             userDao.save(op.get());
 	    }
     }
