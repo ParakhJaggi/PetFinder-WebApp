@@ -13,6 +13,8 @@ Spec.makeOptional = spec => val => _.isEmpty(val) ? true : spec(val);
 
 export { Spec };
 
+export const score =(val) => val.match([0-9]);
+export const scoreValidator = new Validator(score, (details) => details.friendlyName + ' must be 0-10.');
 export const required = value => !!value;
 export const requiredValidator = new Validator(required, (details) => details.friendlyName + ' is required.');
 
