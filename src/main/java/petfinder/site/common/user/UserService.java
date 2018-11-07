@@ -282,11 +282,13 @@ public class UserService {
 		}
 		//now add the booking request to the sitter
 		sitter.get().user.getRequestedBookings().add(new BookingDTO(principal, utd.getBools()));
-		List<String> test = new ArrayList<>();
+		List<String> test = sitter.get().getUser().getNotification();
+		List<String> test2 = owner.get().getUser().getNotification();
 		test.add("Booking confirmed");
-		test.add("test");
+		test2.add("Booking confirmed");
+
 		sitter.get().getUser().setNotification(test);
-		owner.get().getUser().setNotification(test);
+		owner.get().getUser().setNotification(test2);
 		userDao.save(sitter.get());
 		userDao.save(owner.get());
 
@@ -331,10 +333,8 @@ public class UserService {
 			return false;
 		sitter.get().getUser().getRequestedBookings().remove(bd);
 		sitter.get().getUser().getBookings().add(bd);
-		List<String> test = new ArrayList<>();
+		List<String> test = sitter.get().getUser().getNotification();
 		test.add("Booking confirmed");
-		test.add("test");
-
 		sitter.get().getUser().setNotification(test);
 		userDao.save(sitter.get());
 
