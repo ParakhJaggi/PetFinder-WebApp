@@ -393,6 +393,7 @@ public class UserService {
 	public void addReview (ReviewDTO rd){
         String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 	    UserDto owner = userDao.findUserByPrincipal(principal).get().getUser();
+
         if(owner.getType() != UserType.OWNER){
             return;
         }
@@ -415,6 +416,9 @@ public class UserService {
             sitter.getReviews().add(rd);
             sitter.setReviewCount(sitter.getReviewCount() + 1);
             sitter.setReviewSum(sitter.getReviewSum() + rd.getAssignedScore());
+            List<String> l = sitter.getNotification();
+            l.add("Review added! Current Score = " + sitter.getReviewSum());
+            op.get().getUser().setNotification(l);
             userDao.save(op.get());
 	    }
     }

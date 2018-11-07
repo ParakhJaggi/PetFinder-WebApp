@@ -140,6 +140,7 @@ public class UserEndpoint {
 	@PostMapping(value = "/addReviewScore")
 	public void addReview(@RequestBody ReviewDTO rd){
 		userService.addReview(rd);
+
 	}
 
 }
