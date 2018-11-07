@@ -1012,7 +1012,7 @@ export class Dashboard extends React.Component {
 
 var Chart = require('chart.js');
 
-export class AboutUs extends React.Component {
+export class ReviewPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -1032,7 +1032,10 @@ export class AboutUs extends React.Component {
         this.setState({name: event.target.value});
     }
     handleChange2(event) {
-        this.setState({score: event.target.value});
+    	if(event.target.value >= 0 && event.target.value <= 100 )
+        	this.setState({score: event.target.value});
+    	else
+    		window.alert('Error, input between 0-100');
     }
     handleChange3(event){
         this.setState({review: event.target.value});
@@ -1064,7 +1067,7 @@ export class AboutUs extends React.Component {
                 this.setState({sitters: mySitters});
             });
     }
-
+	/*TODO verify that users can only review sitters they booked*/
     render() {
         return (
             <body id="page-top">
@@ -1113,15 +1116,15 @@ export class AboutUs extends React.Component {
                                         <label>
                                             Enter name of Sitter you would like to review:
                                             <input type="text" value={this.state.name} onChange={this.handleChange} />
-                                        </label>
-                                        <label>
-                                            Your Review (Optional):
-                                            <input type="textarea" value={this.state.review} onChange={this.handleChange3} />
-                                        </label>
+                                        </label><br/>
+
                                         <label>
                                             Your Score:
                                             <input type="text" value={this.state.score} onChange={this.handleChange2} />
-                                        </label>
+                                        </label><br/>
+                                        <label>
+                                            Your Review (Optional):
+                                        </label><br/><textarea className="form-control" rows="5" id="comment" type="text" value={this.state.review} onChange={this.handleChange3}></textarea>
                                         <input type="submit" value="Submit" />
                                     </form>
                                 </div>
