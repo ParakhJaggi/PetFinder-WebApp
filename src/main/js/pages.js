@@ -39,7 +39,6 @@ import * as Validation from 'js/alloy/utils/validation';
 import * as ReduxForm from 'redux-form';
 import {SitterTable} from 'js/profilemodules/sitters';
 import {BookingTable} from 'js/profilemodules/bookings';
-
 function logout() {
 	cookie.remove('authentication', {path: '/'});
 	cookie.remove('user', {path: '/'});

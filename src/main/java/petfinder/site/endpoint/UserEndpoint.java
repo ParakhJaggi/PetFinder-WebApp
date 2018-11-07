@@ -85,7 +85,6 @@ public class UserEndpoint {
 
 	@GetMapping(value = "/clearnotifications")
 	public void clearNotifications() throws UserException {
-		//return userService.getAvailableSitters("sitter1@sitter.com");
 		userService.ClearNotifications(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
