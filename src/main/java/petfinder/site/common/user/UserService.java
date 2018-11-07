@@ -344,6 +344,14 @@ public class UserService {
 		userDao.save(owner.get());
 		return true;
 	}
+	public void ClearNotifications(String principle){
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
+
+		sitter.get().getUser().setNotification(new ArrayList<>());
+
+		userDao.save(sitter.get());
+	}
 
     /**
      * Method to cancel a booking. can be called by an owner or a sitter to cancel a requested or confirmed booking.

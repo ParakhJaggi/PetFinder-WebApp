@@ -46,6 +46,10 @@ function logout() {
 	window.location.replace('...');
 }
 
+function ClearNotification() {
+	axios.get('/api/user/clearnotifications');
+}
+
 export class Home extends React.Component {
 	render() {
 		/*TODO edit*/
@@ -227,6 +231,8 @@ class ProfilePage extends React.Component {
 							</tr>
 						)}!</div>
 					}
+					<button className="btn btn-primary" onClick={() => ClearNotification()}>Clear Notifications</button>
+
 					{
 						this.state.pets &&
 						this.state.pets.map(pet =>
