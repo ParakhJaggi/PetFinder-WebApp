@@ -284,8 +284,8 @@ public class UserService {
 		sitter.get().user.getRequestedBookings().add(new BookingDTO(principal, utd.getBools()));
 		List<String> test = sitter.get().getUser().getNotification();
 		List<String> test2 = owner.get().getUser().getNotification();
-		test.add("Booking confirmed");
-		test2.add("Booking confirmed");
+		test.add("Booking requested " + owner.get().getUser().getPrincipal());
+		test2.add("Booking requested " + sitter.get().getUser().getPrincipal());
 
 		sitter.get().getUser().setNotification(test);
 		owner.get().getUser().setNotification(test2);
@@ -340,6 +340,9 @@ public class UserService {
 
 		//also add this to the owner that requested the booking
 		Optional<UserAuthenticationDto> owner = userDao.findUserByPrincipal(bd.getPrincipal());
+		List<String> test2 = owner.get().getUser().getNotification();
+		test2.add("Booking confirmed with " + sitter.get().getUser().getPrincipal());
+		owner.get().getUser().setNotification(test2);
 		owner.get().getUser().getBookings().add(new BookingDTO(principal, bd.getDays()));
 		userDao.save(owner.get());
 		return true;
