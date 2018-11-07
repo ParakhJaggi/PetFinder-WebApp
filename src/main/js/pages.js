@@ -208,7 +208,6 @@ class ProfilePage extends React.Component {
 				</label></h3>
 			);
 		}
-
 		return (
 
 			<div className="container padded">
@@ -222,7 +221,7 @@ class ProfilePage extends React.Component {
 					<div>Welcome, {this.props.user.principal}!</div>
 					}
 					{
-						this.state.user &&
+						this.state.user && this.state.user.notification &&
 						<div>Your current notifications: {this.state.user.notification.map(test =>
 							<tr>
 								<td>{test.toString() }</td>
