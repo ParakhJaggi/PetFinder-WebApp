@@ -19,7 +19,7 @@ public class UserDto implements Momento<String> {
 	private boolean [] days;
 	private List<BookingDTO> bookings;
 	private List<BookingDTO> requestedBookings;
-    private String notification = "";
+    private List<String> notification;
     private int reviewCount, reviewSum;
     private List<ReviewDTO> reviews;
 
@@ -47,11 +47,11 @@ public class UserDto implements Momento<String> {
 		this.reviews = reviews;
 	}
 
-	public String getNotification() {
+	public List<String> getNotification() {
         return this.notification;
     }
 
-    public void setNotification(String notification) {
+    public void setNotification(List<String> notification) {
         this.notification = notification;
     }
 
@@ -60,19 +60,10 @@ public class UserDto implements Momento<String> {
 		this.reviewCount = 1;
 		this.reviewSum = 100;
 		this.reviews = new LinkedList<>();
+		this.notification = new ArrayList<>();
+
 	}
 
-	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String notification) {
-		this();
-		this.principal = principal;
-		this.roles = roles;
-		this.attributes = attributes;
-		this.type = type;
-		this.bookings = new ArrayList<>();
-		this.requestedBookings = new ArrayList<>();
-		this.days=new boolean[7];
-		this.notification = notification;
-	}
 	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip, boolean [] b) {
 		this();
 		this.principal = principal;
