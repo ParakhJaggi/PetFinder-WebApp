@@ -65,6 +65,20 @@ public class UserDto implements Momento<String> {
 		this.usedSitters = new HashSet<>();
 	}
 
+	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip, boolean [] b) {
+		this();
+		this.principal = principal;
+		this.roles = roles;
+		this.attributes = attributes;
+		this.type = type;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.bookings = new ArrayList<>();
+		this.requestedBookings = new ArrayList<>();
+		this.days=b;
+	}
 	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip) {
 		this();
 		this.principal = principal;
