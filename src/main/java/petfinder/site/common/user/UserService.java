@@ -142,8 +142,8 @@ public class UserService {
 		UserDto toSet = new UserDto(request.getPrincipal(),
 				_Lists.list("ROLE_USER"),
 				UserType.OWNER, request.getAttributes(),
-				request.getAddress(), request.getCity(),
-				request.getState(), request.getZip());
+				request.getAddress(), request.getCity().toLowerCase(),
+				request.getState().toLowerCase(), request.getZip());
 		if(request.getType().equals("SITTER")){
 			toSet.setType(UserType.SITTER);
 		}
