@@ -189,10 +189,11 @@ public class UserService {
 		if(!(user.getType() == UserType.OWNER)){
 			return null;
 		}
-		List<Object> zipMatch = new ArrayList<>(), cityMatch = new ArrayList<>();
 		if(user.getZip() == null){
 			throw new UserException("current user has no zip");
 		}
+		/*
+		List<Object> zipMatch = new ArrayList<>(), cityMatch = new ArrayList<>();
 		zipMatch.add(user.getZip());
 		cityMatch.add(user.getCity());
 		//first get all users within the same zip
@@ -201,12 +202,14 @@ public class UserService {
 
 		Set<UserDto> allObjects = new HashSet<>(users.getUsers());
 		allObjects.addAll(userCity.getUsers());
+		*/
+		UserCollectionDTO users = userDao.findSitters(user.getZip(), user.getCity(), user.getState());
 
 		//now remove the current user
-		List<UserDto> filtered = allObjects.stream()
+		List<UserDto> filtered = users.getUsers().stream()
 				.distinct()
-				.filter(x-> !x.getPrincipal().equals(user.getPrincipal())
-						&& x.getType() == UserType.SITTER)
+				.filter(x-> /*!x.getPrincipal().equals(user.getPrincipal())
+						&& */ x.getType() == UserType.SITTER)
 				//see if the owner and sitter have at least one day in common
 				.filter(x->{
 					boolean flag = false;
@@ -218,7 +221,7 @@ public class UserService {
 					return flag;
 				})
 				.sorted((x,y) -> x.getCity().compareTo(y.getCity()))
-                .limit((long)20)
+              //  .limit((long)20)
 				.collect(Collectors.toList());
 		users.setUsers(filtered);
 		return users;
