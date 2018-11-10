@@ -453,7 +453,7 @@ public class UserService {
      * @param rd review that the current owner is adding.
      * @see ReviewDTO
      */
-	public void addReview (ReviewDTO rd){
+	public void addReview (ReviewDTO rd) throws MailjetSocketTimeoutException, MailjetException {
         String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 	    UserDto owner = userDao.findUserByPrincipal(principal).get().getUser();
 
@@ -485,6 +485,24 @@ public class UserService {
             l.add("Review added! Current Score = " + sitter.getReviewSum());
             op.get().getUser().setNotification(l);
             userDao.save(op.get());
+
+
+            MailjetClient client;
+            MailjetRequest request;
+            MailjetResponse response;
+            client = new MailjetClient("141f6e47ca4cc452b41aaa540312bc7a", "d8acde824e69d34ac0c55def4a1fbf12");
+            request = new MailjetRequest(Email.resource)
+                    .property(Email.FROMEMAIL, "parakh_jaggi@baylor.edu")
+                    .property(Email.FROMNAME, "Group 4 admin")
+                    .property(Email.SUBJECT, "Rating Added!")
+                    .property(Email.TEXTPART, "Dear User, A user gave you a review! Your new score is " + sitter.getReviewSum() +".")
+                    .property(Email.RECIPIENTS, new JSONArray()
+                            .put(new JSONObject()
+                                    .put("Email",sitter.getPrincipal())));
+
+
+            response = client.post(request);
+            System.out.println(response.getData());
 	    }
     }
 
