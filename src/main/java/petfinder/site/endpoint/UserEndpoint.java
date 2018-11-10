@@ -126,7 +126,7 @@ public class UserEndpoint {
 	 * @return
 	 */
 	@PostMapping(value = "/confirmBooking")
-	public boolean confirmBooking(@RequestBody BookingDTO bd){
+	public boolean confirmBooking(@RequestBody BookingDTO bd) throws MailjetSocketTimeoutException, MailjetException {
 		return userService.confirmBooking(bd);
 	}
 
@@ -145,7 +145,7 @@ public class UserEndpoint {
 	 * @param rd
 	 */
 	@PostMapping(value = "/addReviewScore")
-	public void addReview(@RequestBody ReviewDTO rd){
+	public void addReview(@RequestBody ReviewDTO rd) throws MailjetSocketTimeoutException, MailjetException {
 		userService.addReview(rd);
 
 	}
