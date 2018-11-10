@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -84,8 +86,7 @@ public class UserEndpoint {
 	}
 
 	@GetMapping(value = "/clearnotifications")
-	public void clearNotifications() throws UserException {
-		//return userService.getAvailableSitters("sitter1@sitter.com");
+	public void clearNotifications(){
 		userService.ClearNotifications(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
@@ -115,7 +116,7 @@ public class UserEndpoint {
 	 * @return
 	 */
 	@PostMapping(value = "/requestBooking")
-	public boolean requestBooking(@RequestBody makebookingDTO utd){
+	public boolean requestBooking(@RequestBody makebookingDTO utd) throws MailjetSocketTimeoutException, MailjetException {
 		return userService.requestBooking(utd.getPrincipal(), new UserTimesDTO(utd.getDays()));
 	}
 
