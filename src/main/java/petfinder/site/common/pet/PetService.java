@@ -124,6 +124,9 @@ public class PetService {
 		}
 	}
 
+	public PetCollectionDTO findByOwner(List<Object> toMatch){
+		return petDao.findByOwner(toMatch);
+	}
 	/**
 	 * @author Laird
 	 * @param newPet
