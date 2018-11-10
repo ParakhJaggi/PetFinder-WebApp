@@ -49,6 +49,17 @@ RegistrationPetForm = connect(
 export {RegistrationPetForm};
 
 class EditPetForm extends React.Component {
+    constructor (props){
+        super(props);
+
+        this.state = {
+            show: false,
+        };
+
+        this.toggleShown = this.toggleShown.bind(this);
+
+    }
+
 	onSubmit = pet => {
 		let toPost = {
 			'id': this.props.pet.id,
@@ -61,35 +72,47 @@ class EditPetForm extends React.Component {
 		return axios.post('/pets/edit', toPost);
 	};
 
+	toggleShown(){
+        this.setState({show: !this.state.show});
+	}
+
 	render() {
 		let {handleSubmit, submitting} = this.props;
 		let onSuccess = this.props.success;
 
-		return (
-			<form name={this.props.pet.id + 'form'} onSubmit={handleSubmit(form => this.onSubmit(form))}
-			      initialValues={this.props.pet}>
-				{'Your pet is named' + this.props.pet.name}
-				<Bessemer.Field name={this.props.pet.id + 'name'} friendlyName="Pet Name"
-				                defaultVal={this.props.pet.name}
-				                value={this.props.pet.name}
-				/>
+		if(this.state) {
+            return (
+                <React.Fragment>
+                    <div onClick={this.toggleShown} style={{cursor: 'pointer'}}>{!this.state.show && <div>&#9655;{this.props.pet.name}</div>}{this.state.show && <div>&#9661;{this.props.pet.name}</div>}</div>
+                    {
+                        this.state.show &&
+                        <form name={this.props.pet.id + 'form'} onSubmit={handleSubmit(form => this.onSubmit(form))}
+                              initialValues={this.props.pet}>
+                            <Bessemer.Field name={this.props.pet.id + 'name'} friendlyName="Pet Name"
+                                            defaultVal={this.props.pet.name}
+                                            value={this.props.pet.name}
+                            />
 
-				<Bessemer.Field name={this.props.pet.id + 'type'} friendlyName="Type"/*Todo Radio box*/
-				                defaultVal={this.props.pet.type}
-				/>
+                            <Bessemer.Field name={this.props.pet.id + 'type'} friendlyName="Type"/*Todo Radio box*/
+                                            defaultVal={this.props.pet.type}
+                            />
 
-				<Bessemer.Field name={this.props.pet.id + 'subtype'} friendlyName="Sub Type"
-				                defaultVal={this.props.pet.subtype}
-				/>
+                            <Bessemer.Field name={this.props.pet.id + 'subtype'} friendlyName="Sub Type"
+                                            defaultVal={this.props.pet.subtype}
+                            />
 
-				<Bessemer.Field name={this.props.pet.id + 'preferences'} friendlyName="Extra Preferences"
-				                defaultVal={this.props.pet.preferences}
-				/>
+                            <Bessemer.Field name={this.props.pet.id + 'preferences'} friendlyName="Extra Preferences"
+                                            defaultVal={this.props.pet.preferences}
+                            />
 
-				<Bessemer.Button loading={submitting}>Register</Bessemer.Button>
-			</form>
-
-		);
+                            <Bessemer.Button loading={submitting}>Register</Bessemer.Button>
+                        </form>
+                    }
+                </React.Fragment>
+            );
+        }else{
+			return 'Mounting...';
+		}
 	}
 }
 

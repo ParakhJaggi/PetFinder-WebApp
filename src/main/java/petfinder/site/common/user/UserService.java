@@ -284,8 +284,8 @@ public class UserService {
 		sitter.get().user.getRequestedBookings().add(new BookingDTO(principal, utd.getBools()));
 		List<String> test = sitter.get().getUser().getNotification();
 		List<String> test2 = owner.get().getUser().getNotification();
-		test.add("Booking Requested");
-		test2.add("Booking Requested with " + sitter.get().getUser().getPrincipal());
+		test.add("Booking requested " + owner.get().getUser().getPrincipal());
+		test2.add("Booking requested " + sitter.get().getUser().getPrincipal());
 
 		sitter.get().getUser().setNotification(test);
 		owner.get().getUser().setNotification(test2);
@@ -336,13 +336,15 @@ public class UserService {
 		List<String> test = sitter.get().getUser().getNotification();
 		test.add("Booking confirmed");
 		sitter.get().getUser().setNotification(test);
+		//add this owner to the people allowed to review the sitter
+		sitter.get().getUser().getUsedSitters().add(bd.getPrincipal());
 		userDao.save(sitter.get());
 
 		//also add this to the owner that requested the booking
 		Optional<UserAuthenticationDto> owner = userDao.findUserByPrincipal(bd.getPrincipal());
-		List<String> test1 = owner.get().getUser().getNotification();
-		test1.add("Booking confirmed with " + sitter.get().getUser().getPrincipal() );
-		owner.get().getUser().setNotification(test1);
+		List<String> test2 = owner.get().getUser().getNotification();
+		test2.add("Booking confirmed with " + principal);
+		owner.get().getUser().setNotification(test2);
 		owner.get().getUser().getBookings().add(new BookingDTO(principal, bd.getDays()));
 		userDao.save(owner.get());
 		return true;
@@ -389,7 +391,7 @@ public class UserService {
 				owner.getUser().getBookings().remove(new BookingDTO(owner.getUser().getPrincipal(), bd.getDays()));
 			}
 		}
-
+		sitter.getUser().setReviewSum(sitter.getUser().getReviewSum()-1);
 		userDao.save(sitter);
 		userDao.save(owner);
 		return true;
@@ -411,7 +413,9 @@ public class UserService {
 	    Optional<UserAuthenticationDto> op = userDao.findUserByPrincipal(rd.getUser());
 	    if(op.isPresent()){
 	        UserDto sitter = op.get().getUser();
-	        if(sitter.getType()!= UserType.SITTER){
+	        //make sure that the owner is reviewing a sitter and that the owner is
+			// allowed to review the sitter
+	        if(sitter.getType()!= UserType.SITTER || !sitter.getUsedSitters().contains(principal)){
 	            return;
             }
             //see if the owner has already left a review
