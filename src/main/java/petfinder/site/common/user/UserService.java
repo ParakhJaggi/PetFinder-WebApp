@@ -385,7 +385,7 @@ public class UserService {
         request = new MailjetRequest(Email.resource)
                 .property(Email.FROMEMAIL, "parakh_jaggi@baylor.edu")
                 .property(Email.FROMNAME, "Group 4 admin")
-                .property(Email.SUBJECT, "Booking requested!")
+                .property(Email.SUBJECT, "Booking confirmed!")
                 .property(Email.TEXTPART, "Dear User, Your booking has been confirmed!")
                 .property(Email.RECIPIENTS, new JSONArray()
                         .put(new JSONObject()
