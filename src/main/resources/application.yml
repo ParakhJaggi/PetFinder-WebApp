@@ -38,5 +38,11 @@ elastic-search:
   user-name: k697as71ws
   password: j1ljluiwfk
 
+  env:
+    MJ_APIKEY_PUBLIC: 141f6e47ca4cc452b41aaa540312bc7a
+    MJ_APIKEY_PRIVATE: d8acde824e69d34ac0c55def4a1fbf12
+
+
+
 
 

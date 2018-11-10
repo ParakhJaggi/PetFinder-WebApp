@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.mailjet.client.resource.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -19,6 +20,16 @@ import petfinder.site.common.RestRequests.AnimalTypeRequestBuilder;
 import petfinder.site.common.pet.PetCollectionDTO;
 import petfinder.site.common.pet.PetDao;
 import petfinder.site.common.user.UserDto.UserType;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.ClientOptions;
+import com.mailjet.client.resource.Emailv31;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 /**
  * Created by jlutteringer on 8/23/17.
@@ -262,7 +273,7 @@ public class UserService {
      * @param utd boolean array representing each day of the week
      * @return true indicates that the booking has been successfully requested
      */
-	public boolean requestBooking(String s, UserTimesDTO utd){
+	public boolean requestBooking(String s, UserTimesDTO utd) throws MailjetSocketTimeoutException, MailjetException {
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> owner = userDao.findUserByPrincipal(principal);
 		//see if the current user is an owner
@@ -291,6 +302,24 @@ public class UserService {
 		owner.get().getUser().setNotification(test2);
 		userDao.save(sitter.get());
 		userDao.save(owner.get());
+
+        MailjetClient client;
+        MailjetRequest request;
+        MailjetResponse response;
+        client = new MailjetClient("141f6e47ca4cc452b41aaa540312bc7a", "d8acde824e69d34ac0c55def4a1fbf12");
+        request = new MailjetRequest(Email.resource)
+                .property(Email.FROMEMAIL, "parakh_jaggi@baylor.edu")
+                .property(Email.FROMNAME, "Group 4 admin")
+                .property(Email.SUBJECT, "Booking requested!")
+                .property(Email.TEXTPART, "Dear User, You have a booking! Please check our site to accept/decline.")
+                .property(Email.RECIPIENTS, new JSONArray()
+                        .put(new JSONObject()
+                                .put("Email",sitter.get().getUser().getPrincipal())
+                                .put("Email",owner.get().getUser().getPrincipal())));
+
+
+        response = client.post(request);
+        System.out.println(response.getData());
 
 		return true;
 	}
@@ -349,14 +378,16 @@ public class UserService {
 		userDao.save(owner.get());
 		return true;
 	}
-	public void ClearNotifications(String principle){
+	public void ClearNotifications(String principle)  {
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
 
 		sitter.get().getUser().setNotification(new ArrayList<>());
 
 		userDao.save(sitter.get());
-	}
+
+    }
+
 
     /**
      * Method to cancel a booking. can be called by an owner or a sitter to cancel a requested or confirmed booking.
