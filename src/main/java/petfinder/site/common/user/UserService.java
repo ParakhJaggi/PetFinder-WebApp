@@ -349,7 +349,7 @@ public class UserService {
      * @return true indicates that the booking was successfully confimed. False means the confirmation failed.
      * @see BookingDTO
      */
-	public boolean confirmBooking (BookingDTO bd){
+	public boolean confirmBooking (BookingDTO bd) throws MailjetSocketTimeoutException, MailjetException {
 		//first see if the current user is a sitter and exists
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
@@ -376,6 +376,25 @@ public class UserService {
 		owner.get().getUser().setNotification(test2);
 		owner.get().getUser().getBookings().add(new BookingDTO(principal, bd.getDays()));
 		userDao.save(owner.get());
+
+
+        MailjetClient client;
+        MailjetRequest request;
+        MailjetResponse response;
+        client = new MailjetClient("141f6e47ca4cc452b41aaa540312bc7a", "d8acde824e69d34ac0c55def4a1fbf12");
+        request = new MailjetRequest(Email.resource)
+                .property(Email.FROMEMAIL, "parakh_jaggi@baylor.edu")
+                .property(Email.FROMNAME, "Group 4 admin")
+                .property(Email.SUBJECT, "Booking requested!")
+                .property(Email.TEXTPART, "Dear User, Your booking has been confirmed!")
+                .property(Email.RECIPIENTS, new JSONArray()
+                        .put(new JSONObject()
+                                .put("Email",sitter.get().getUser().getPrincipal())
+                                .put("Email",owner.get().getUser().getPrincipal())));
+
+
+        response = client.post(request);
+        System.out.println(response.getData());
 		return true;
 	}
 	public void ClearNotifications(String principle)  {
