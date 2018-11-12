@@ -1101,12 +1101,16 @@ export class ReviewPage extends React.Component {
                                             </tr>
                                             </thead>
                                             <tbody>
-                                           {this.state.sitters.map(sitters =>
-                                                <tr>
-                                                    <td>{sitters.principal}</td>
-                                                    <td>{sitters.reviewCount-1}</td>
-                                                    <td>{parseInt(sitters.reviewSum/sitters.reviewCount)}</td>
-                                                </tr>
+                                           {this.state.sitters.map(sitters => {
+                                           	console.log(this.state.bookings);
+                                           	console.log(this.state.sitters);
+                                           		this.state.bookings.filter(bookings => bookings.principal===sitters.principal).map(resolved=>
+                                           			<tr>
+                                                       <td>{resolved.principal}</td>
+                                                       <td>{resolved.reviewCount - 1}</td>
+                                                       <td>{parseInt(resolved.reviewSum / resolved.reviewCount)}</td>
+                                                   </tr>);
+                                               }
                                             )}
 
                                             </tbody>
