@@ -53,25 +53,7 @@ public class PetEndpoint {
 	}
 
 
-	@GetMapping(value = "/TestEmail/{email:.+}")
-	public void testEmail(@PathVariable("email") String email) throws MailjetSocketTimeoutException, MailjetException {
-		MailjetClient client;
-		MailjetRequest request;
-		MailjetResponse response;
-		client = new MailjetClient("141f6e47ca4cc452b41aaa540312bc7a", "d8acde824e69d34ac0c55def4a1fbf12");
-		request = new MailjetRequest(Email.resource)
-				.property(Email.FROMEMAIL, "parakh_jaggi@baylor.edu")
-				.property(Email.FROMNAME, "Group 4 admin")
-				.property(Email.SUBJECT, "Test Email!")
-				.property(Email.TEXTPART, "Dear User, This is a test email!")
-				.property(Email.RECIPIENTS, new JSONArray()
-						.put(new JSONObject()
-								.put("Email",email)));
 
-
-		response = client.post(request);
-		System.out.println(response.getData());
-	}
 
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public Optional<PetDto> getPet(@PathVariable("id") Long id) {
