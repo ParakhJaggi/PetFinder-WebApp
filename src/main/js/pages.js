@@ -93,7 +93,6 @@ export class RegisterPage extends React.Component {
 							<div className="card-header">Register</div>
 							<div className="card-body">
 								<RegistrationForm/>
-								<a className="d-block small" href="/#/profile-page">ProfilePage</a>
 								<a className="d-block small" href="/#/login">login</a>
 
 							</div>
