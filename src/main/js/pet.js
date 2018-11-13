@@ -107,7 +107,7 @@ class EditPetForm extends React.Component {
 							                defaultVal={this.props.pet.preferences}
 							/>
 
-							<Bessemer.Button loading={submitting}>Register</Bessemer.Button>
+							<Bessemer.Button loading={submitting}>Update Pet</Bessemer.Button>
 						</form>
 					}
 				</React.Fragment>
