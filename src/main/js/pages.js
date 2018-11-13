@@ -39,6 +39,7 @@ import * as Validation from 'js/alloy/utils/validation';
 import * as ReduxForm from 'redux-form';
 import {SitterTable} from 'js/profilemodules/sitters';
 import {BookingTable} from 'js/profilemodules/bookings';
+
 function logout() {
 	cookie.remove('authentication', {path: '/'});
 	cookie.remove('user', {path: '/'});
@@ -88,14 +89,14 @@ export class RegisterPage extends React.Component {
 
 			{this.redirectPage()}
 			<Pulse>
-					<div className="myContainer pull-left">
-						<div className="card card-login mx-auto mt-9">
-							<div className="card-header">Register</div>
-							<div className="card-body">
-								<RegistrationForm/>
-								<a className="d-block small" href="/#/login">login</a>
+				<div className="myContainer pull-left">
+					<div className="card card-login mx-auto mt-9">
+						<div className="card-header">Register</div>
+						<div className="card-body">
+							<RegistrationForm/>
+							<a className="d-block small" href="/#/login">login</a>
 
-							</div>
+						</div>
 
 					</div>
 				</div>
@@ -223,7 +224,7 @@ class ProfilePage extends React.Component {
 						this.state.user && this.state.user.notification &&
 						<div>Your current notifications: {this.state.user.notification.map(test =>
 							<tr>
-								<td>{test.toString() }</td>
+								<td>{test.toString()}</td>
 							</tr>
 						)}</div>
 					}
@@ -1019,130 +1020,135 @@ export class Dashboard extends React.Component {
 var Chart = require('chart.js');
 
 export class ReviewPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            bookings: [],
-            sitters: [],
-            score: '',
-            review:'',
-            name:'',
-            reload:''
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleChange2 = this.handleChange2.bind(this);
-        this.handleChange3=this.handleChange3.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    handleChange(event) {
-        this.setState({name: event.target.value});
-    }
-    handleChange2(event) {
-    	if(event.target.value >= 0 && event.target.value <= 100 )
-        	this.setState({score: event.target.value});
-    	else
-    		window.alert('Error, input between 0-100');
-    }
-    handleChange3(event){
-        this.setState({review: event.target.value});
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			bookings: [],
+			sitters: [],
+			score: '',
+			review: '',
+			name: '',
+			reload: ''
+		};
+		this.handleChange = this.handleChange.bind(this);
+		this.handleChange2 = this.handleChange2.bind(this);
+		this.handleChange3 = this.handleChange3.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
 
-    handleSubmit(event) {
-        event.preventDefault();
-        let toPost = {
-            'user': this.state.name,
-            'review': this.state.review,
-            'assignedScore': this.state.score
-        };
-        axios.post('/api/user/addReviewScore', toPost);
-        location.reload();
-        window.alert('Review sent');
-    }
+	handleChange(event) {
+		this.setState({name: event.target.value});
+	}
+
+	handleChange2(event) {
+		if (event.target.value >= 0 && event.target.value <= 100)
+			this.setState({score: event.target.value});
+		else
+			window.alert('Error, input between 0-100');
+	}
+
+	handleChange3(event) {
+		this.setState({review: event.target.value});
+	}
+
+	handleSubmit(event) {
+		event.preventDefault();
+		let toPost = {
+			'user': this.state.name,
+			'review': this.state.review,
+			'assignedScore': this.state.score
+		};
+		axios.post('/api/user/addReviewScore', toPost);
+		location.reload();
+		window.alert('Review sent');
+	}
 
 
+	componentDidMount() {
+		axios.get('/api/user')
+			.then(res => {
+				const myBookings = res.bookings;
+				this.setState({bookings: myBookings});
+			});
+		axios.get('/api/user/getavailablesitters')
+			.then(res => {
+				const mySitters = res.users;
+				this.setState({sitters: mySitters});
+			});
+	}
 
-    componentDidMount() {
-        axios.get('/api/user')
-            .then(res => {
-                const myBookings = res.bookings;
-                this.setState({bookings: myBookings});
-            });
-        axios.get('/api/user/getavailablesitters')
-            .then(res => {
-                const mySitters = res.users;
-                this.setState({sitters: mySitters});
-            });
-    }
 	/*TODO verify that users can only review sitters they booked*/
-    render() {
-        return (
-            <body id="page-top">
-            <div id="wrapper">
-                <NavBar></NavBar>
-                <SideBar></SideBar>
-                <div id="content-wrapper">
-                    <div class="top-buffer">
-                    </div>
-                    <div class="container shiftRight">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="#">Dashboard</a>
-                            </li>
-                            <li class="breadcrumb-item active">Bookings</li>
-                        </ol>
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fas fa-table"></i>
-                                Bookings
-                            </div>
-                            <div class="card-body">
-                                <div className="table-responsive">
-                                    <table className="table table-bordered" id="dataTable" width="90%" cellSpacing="0">
-                                        <Pulse>
-                                            <thead>
-                                            <tr>
-                                                <td>Sitter Name</td>
-                                                <td># Ratings</td>
-                                                <td>Sitter Rating</td>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                           {this.state.sitters.map(sitters =>
-                                                <tr>
-                                                    <td>{sitters.principal}</td>
-                                                    <td>{sitters.reviewCount-1}</td>
-                                                    <td>{parseInt(sitters.reviewSum/sitters.reviewCount)}</td>
-                                                </tr>
-                                            )}
+	render() {
+		return (
+			<body id="page-top">
+			<div id="wrapper">
+				<NavBar></NavBar>
+				<SideBar></SideBar>
+				<div id="content-wrapper">
+					<div class="top-buffer">
+					</div>
+					<div class="container shiftRight">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								<a href="#">Dashboard</a>
+							</li>
+							<li class="breadcrumb-item active">Bookings</li>
+						</ol>
+						<div class="card mb-3">
+							<div class="card-header">
+								<i class="fas fa-table"></i>
+								Bookings
+							</div>
+							<div class="card-body">
+								<div className="table-responsive">
+									<table className="table table-bordered" id="dataTable" width="90%" cellSpacing="0">
+										<Pulse>
+											<thead>
+											<tr>
+												<td>Sitter Name</td>
+												<td># Ratings</td>
+												<td>Sitter Rating</td>
+											</tr>
+											</thead>
+											<tbody>
+											{this.state.sitters.map(sitters =>
+												<tr>
+													<td>{sitters.principal}</td>
+													<td>{sitters.reviewCount - 1}</td>
+													<td>{parseInt(sitters.reviewSum / sitters.reviewCount)}</td>
+												</tr>
+											)}
 
-                                            </tbody>
-                                        </Pulse>
-                                    </table>
-                                    <form onSubmit={this.handleSubmit}>
-                                        <label>
-                                            Enter name of Sitter you would like to review:
-                                            <input type="text" value={this.state.name} onChange={this.handleChange} />
-                                        </label><br/>
+											</tbody>
+										</Pulse>
+									</table>
+									<form onSubmit={this.handleSubmit}>
+										<label>
+											Enter name of Sitter you would like to review:
+											<input type="text" value={this.state.name} onChange={this.handleChange}/>
+										</label><br/>
 
-                                        <label>
-                                            Your Score:
-                                            <input type="text" value={this.state.score} onChange={this.handleChange2} />
-                                        </label><br/>
-                                        <label>
-                                            Your Review (Optional):
-                                        </label><br/><textarea className="form-control" rows="5" id="comment" type="text" value={this.state.review} onChange={this.handleChange3}></textarea>
-                                        <input type="submit" value="Submit" />
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <Logout/>
-            </body>
-        );
-    }
+										<label>
+											Your Score:
+											<input type="text" value={this.state.score} onChange={this.handleChange2}/>
+										</label><br/>
+										<label>
+											Your Review (Optional):
+										</label><br/><textarea className="form-control" rows="5" id="comment"
+										                       type="text" value={this.state.review}
+										                       onChange={this.handleChange3}></textarea>
+										<input type="submit" value="Submit"/>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<Logout/>
+			</body>
+		);
+	}
 }
 
 export class AddPet extends React.Component {
