@@ -136,9 +136,6 @@ export class LoginPage extends React.Component {
 							<div className="text-center">
 								<a className="d-block small mt-3" href="#/register">Register an Account</a>
 								<a className="d-block small" href="forgot-password.html">Forgot Password?</a>
-								<a className="d-block small" href="/#/dashboard">Home</a>
-								<a className="d-block small" href="/#/profile-page">ProfilePage</a>
-
 							</div>
 						</div>
 					</div>
