@@ -1023,11 +1023,6 @@ export class ReviewPage extends React.Component {
 	componentDidMount() {
 		axios.get('/api/user')
 			.then(res => {
-				if (res.type == 'SITTER') {
-					window.alert('Sitters Can Not Review');
-					window.location.href = '#/profile-page';
-					location.reload();
-				}
 				const myBookings = res.bookings;
 				this.setState({bookings: myBookings});
 			});
@@ -1222,7 +1217,7 @@ export class Logout extends React.Component {
 	}
 }
 
-import dogAboutUs from '../resources/images/dogau.jpg';
+import dogAboutUs from '../resources/images/dogau.png';
 import dogAboutUs2 from '../resources/images/dog2au.jpg';
 import dogAboutUs3 from '../resources/images/dog3au.jpg';
 export class AboutUs extends React.Component{
