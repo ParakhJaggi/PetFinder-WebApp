@@ -236,7 +236,8 @@ public class UserService {
 		Set<UserDto> allObjects = new HashSet<>(users.getUsers());
 		allObjects.addAll(userCity.getUsers());
 		*/
-		UserCollectionDTO users = userDao.findSitters(user.getGeographicPoint());
+		//UserCollectionDTO users = userDao.findSitters(user.getGeographicPoint());
+		UserCollectionDTO users = userDao.findSitters(user.getCity(),user.getState(),user.getZip());
 
 		//now remove the current user
 		List<UserDto> filtered = users.getUsers().stream()
