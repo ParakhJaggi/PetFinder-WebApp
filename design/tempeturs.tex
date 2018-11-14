@@ -1,0 +1,71 @@
+\documentclass[12pt]{article}
+\pagestyle{empty}
+\textheight = 10in
+\addtolength{\voffset}{-1in}
+\usepackage{graphicx}
+\graphicspath{}
+
+% Header, put stuff that impacts the whole document here
+\NeedsTeXFormat{LaTeX2e}
+\title{Software II Group Project: Tempeturs}
+\author{Group4} 
+
+
+\begin{document}
+\maketitle 
+\thispagestyle{empty}
+
+
+\section*{Use Case Model}
+\includegraphics[scale=.6]{Use_Case_Model}
+
+
+\section*{Domain Model}
+\includegraphics[scale=.65]{Domain_Model}
+\section*{Use Case}
+UC1: Add Pet\newline 
+
+	Scope: Tempeturs AddPet\newline 
+
+	
+	Stakeholders and Interests:\newline 
+	Owner - a user that has an account and wants a sitter to watch their pets\newline 
+	Tempeturs - the company that wants to ensure that the system is always running and that it can connect all the users and its databases at anny given time\newline
+	
+
+	Precondition: Owner has an account and indicates that he/she wants to add a new pet.\newline 
+
+	Postcondition: Owner's new pet has been added and appears in the user's profile.\newline 
+	
+	Main success path:\newline
+		1. Owner sends request to add new pet\newline 
+		2. System sends message to update the pet database\newline 
+		3 .Database adds the pet and sends message to the system that database has \\ \indent been updated\newline
+		4. System updates the owner's profile and confirms that the new pet has \\ \indent been associated with the Owner\newline 
+	
+	Alternative Paths:\newline
+	*a Owner cannot connect to server\newline
+	\indent 1 Returns that it cannot connect to server\newline
+	1a Attribute variables are empty or unsupported type\newline
+	\indent1 Server returns that there were errors in submiting the attributes\newline
+	\indent 2 Server provides the format with marks for which attributes need\\ \indent\indent changing\newline
+	2a Server cannot connect to the databse\newline
+	\indent1 Server returns that it has connection problems\newline
+	3a Database is unable to add a new item\newline
+	\indent1 Server returns that the database is nonresponsive\newline
+	
+
+
+
+\section*{System Sequence Diagram}
+
+\includegraphics[scale=.7]{SSD}
+
+Contract CO1: addPet\newline 
+Operation: addPet()\newline 
+Cross References: Use Case: Temperature AddPet.\newline 
+Pre-conditions: The User is an Owner and is logged int\newline 
+Post-conditions: A new Pet is associated with the Owner.\newline 
+
+
+\end{document}
