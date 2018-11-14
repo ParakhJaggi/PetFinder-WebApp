@@ -950,53 +950,9 @@ export class Dashboard extends React.Component {
 									</div>
 								</div>
 							</div>
-							<div className="row justify-content-center ">
-								<div className="col-xl-4 col-sm-9 mb-3 card text-white bg-light o-hidden h-35">
-									<a className="card-footer text-black-50 clearfix small z-1" href="#/rodent-search">
-										<span className="float-left"><b>Location Search</b></span>
-										<span className="float-right">
-                    <i className="fas fa-angle-right"></i>
-                  </span>
-									</a>
-									<div className="card-body">
-										<div className="card-img-overlay">
-											<img src={'https://i.postimg.cc/R0N0KMMq/traveling-with-animals.jpg'}
-											     className="card-img-bottom bunny-crop "></img>
-										</div>
-									</div>
-
-								</div>
-								<div className="pr-2"></div>
-								<div className="col-xl-4 col-sm-9 mb-3 card text-white bg-light o-hidden h-35">
-
-									<a className="card-footer text-black-50 clearfix small z-1" href="#">
-										<span className="float-left"><b>Advanced Search</b></span>
-										<span className="float-right">
-                    <i className="fas fa-angle-right"></i>
-                  </span>
-									</a>
-									<div className="card-body">
-										<div className="card-img-overlay">
-											<img
-												src={'https://i.postimg.cc/JhZjZc7s/3958_D90_D1601-_D4_F3-_A5_A6-_D7_FB-872_BF841028_B.png'}
-												className="card-img-bottom mag-crop"></img>
-										</div>
-									</div>
-								</div>
-							</div>
 						</Pulse>
 
-						<div class="card mb-3">
-							<div class="card-header">
-								<i class="fas fa-chart-area"></i>
-								Bar Chart Example
-							</div>
-							<div class="card-body">
-								<Layout></Layout>
 
-							</div>
-							<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-						</div>
 					</div>
 
 					<footer class="footer navbar-fixed-bottom">
@@ -1162,6 +1118,7 @@ export class AddPet extends React.Component {
 				<div className="card">
 					<RegistrationPetForm/>
 				</div>
+			<Logout/>
 			</div>
 		);
 	}
@@ -1170,19 +1127,47 @@ export class AddPet extends React.Component {
 class Layout extends React.Component {
 	constructor(props) {
 		super(props);
+        this.state = {
+            dog: 0,
+            cat: 0,
+            rodent: 0,
+            bird: 0,
+        };
+
 	}
+	componentDidMount(){
+        axios.get('/pets/rodents')
+            .then(res => {
+                const pets = res.pets;
+                this.setState({rodent: pets.length});
+            });
+        axios.get('/pets/dogs')
+            .then(res => {
+                const pets = res.pets;
+                this.setState({dog: pets.length});
+            });
+        axios.get('/pets/cats')
+            .then(res => {
+                const pets = res.pets;
+                this.setState({cat: pets.length});
+            });
+        axios.get('/pets/birds')
+            .then(res => {
+                const pets = res.pets;
+                this.setState({bird: pets.length});
+            });
+	}
+	shouldComponentUpdate() {
 
-	componentDidMount() {
-		const node = this.node;
-
+		var node = this.node;
 		var myChart = new Chart(node, {
 			type: 'bar',
 			data: {
-				labels: ['Red', 'Blue', 'Yellow', 'Green'],
+				labels: ['Dogs', 'Cats', 'Rodents', 'Birds'],
 				datasets: [
 					{
-						label: '# of Likes',
-						data: [12, 19, 7, 13],
+						label: '# of Registered Pets',
+						data: [this.state.dog, this.state.cat, this.state.rodent, this.state.bird],
 						backgroundColor: [
 							'rgba(255, 99, 132, 0.9)',
 							'rgba(54, 162, 235, 0.9)',
@@ -1229,5 +1214,78 @@ export class Logout extends React.Component {
 					</div>
 				</div>
 			</div>);
+	}
+}
+
+import dogAboutUs from '../resources/images/dogau.png';
+import dogAboutUs2 from '../resources/images/dog2au.jpg';
+import dogAboutUs3 from '../resources/images/dog3au.jpg';
+export class AboutUs extends React.Component{
+	render(){
+		return(
+            <div className="container shiftRight top-buffer">
+                <NavBar/>
+                <SideBar/>
+                    <div className="container">
+                        <div className="row">
+                            <div className="card col-md-12 p-3">
+                                <div className="row ">
+                                    <div className="col-md-8">
+                                        <div className="card-block">
+                                            <h6 className="card-title text-right"></h6>
+                                            <p className="card-text text-justify">Tempeturs was created for Pet Owners and Sitters
+											to match. Simply set your availability, and create a booking to accommodate your furry
+											friends.</p>
+                                            <a href="#" className="btn btn-primary">My Profile</a>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <img className="w-100" src={dogAboutUs}/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card col-md-12 p-3">
+                                <div className="row ">
+                                    <div className="col-md-4">
+                                        <img className="w-100" src={dogAboutUs2}/>
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="card-block">
+                                            <h6 className="card-title">Rate a Sitter</h6>
+                                            <p className="card-text text-justify"> Rate and review sitters to share your Tempeturs experience! </p>
+                                            <a href="/#/review-page" className="btn btn-primary">Rate a Sitter</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card col-md-12 p-3">
+                                <div className="row ">
+                                    <div className="col-md-4">
+                                        <img className="w-100" src={dogAboutUs3}/>
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="card-block">
+                                            <h6 className="card-title">Built by the Best</h6>
+                                            <p className="card-text text-justify"> Tempeturs was designed and developed by Ian Laird,
+											Parakh Jaggi, Garth Terlizzi III, Aidan Edwards, and David Milliard.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card col-md-12 p-3">
+                                <div className="card-header">
+                                    <i className="fas fa-chart-area"></i>
+                                    Number of Registered Pets
+                                </div>
+                                <div className="card-body">
+                                    <Layout></Layout>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <Logout/>
+            </div>
+		);
 	}
 }
