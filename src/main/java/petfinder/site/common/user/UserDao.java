@@ -49,9 +49,6 @@ public class UserDao {
 	}
 
 	public UserCollectionDTO findByFieldMatch(String term, List<Object> toMatch){
-//		if(!Arrays.asList(VALID_TYPES).contains(term)){
-//			throw new PetException("field " + term + "not existent");
-//		}
 		int count = toMatch.size();
 		QueryBuilder queryBuilder = null;
 		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
@@ -65,6 +62,29 @@ public class UserDao {
 			}
 		}
 		sourceBuilder.query(qs);
+		UserCollectionDTO results = new UserCollectionDTO();
+		List<UserDto> users = new LinkedList<>();
+		List<UserAuthenticationDto> res = this.repository.search(sourceBuilder);
+		res.forEach(x->users.add(x.getUser()));
+		results.setUsers( users);
+		return results;
+	}
+
+	public UserCollectionDTO findSitters(String zip, String city, String state){
+		QueryBuilder queryBuilder = null;
+		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+		BoolQueryBuilder qs = QueryBuilders.boolQuery();
+		BoolQueryBuilder q = QueryBuilders.boolQuery();
+		//BoolQueryBuilder r = QueryBuilders.boolQuery();
+
+		//city or zip
+		qs.must(QueryBuilders.termQuery("user.city", city))
+				.must(QueryBuilders.termQuery("user.state", state));
+		q.should(qs)
+		        .should(QueryBuilders.termQuery("user.zip", zip));
+	//	r.must(QueryBuilders.termQuery("user.type", "petfinder.site.common.user.UserDto.UserType.SITTER"));
+				//.must(q);
+		sourceBuilder.query(q).size(20);
 		UserCollectionDTO results = new UserCollectionDTO();
 		List<UserDto> users = new LinkedList<>();
 		List<UserAuthenticationDto> res = this.repository.search(sourceBuilder);

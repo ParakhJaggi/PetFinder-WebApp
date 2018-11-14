@@ -46,6 +46,9 @@ public class PetDao {
 	public PetCollectionDTO findByFieldMatch(String term, List<Object> toMatch) throws PetException {
 		return petElasticsearchRepository.findByFieldMatch(term, toMatch);
 	}
+	public PetCollectionDTO findByOwner(List<Object> toMatch){
+		return petElasticsearchRepository.findByOwner(toMatch);
+	}
 	public void deletePet(Long id){
 		petElasticsearchRepository.delete(id);
 	}
