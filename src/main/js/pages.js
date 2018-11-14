@@ -1065,13 +1065,7 @@ export class ReviewPage extends React.Component {
     componentDidMount() {
         axios.get('/api/user')
             .then(res => {
-	            if (res.type == 'SITTER') {
-		            window.alert('Sitters Can Not Review');
-		            window.location.href = '#/profile-page';
-		            location.reload();
-
-	            }
-	            const myBookings = res.bookings;
+                const myBookings = res.bookings;
                 this.setState({bookings: myBookings});
             });
         axios.get('/api/user/getavailablesitters')
