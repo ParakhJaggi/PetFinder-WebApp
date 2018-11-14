@@ -11,6 +11,7 @@ import petfinder.site.common.user.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Laird
@@ -159,4 +160,14 @@ public class UserTester extends UserDao {
         return toReturn;
     }
 
+    @Override
+    public UserCollectionDTO findSitters(String zip, String city, String state){
+       List<Object> zipList = new ArrayList<>(), cityList = new ArrayList<>();
+       zipList.add(zip);
+       cityList.add(city);
+        UserCollectionDTO toReturn =  findByFieldMatch("zip", zipList);
+        toReturn.getUsers().addAll(findByFieldMatch("city",  cityList).getUsers());
+        toReturn.setUsers(toReturn.getUsers().stream().distinct().collect(Collectors.toList()));
+        return toReturn;
+    }
 }

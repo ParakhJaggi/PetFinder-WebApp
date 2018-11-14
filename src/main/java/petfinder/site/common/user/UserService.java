@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.mailjet.client.resource.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -19,6 +20,16 @@ import petfinder.site.common.RestRequests.AnimalTypeRequestBuilder;
 import petfinder.site.common.pet.PetCollectionDTO;
 import petfinder.site.common.pet.PetDao;
 import petfinder.site.common.user.UserDto.UserType;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.ClientOptions;
+import com.mailjet.client.resource.Emailv31;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 /**
  * Created by jlutteringer on 8/23/17.
@@ -142,8 +153,8 @@ public class UserService {
 		UserDto toSet = new UserDto(request.getPrincipal(),
 				_Lists.list("ROLE_USER"),
 				UserType.OWNER, request.getAttributes(),
-				request.getAddress(), request.getCity(),
-				request.getState(), request.getZip());
+				request.getAddress(), request.getCity().toLowerCase(),
+				request.getState().toLowerCase(), request.getZip());
 		if(request.getType().equals("SITTER")){
 			toSet.setType(UserType.SITTER);
 		}
@@ -189,10 +200,11 @@ public class UserService {
 		if(!(user.getType() == UserType.OWNER)){
 			return null;
 		}
-		List<Object> zipMatch = new ArrayList<>(), cityMatch = new ArrayList<>();
 		if(user.getZip() == null){
 			throw new UserException("current user has no zip");
 		}
+		/*
+		List<Object> zipMatch = new ArrayList<>(), cityMatch = new ArrayList<>();
 		zipMatch.add(user.getZip());
 		cityMatch.add(user.getCity());
 		//first get all users within the same zip
@@ -201,12 +213,14 @@ public class UserService {
 
 		Set<UserDto> allObjects = new HashSet<>(users.getUsers());
 		allObjects.addAll(userCity.getUsers());
+		*/
+		UserCollectionDTO users = userDao.findSitters(user.getZip(), user.getCity(), user.getState());
 
 		//now remove the current user
-		List<UserDto> filtered = allObjects.stream()
+		List<UserDto> filtered = users.getUsers().stream()
 				.distinct()
-				.filter(x-> !x.getPrincipal().equals(user.getPrincipal())
-						&& x.getType() == UserType.SITTER)
+				.filter(x-> /*!x.getPrincipal().equals(user.getPrincipal())
+						&& */ x.getType() == UserType.SITTER)
 				//see if the owner and sitter have at least one day in common
 				.filter(x->{
 					boolean flag = false;
@@ -218,7 +232,7 @@ public class UserService {
 					return flag;
 				})
 				.sorted((x,y) -> x.getCity().compareTo(y.getCity()))
-                .limit((long)20)
+              //  .limit((long)20)
 				.collect(Collectors.toList());
 		users.setUsers(filtered);
 		return users;
@@ -262,7 +276,7 @@ public class UserService {
      * @param utd boolean array representing each day of the week
      * @return true indicates that the booking has been successfully requested
      */
-	public boolean requestBooking(String s, UserTimesDTO utd){
+	public boolean requestBooking(String s, UserTimesDTO utd) throws MailjetSocketTimeoutException, MailjetException {
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> owner = userDao.findUserByPrincipal(principal);
 		//see if the current user is an owner
@@ -292,6 +306,24 @@ public class UserService {
 		userDao.save(sitter.get());
 		userDao.save(owner.get());
 
+        MailjetClient client;
+        MailjetRequest request;
+        MailjetResponse response;
+        client = new MailjetClient("141f6e47ca4cc452b41aaa540312bc7a", "d8acde824e69d34ac0c55def4a1fbf12");
+        request = new MailjetRequest(Email.resource)
+                .property(Email.FROMEMAIL, "parakh_jaggi@baylor.edu")
+                .property(Email.FROMNAME, "Group 4 admin")
+                .property(Email.SUBJECT, "Booking requested!")
+                .property(Email.TEXTPART, "Dear User, You have a booking! Please check our site to accept/decline.")
+                .property(Email.RECIPIENTS, new JSONArray()
+                        .put(new JSONObject()
+                                .put("Email",sitter.get().getUser().getPrincipal())
+                                .put("Email",owner.get().getUser().getPrincipal())));
+
+
+        response = client.post(request);
+        System.out.println(response.getData());
+
 		return true;
 	}
 
@@ -320,7 +352,7 @@ public class UserService {
      * @return true indicates that the booking was successfully confimed. False means the confirmation failed.
      * @see BookingDTO
      */
-	public boolean confirmBooking (BookingDTO bd){
+	public boolean confirmBooking (BookingDTO bd) throws MailjetSocketTimeoutException, MailjetException {
 		//first see if the current user is a sitter and exists
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
@@ -336,25 +368,48 @@ public class UserService {
 		List<String> test = sitter.get().getUser().getNotification();
 		test.add("Booking confirmed");
 		sitter.get().getUser().setNotification(test);
+		//add this owner to the people allowed to review the sitter
+		sitter.get().getUser().getUsedSitters().add(bd.getPrincipal());
 		userDao.save(sitter.get());
 
 		//also add this to the owner that requested the booking
 		Optional<UserAuthenticationDto> owner = userDao.findUserByPrincipal(bd.getPrincipal());
 		List<String> test2 = owner.get().getUser().getNotification();
-		test2.add("Booking confirmed with " + sitter.get().getUser().getPrincipal());
+		test2.add("Booking confirmed with " + principal);
 		owner.get().getUser().setNotification(test2);
 		owner.get().getUser().getBookings().add(new BookingDTO(principal, bd.getDays()));
 		userDao.save(owner.get());
+
+
+        MailjetClient client;
+        MailjetRequest request;
+        MailjetResponse response;
+        client = new MailjetClient("141f6e47ca4cc452b41aaa540312bc7a", "d8acde824e69d34ac0c55def4a1fbf12");
+        request = new MailjetRequest(Email.resource)
+                .property(Email.FROMEMAIL, "parakh_jaggi@baylor.edu")
+                .property(Email.FROMNAME, "Group 4 admin")
+                .property(Email.SUBJECT, "Booking confirmed!")
+                .property(Email.TEXTPART, "Dear User, Your booking has been confirmed!")
+                .property(Email.RECIPIENTS, new JSONArray()
+                        .put(new JSONObject()
+                                .put("Email",sitter.get().getUser().getPrincipal())
+                                .put("Email",owner.get().getUser().getPrincipal())));
+
+
+        response = client.post(request);
+        System.out.println(response.getData());
 		return true;
 	}
-	public void ClearNotifications(String principle){
+	public void ClearNotifications(String principle)  {
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
 
 		sitter.get().getUser().setNotification(new ArrayList<>());
 
 		userDao.save(sitter.get());
-	}
+
+    }
+
 
     /**
      * Method to cancel a booking. can be called by an owner or a sitter to cancel a requested or confirmed booking.
@@ -401,7 +456,7 @@ public class UserService {
      * @param rd review that the current owner is adding.
      * @see ReviewDTO
      */
-	public void addReview (ReviewDTO rd){
+	public void addReview (ReviewDTO rd) throws MailjetSocketTimeoutException, MailjetException {
         String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 	    UserDto owner = userDao.findUserByPrincipal(principal).get().getUser();
 
@@ -411,7 +466,9 @@ public class UserService {
 	    Optional<UserAuthenticationDto> op = userDao.findUserByPrincipal(rd.getUser());
 	    if(op.isPresent()){
 	        UserDto sitter = op.get().getUser();
-	        if(sitter.getType()!= UserType.SITTER){
+	        //make sure that the owner is reviewing a sitter and that the owner is
+			// allowed to review the sitter
+	        if(sitter.getType()!= UserType.SITTER || !sitter.getUsedSitters().contains(principal)){
 	            return;
             }
             //see if the owner has already left a review
@@ -431,6 +488,24 @@ public class UserService {
             l.add("Review added! Current Score = " + sitter.getReviewSum());
             op.get().getUser().setNotification(l);
             userDao.save(op.get());
+
+
+            MailjetClient client;
+            MailjetRequest request;
+            MailjetResponse response;
+            client = new MailjetClient("141f6e47ca4cc452b41aaa540312bc7a", "d8acde824e69d34ac0c55def4a1fbf12");
+            request = new MailjetRequest(Email.resource)
+                    .property(Email.FROMEMAIL, "parakh_jaggi@baylor.edu")
+                    .property(Email.FROMNAME, "Group 4 admin")
+                    .property(Email.SUBJECT, "Rating Added!")
+                    .property(Email.TEXTPART, "Dear User, A user gave you a review! Your new score is " + sitter.getReviewSum() +".")
+                    .property(Email.RECIPIENTS, new JSONArray()
+                            .put(new JSONObject()
+                                    .put("Email",sitter.getPrincipal())));
+
+
+            response = client.post(request);
+            System.out.println(response.getData());
 	    }
     }
 

@@ -5,6 +5,14 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.logging.Logger;
 
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.resource.Email;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +51,9 @@ public class PetEndpoint {
 		petService.save(new PetDto((long)2, "doggo", "dog"));
 		petService.save(new PetDto((long)3, "ratto", "rodent"));
 	}
+
+
+
 
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public Optional<PetDto> getPet(@PathVariable("id") Long id) {

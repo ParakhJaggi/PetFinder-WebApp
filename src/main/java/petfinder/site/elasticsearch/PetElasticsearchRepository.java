@@ -71,4 +71,11 @@ public class PetElasticsearchRepository extends ElasticSearchJsonRepository<PetD
 		results.setPets( this.index.search(sourceBuilder, this.serializer));
 		return results;
 	}
+	public PetCollectionDTO findByOwner(List<Object> toMatch){
+		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+		sourceBuilder.query(QueryBuilders.queryStringQuery((String)toMatch.get(0)));
+		PetCollectionDTO results = new PetCollectionDTO();
+		results.setPets( this.index.search(sourceBuilder, this.serializer));
+		return results;
+	}
 }

@@ -32,11 +32,17 @@ web:
     css-bundle-location: /statics/petfinder-site.css
 
 elastic-search:
-  host: boxwood-9271516.us-east-1.bonsaisearch.net
+  host: rowan-3574230.us-east-1.bonsaisearch.net
   port: 443
   scheme: https
-  user-name: zxnyitaja8
-  password: me7jgdxlr1
+  user-name: k697as71ws
+  password: j1ljluiwfk
+
+  env:
+    MJ_APIKEY_PUBLIC: 141f6e47ca4cc452b41aaa540312bc7a
+    MJ_APIKEY_PRIVATE: d8acde824e69d34ac0c55def4a1fbf12
+
+
 
 
 
