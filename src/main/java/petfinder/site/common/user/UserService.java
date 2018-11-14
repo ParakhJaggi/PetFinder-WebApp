@@ -1,5 +1,4 @@
 package petfinder.site.common.user;
-import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
@@ -19,6 +18,7 @@ import alloy.util.AlloyAuthentication;
 import alloy.util.Wait;
 import alloy.util._Lists;
 import alloy.util._Maps;
+import petfinder.site.common.CustomGeoPoint;
 import petfinder.site.common.Exceptions.UserException;
 import petfinder.site.common.RestRequests.AnimalTypeRequestBuilder;
 import petfinder.site.common.pet.PetCollectionDTO;
@@ -58,7 +58,8 @@ public class UserService {
 	}
 
 	public Optional<UserDto> findUserByPrincipal(String principal) {
-		return userDao.findUserByPrincipal(principal).map(UserAuthenticationDto::getUser);
+		Optional<UserDto> u = userDao.findUserByPrincipal(principal).map(UserAuthenticationDto::getUser);
+		return u;
 	}
 
 	public Optional<UserAuthenticationDto> findUserAuthenticationByPrincipal(String principal) {
@@ -165,7 +166,7 @@ public class UserService {
 		catch(UnsupportedEncodingException e){
 			return null;
 		}
-		if(((String)((List<?>)o.get("results")).get(1)).equals("OK") ){
+		if(((String)(((Map<?,?>)o).get("status"))).equals("OK") ){
 			Map<?, ?> location = ((Map<?, ?>) ((Map<?, ?>) ((Map<?, ?>) ((List<?>) o.get("results")).get(0)).get("geometry")).get("location"));
 			latitude = (Double)location.get("lat");
 			longitude = (Double)location.get("lng");
@@ -181,7 +182,7 @@ public class UserService {
 		else{
 			toSet.setType(UserType.OWNER);
 		}
-		toSet.setGeographicPoint(new GeoPoint(latitude, longitude));
+		toSet.setGeographicPoint(new CustomGeoPoint(latitude, longitude));
 		userAuthentication = new UserAuthenticationDto(toSet,
 				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);

@@ -14,9 +14,9 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.stereotype.Repository;
 
+import petfinder.site.common.CustomGeoPoint;
 import petfinder.site.common.Exceptions.PetException;
 import petfinder.site.common.pet.PetCollectionDTO;
 import petfinder.site.elasticsearch.UserElasticSearchRepository;
@@ -75,7 +75,7 @@ public class UserDao {
 		return results;
 	}
 
-	public UserCollectionDTO findSitters(GeoPoint p){
+	public UserCollectionDTO findSitters(CustomGeoPoint p){
 		QueryBuilder queryBuilder = null;
 		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 		GeoDistanceQueryBuilder g = QueryBuilders.geoDistanceQuery("geographicPoint");

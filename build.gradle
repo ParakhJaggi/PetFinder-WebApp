@@ -52,7 +52,6 @@ dependencies {
 	compile group: 'org.springframework.security', name: 'spring-security-jwt'
 	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2'
 
-	compile group: 'org.springframework.data', name: 'spring-data-elasticsearch', version: '1.0.0.RELEASE'
 	compile group: 'org.apache.logging.log4j', name: 'log4j-api'
 	compile group: 'org.apache.logging.log4j', name: 'log4j-core'
 	compile group: 'org.apache.logging.log4j', name: 'log4j-jcl'

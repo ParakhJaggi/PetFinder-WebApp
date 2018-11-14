@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import alloy.util.Identifiable;
 import alloy.util.Momento;
-import org.springframework.data.elasticsearch.core.geo.GeoPoint;
+import petfinder.site.common.CustomGeoPoint;
 
 /**
  * Created by jlutteringer on 8/23/17.
@@ -24,7 +24,7 @@ public class UserDto implements Momento<String> {
     private int reviewCount, reviewSum;
     private List<ReviewDTO> reviews;
     private Set<String> usedSitters;
-    GeoPoint geographicPoint;
+    CustomGeoPoint geographicPoint;
 
 	public int getReviewCount() {
 		return reviewCount;
@@ -58,11 +58,11 @@ public class UserDto implements Momento<String> {
         this.notification = notification;
     }
 
-	public GeoPoint getGeographicPoint() {
+	public CustomGeoPoint getGeographicPoint() {
 		return geographicPoint;
 	}
 
-	public void setGeographicPoint(GeoPoint geographicPoint) {
+	public void setGeographicPoint(CustomGeoPoint geographicPoint) {
 		this.geographicPoint = geographicPoint;
 	}
 
@@ -72,6 +72,7 @@ public class UserDto implements Momento<String> {
 		this.reviews = new LinkedList<>();
 		this.notification = new ArrayList<>();
 		this.usedSitters = new HashSet<>();
+		this.geographicPoint = new CustomGeoPoint(0.0,0.0);
 	}
 
 	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip, boolean [] b) {
@@ -111,7 +112,7 @@ public class UserDto implements Momento<String> {
         this.type = type;
     }
 
-	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip, boolean[] days, List<BookingDTO> bookings, List<BookingDTO> requestedBookings, List<String> notification, int reviewCount, int reviewSum, List<ReviewDTO> reviews, Set<String> usedSitters, GeoPoint geographicPoint) {
+	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip, boolean[] days, List<BookingDTO> bookings, List<BookingDTO> requestedBookings, List<String> notification, int reviewCount, int reviewSum, List<ReviewDTO> reviews, Set<String> usedSitters, CustomGeoPoint geographicPoint) {
 		this.principal = principal;
 		this.roles = roles;
 		this.type = type;
@@ -128,7 +129,7 @@ public class UserDto implements Momento<String> {
 		this.reviewSum = reviewSum;
 		this.reviews = reviews;
 		this.usedSitters = usedSitters;
-		this.geographicPoint = geographicPoint;
+		this.geographicPoint = new CustomGeoPoint(geographicPoint);
 	}
 
 	public String getPrincipal() {
