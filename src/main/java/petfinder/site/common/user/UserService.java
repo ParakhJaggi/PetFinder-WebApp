@@ -1,5 +1,8 @@
 package petfinder.site.common.user;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import static java.net.URLEncoder.encode;
 
 import alloy.util.AlloyAuthentication;
 import alloy.util.Wait;
@@ -145,10 +149,26 @@ public class UserService {
 	}
 
 	public UserDto register(RegistrationRequest request) {
+		RestTemplate rs = new RestTemplate();
+		StringBuilder strB = new StringBuilder();
+		Double latitude = 0.0, longitude = 0.0;
+		strB.append(request.getAddress()).append(',').append(request.getCity()).append(',').append(request.getState());
 		UserAuthenticationDto userAuthentication = null;
 		//see if the user already exists
 		if(findUserByPrincipal(request.getPrincipal()).isPresent()){
 			return null;
+		}
+		Map<?, ?> o = null;
+		try {
+			o = rs.getForObject("https://maps.googleapis.com/maps/api/geocode/json?address={address}&key=AIzaSyCXPmp-yjzKl9jIN9fwXbRLgCUOfwaYZfQ", Map.class, encode(strB.toString(), "UTF-8"));
+		}
+		catch(UnsupportedEncodingException e){
+			return null;
+		}
+		if(((String)((List<?>)o.get("results")).get(1)).equals("OK") ){
+			Map<?, ?> location = ((Map<?, ?>) ((Map<?, ?>) ((Map<?, ?>) ((List<?>) o.get("results")).get(0)).get("geometry")).get("location"));
+			latitude = (Double)location.get("lat");
+			longitude = (Double)location.get("lng");
 		}
 		UserDto toSet = new UserDto(request.getPrincipal(),
 				_Lists.list("ROLE_USER"),
@@ -161,6 +181,7 @@ public class UserService {
 		else{
 			toSet.setType(UserType.OWNER);
 		}
+		toSet.setGeographicPoint(new GeoPoint(latitude, longitude));
 		userAuthentication = new UserAuthenticationDto(toSet,
 				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);
@@ -214,7 +235,7 @@ public class UserService {
 		Set<UserDto> allObjects = new HashSet<>(users.getUsers());
 		allObjects.addAll(userCity.getUsers());
 		*/
-		UserCollectionDTO users = userDao.findSitters(user.getZip(), user.getCity(), user.getState());
+		UserCollectionDTO users = userDao.findSitters(user.getGeographicPoint());
 
 		//now remove the current user
 		List<UserDto> filtered = users.getUsers().stream()
@@ -232,7 +253,7 @@ public class UserService {
 					return flag;
 				})
 				.sorted((x,y) -> x.getCity().compareTo(y.getCity()))
-              //  .limit((long)20)
+                .limit((long)20)
 				.collect(Collectors.toList());
 		users.setUsers(filtered);
 		return users;

@@ -5,11 +5,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.stereotype.Repository;
 
 import petfinder.site.common.Exceptions.PetException;
@@ -70,21 +75,27 @@ public class UserDao {
 		return results;
 	}
 
-	public UserCollectionDTO findSitters(String zip, String city, String state){
+	public UserCollectionDTO findSitters(GeoPoint p){
 		QueryBuilder queryBuilder = null;
 		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-		BoolQueryBuilder qs = QueryBuilders.boolQuery();
-		BoolQueryBuilder q = QueryBuilders.boolQuery();
-		//BoolQueryBuilder r = QueryBuilders.boolQuery();
-
-		//city or zip
-		qs.must(QueryBuilders.termQuery("user.city", city))
-				.must(QueryBuilders.termQuery("user.state", state));
-		q.should(qs)
-		        .should(QueryBuilders.termQuery("user.zip", zip));
-	//	r.must(QueryBuilders.termQuery("user.type", "petfinder.site.common.user.UserDto.UserType.SITTER"));
-				//.must(q);
-		sourceBuilder.query(q).size(20);
+		GeoDistanceQueryBuilder g = QueryBuilders.geoDistanceQuery("geographicPoint");
+		org.elasticsearch.common.geo.GeoPoint altGeoPoint = new org.elasticsearch.common.geo.GeoPoint();
+		altGeoPoint.resetLon(p.getLon());
+		altGeoPoint.resetLat(p.getLat());
+		g.point(altGeoPoint).distance("35 km");
+		SortBuilder sb = SortBuilders.geoDistanceSort("geographicPoint", p.getLat(), p.getLon()).unit(DistanceUnit.KILOMETERS);
+//		BoolQueryBuilder qs = QueryBuilders.boolQuery();
+//		BoolQueryBuilder q = QueryBuilders.boolQuery();
+//		//BoolQueryBuilder r = QueryBuilders.boolQuery();
+//
+//		//city or zip
+//		qs.must(QueryBuilders.termQuery("user.city", city))
+//				.must(QueryBuilders.termQuery("user.state", state));
+//		q.should(qs)
+//		        .should(QueryBuilders.termQuery("user.zip", zip));
+//	//	r.must(QueryBuilders.termQuery("user.type", "petfinder.site.common.user.UserDto.UserType.SITTER"));
+//				//.must(q);
+		sourceBuilder.query(g).size(100).sort(sb);
 		UserCollectionDTO results = new UserCollectionDTO();
 		List<UserDto> users = new LinkedList<>();
 		List<UserAuthenticationDto> res = this.repository.search(sourceBuilder);

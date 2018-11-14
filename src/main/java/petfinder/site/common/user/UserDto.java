@@ -6,6 +6,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import alloy.util.Identifiable;
 import alloy.util.Momento;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
 /**
  * Created by jlutteringer on 8/23/17.
@@ -23,6 +24,7 @@ public class UserDto implements Momento<String> {
     private int reviewCount, reviewSum;
     private List<ReviewDTO> reviews;
     private Set<String> usedSitters;
+    GeoPoint geographicPoint;
 
 	public int getReviewCount() {
 		return reviewCount;
@@ -56,6 +58,13 @@ public class UserDto implements Momento<String> {
         this.notification = notification;
     }
 
+	public GeoPoint getGeographicPoint() {
+		return geographicPoint;
+	}
+
+	public void setGeographicPoint(GeoPoint geographicPoint) {
+		this.geographicPoint = geographicPoint;
+	}
 
 	public UserDto() {
 		this.reviewCount = 1;
@@ -101,6 +110,26 @@ public class UserDto implements Momento<String> {
         this.attributes = attributes;
         this.type = type;
     }
+
+	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip, boolean[] days, List<BookingDTO> bookings, List<BookingDTO> requestedBookings, List<String> notification, int reviewCount, int reviewSum, List<ReviewDTO> reviews, Set<String> usedSitters, GeoPoint geographicPoint) {
+		this.principal = principal;
+		this.roles = roles;
+		this.type = type;
+		this.attributes = attributes;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.days = days;
+		this.bookings = bookings;
+		this.requestedBookings = requestedBookings;
+		this.notification = notification;
+		this.reviewCount = reviewCount;
+		this.reviewSum = reviewSum;
+		this.reviews = reviews;
+		this.usedSitters = usedSitters;
+		this.geographicPoint = geographicPoint;
+	}
 
 	public String getPrincipal() {
 		return principal;
