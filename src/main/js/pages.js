@@ -84,7 +84,9 @@ export class RegisterPage extends React.Component {
 
 	render() {
 		return (
+
 			<body className="register-background fixed-top " id="page-top">
+
 			{this.redirectPage()}
 			<Pulse>
 				<div className="myContainer pull-left">
@@ -92,14 +94,15 @@ export class RegisterPage extends React.Component {
 						<div className="card-header">Register</div>
 						<div className="card-body">
 							<RegistrationForm/>
-							<a className="d-block small" href="/#/profile-page">ProfilePage</a>
 							<a className="d-block small" href="/#/login">login</a>
 
 						</div>
+
 					</div>
 				</div>
 			</Pulse>
 			<Logout/>
+
 			</body>
 		);
 	}
@@ -133,9 +136,6 @@ export class LoginPage extends React.Component {
 							<div className="text-center">
 								<a className="d-block small mt-3" href="#/register">Register an Account</a>
 								<a className="d-block small" href="forgot-password.html">Forgot Password?</a>
-								<a className="d-block small" href="/#/dashboard">Home</a>
-								<a className="d-block small" href="/#/profile-page">ProfilePage</a>
-
 							</div>
 						</div>
 					</div>
@@ -224,7 +224,7 @@ class ProfilePage extends React.Component {
 						this.state.user && this.state.user.notification &&
 						<div>Your current notifications: {this.state.user.notification.map(test =>
 							<tr>
-								<td>{test.toString() }</td>
+								<td>{test.toString()}</td>
 							</tr>
 						)}</div>
 					}
@@ -950,53 +950,9 @@ export class Dashboard extends React.Component {
 									</div>
 								</div>
 							</div>
-							<div className="row justify-content-center ">
-								<div className="col-xl-4 col-sm-9 mb-3 card text-white bg-light o-hidden h-35">
-									<a className="card-footer text-black-50 clearfix small z-1" href="#/rodent-search">
-										<span className="float-left"><b>Location Search</b></span>
-										<span className="float-right">
-                    <i className="fas fa-angle-right"></i>
-                  </span>
-									</a>
-									<div className="card-body">
-										<div className="card-img-overlay">
-											<img src={'https://i.postimg.cc/R0N0KMMq/traveling-with-animals.jpg'}
-											     className="card-img-bottom bunny-crop "></img>
-										</div>
-									</div>
-
-								</div>
-								<div className="pr-2"></div>
-								<div className="col-xl-4 col-sm-9 mb-3 card text-white bg-light o-hidden h-35">
-
-									<a className="card-footer text-black-50 clearfix small z-1" href="#">
-										<span className="float-left"><b>Advanced Search</b></span>
-										<span className="float-right">
-                    <i className="fas fa-angle-right"></i>
-                  </span>
-									</a>
-									<div className="card-body">
-										<div className="card-img-overlay">
-											<img
-												src={'https://i.postimg.cc/JhZjZc7s/3958_D90_D1601-_D4_F3-_A5_A6-_D7_FB-872_BF841028_B.png'}
-												className="card-img-bottom mag-crop"></img>
-										</div>
-									</div>
-								</div>
-							</div>
 						</Pulse>
 
-						<div class="card mb-3">
-							<div class="card-header">
-								<i class="fas fa-chart-area"></i>
-								Bar Chart Example
-							</div>
-							<div class="card-body">
-								<Layout></Layout>
 
-							</div>
-							<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-						</div>
 					</div>
 
 					<footer class="footer navbar-fixed-bottom">
@@ -1020,130 +976,135 @@ export class Dashboard extends React.Component {
 var Chart = require('chart.js');
 
 export class ReviewPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            bookings: [],
-            sitters: [],
-            score: '',
-            review:'',
-            name:'',
-            reload:''
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleChange2 = this.handleChange2.bind(this);
-        this.handleChange3=this.handleChange3.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    handleChange(event) {
-        this.setState({name: event.target.value});
-    }
-    handleChange2(event) {
-    	if(event.target.value >= 0 && event.target.value <= 100 )
-        	this.setState({score: event.target.value});
-    	else
-    		window.alert('Error, input between 0-100');
-    }
-    handleChange3(event){
-        this.setState({review: event.target.value});
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			bookings: [],
+			sitters: [],
+			score: '',
+			review: '',
+			name: '',
+			reload: ''
+		};
+		this.handleChange = this.handleChange.bind(this);
+		this.handleChange2 = this.handleChange2.bind(this);
+		this.handleChange3 = this.handleChange3.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
 
-    handleSubmit(event) {
-        event.preventDefault();
-        let toPost = {
-            'user': this.state.name,
-            'review': this.state.review,
-            'assignedScore': this.state.score
-        };
-        axios.post('/api/user/addReviewScore', toPost);
-        location.reload();
-        window.alert('Review sent');
-    }
+	handleChange(event) {
+		this.setState({name: event.target.value});
+	}
+
+	handleChange2(event) {
+		if (event.target.value >= 0 && event.target.value <= 100)
+			this.setState({score: event.target.value});
+		else
+			window.alert('Error, input between 0-100');
+	}
+
+	handleChange3(event) {
+		this.setState({review: event.target.value});
+	}
+
+	handleSubmit(event) {
+		event.preventDefault();
+		let toPost = {
+			'user': this.state.name,
+			'review': this.state.review,
+			'assignedScore': this.state.score
+		};
+		axios.post('/api/user/addReviewScore', toPost);
+		location.reload();
+		window.alert('Review sent');
+	}
 
 
+	componentDidMount() {
+		axios.get('/api/user')
+			.then(res => {
+				const myBookings = res.bookings;
+				this.setState({bookings: myBookings});
+			});
+		axios.get('/api/user/getavailablesitters')
+			.then(res => {
+				const mySitters = res.users;
+				this.setState({sitters: mySitters});
+			});
+	}
 
-    componentDidMount() {
-        axios.get('/api/user')
-            .then(res => {
-                const myBookings = res.bookings;
-                this.setState({bookings: myBookings});
-            });
-        axios.get('/api/user/getavailablesitters')
-            .then(res => {
-                const mySitters = res.users;
-                this.setState({sitters: mySitters});
-            });
-    }
 	/*TODO verify that users can only review sitters they booked*/
-    render() {
-        return (
-            <body id="page-top">
-            <div id="wrapper">
-                <NavBar></NavBar>
-                <SideBar></SideBar>
-                <div id="content-wrapper">
-                    <div class="top-buffer">
-                    </div>
-                    <div class="container shiftRight">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="#">Dashboard</a>
-                            </li>
-                            <li class="breadcrumb-item active">Bookings</li>
-                        </ol>
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fas fa-table"></i>
-                                Bookings
-                            </div>
-                            <div class="card-body">
-                                <div className="table-responsive">
-                                    <table className="table table-bordered" id="dataTable" width="90%" cellSpacing="0">
-                                        <Pulse>
-                                            <thead>
-                                            <tr>
-                                                <td>Sitter Name</td>
-                                                <td># Ratings</td>
-                                                <td>Sitter Rating</td>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                           {this.state.sitters.map(sitters =>
-                                                <tr>
-                                                    <td>{sitters.principal}</td>
-                                                    <td>{sitters.reviewCount-1}</td>
-                                                    <td>{parseInt(sitters.reviewSum/sitters.reviewCount)}</td>
-                                                </tr>
-                                            )}
+	render() {
+		return (
+			<body id="page-top">
+			<div id="wrapper">
+				<NavBar></NavBar>
+				<SideBar></SideBar>
+				<div id="content-wrapper">
+					<div class="top-buffer">
+					</div>
+					<div class="container shiftRight">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								<a href="#">Dashboard</a>
+							</li>
+							<li class="breadcrumb-item active">Bookings</li>
+						</ol>
+						<div class="card mb-3">
+							<div class="card-header">
+								<i class="fas fa-table"></i>
+								Bookings
+							</div>
+							<div class="card-body">
+								<div className="table-responsive">
+									<table className="table table-bordered" id="dataTable" width="90%" cellSpacing="0">
+										<Pulse>
+											<thead>
+											<tr>
+												<td>Sitter Name</td>
+												<td># Ratings</td>
+												<td>Sitter Rating</td>
+											</tr>
+											</thead>
+											<tbody>
+											{this.state.sitters.map(sitters =>
+												<tr>
+													<td>{sitters.principal}</td>
+													<td>{sitters.reviewCount - 1}</td>
+													<td>{parseInt(sitters.reviewSum / sitters.reviewCount)}</td>
+												</tr>
+											)}
 
-                                            </tbody>
-                                        </Pulse>
-                                    </table>
-                                    <form onSubmit={this.handleSubmit}>
-                                        <label>
-                                            Enter name of Sitter you would like to review:
-                                            <input type="text" value={this.state.name} onChange={this.handleChange} />
-                                        </label><br/>
+											</tbody>
+										</Pulse>
+									</table>
+									<form onSubmit={this.handleSubmit}>
+										<label>
+											Enter name of Sitter you would like to review:
+											<input type="text" value={this.state.name} onChange={this.handleChange}/>
+										</label><br/>
 
-                                        <label>
-                                            Your Score:
-                                            <input type="text" value={this.state.score} onChange={this.handleChange2} />
-                                        </label><br/>
-                                        <label>
-                                            Your Review (Optional):
-                                        </label><br/><textarea className="form-control" rows="5" id="comment" type="text" value={this.state.review} onChange={this.handleChange3}></textarea>
-                                        <input type="submit" value="Submit" />
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <Logout/>
-            </body>
-        );
-    }
+										<label>
+											Your Score:
+											<input type="text" value={this.state.score} onChange={this.handleChange2}/>
+										</label><br/>
+										<label>
+											Your Review (Optional):
+										</label><br/><textarea className="form-control" rows="5" id="comment"
+										                       type="text" value={this.state.review}
+										                       onChange={this.handleChange3}></textarea>
+										<input type="submit" value="Submit"/>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<Logout/>
+			</body>
+		);
+	}
 }
 
 export class AddPet extends React.Component {
@@ -1157,6 +1118,7 @@ export class AddPet extends React.Component {
 				<div className="card">
 					<RegistrationPetForm/>
 				</div>
+			<Logout/>
 			</div>
 		);
 	}
@@ -1165,19 +1127,47 @@ export class AddPet extends React.Component {
 class Layout extends React.Component {
 	constructor(props) {
 		super(props);
+        this.state = {
+            dog: 0,
+            cat: 0,
+            rodent: 0,
+            bird: 0,
+        };
+
 	}
+	componentDidMount(){
+        axios.get('/pets/rodents')
+            .then(res => {
+                const pets = res.pets;
+                this.setState({rodent: pets.length});
+            });
+        axios.get('/pets/dogs')
+            .then(res => {
+                const pets = res.pets;
+                this.setState({dog: pets.length});
+            });
+        axios.get('/pets/cats')
+            .then(res => {
+                const pets = res.pets;
+                this.setState({cat: pets.length});
+            });
+        axios.get('/pets/birds')
+            .then(res => {
+                const pets = res.pets;
+                this.setState({bird: pets.length});
+            });
+	}
+	shouldComponentUpdate() {
 
-	componentDidMount() {
-		const node = this.node;
-
+		var node = this.node;
 		var myChart = new Chart(node, {
 			type: 'bar',
 			data: {
-				labels: ['Red', 'Blue', 'Yellow', 'Green'],
+				labels: ['Dogs', 'Cats', 'Rodents', 'Birds'],
 				datasets: [
 					{
-						label: '# of Likes',
-						data: [12, 19, 7, 13],
+						label: '# of Registered Pets',
+						data: [this.state.dog, this.state.cat, this.state.rodent, this.state.bird],
 						backgroundColor: [
 							'rgba(255, 99, 132, 0.9)',
 							'rgba(54, 162, 235, 0.9)',
@@ -1224,5 +1214,78 @@ export class Logout extends React.Component {
 					</div>
 				</div>
 			</div>);
+	}
+}
+
+import dogAboutUs from '../resources/images/dogau.png';
+import dogAboutUs2 from '../resources/images/dog2au.jpg';
+import dogAboutUs3 from '../resources/images/dog3au.jpg';
+export class AboutUs extends React.Component{
+	render(){
+		return(
+            <div className="container shiftRight top-buffer">
+                <NavBar/>
+                <SideBar/>
+                    <div className="container">
+                        <div className="row">
+                            <div className="card col-md-12 p-3">
+                                <div className="row ">
+                                    <div className="col-md-8">
+                                        <div className="card-block">
+                                            <h6 className="card-title text-right"></h6>
+                                            <p className="card-text text-justify">Tempeturs was created for Pet Owners and Sitters
+											to match. Simply set your availability, and create a booking to accommodate your furry
+											friends.</p>
+                                            <a href="#" className="btn btn-primary">My Profile</a>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <img className="w-100" src={dogAboutUs}/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card col-md-12 p-3">
+                                <div className="row ">
+                                    <div className="col-md-4">
+                                        <img className="w-100" src={dogAboutUs2}/>
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="card-block">
+                                            <h6 className="card-title">Rate a Sitter</h6>
+                                            <p className="card-text text-justify"> Rate and review sitters to share your Tempeturs experience! </p>
+                                            <a href="/#/review-page" className="btn btn-primary">Rate a Sitter</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card col-md-12 p-3">
+                                <div className="row ">
+                                    <div className="col-md-4">
+                                        <img className="w-100" src={dogAboutUs3}/>
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="card-block">
+                                            <h6 className="card-title">Built by the Best</h6>
+                                            <p className="card-text text-justify"> Tempeturs was designed and developed by Ian Laird,
+											Parakh Jaggi, Garth Terlizzi III, Aidan Edwards, and David Milliard.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card col-md-12 p-3">
+                                <div className="card-header">
+                                    <i className="fas fa-chart-area"></i>
+                                    Number of Registered Pets
+                                </div>
+                                <div className="card-body">
+                                    <Layout></Layout>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <Logout/>
+            </div>
+		);
 	}
 }

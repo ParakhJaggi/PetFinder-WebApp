@@ -28,14 +28,17 @@ public class UserPetEndpoint {
     public PetCollectionDTO getUsersPets(){
         List<Object> userName = new ArrayList<>();
         userName.add(SecurityContextHolder.getContext().getAuthentication().getName());
-        return petService.findByFieldMatch("owner", userName);
+        return petService.findByOwner(userName);
     }
     @GetMapping("/ugly")
     public PetCollectionDTO getPetsWeirdWay(){
+        return getUsersPets();
+        /*
         PetCollectionDTO ret =  petService.findByType(AnimalTypeRequestBuilder.getInstance().generate());
         List<PetDto> pets = ret.getPets().stream().filter(s->s.getOwner().equals(SecurityContextHolder.getContext().getAuthentication().getName())).collect(Collectors.toList());
         ret.setPets(pets);
         return ret;
+        */
     }
 
     /**

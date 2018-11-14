@@ -90,10 +90,6 @@ export class SideBar extends React.Component {
 						<a className="dropdown-item" href="#/cat-search">Cats</a>
 						<a className="dropdown-item" href="#/rodent-search">Rodents</a>
 						<a className="dropdown-item" href="#/other-search">Other</a>
-						<div className="dropdown-divider"></div>
-						<h6 className="dropdown-header"></h6>
-						<a className="dropdown-item" href="#/location-search">Location Search</a>
-						<a className="dropdown-item" href="#/advanced-search">Advanced Search</a>
 					</div>
 				</li>
 				<li className="nav-item">
@@ -106,6 +102,11 @@ export class SideBar extends React.Component {
 						<i className="fas fa-fw fa-table"></i>
 						<span>Leave a Review</span></a>
 				</li>
+                <li className="nav-item">
+                    <a className="nav-link" href="#/about-us">
+                        <i className="fas fa-fw fa-table"></i>
+                        <span>About Us</span></a>
+                </li>
 			</ul>
 		);
 	}
