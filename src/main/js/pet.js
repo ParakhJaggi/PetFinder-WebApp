@@ -88,8 +88,7 @@ class EditPetForm extends React.Component {
 					<div>&#9661;{this.props.pet.name}</div>}</div>
 					{
 						this.state.show &&
-						<form name={this.props.pet.id + 'form'} onSubmit={handleSubmit(form => this.onSubmit(form))}
-						      initialValues={this.props.pet}>
+						<form name={this.props.pet.id + 'form'} onSubmit={handleSubmit(form => this.onSubmit(form))}>
 							<Bessemer.Field name={this.props.pet.id + 'name'} friendlyName="Pet Name"
 							                defaultVal={this.props.pet.name}
 							                value={this.props.pet.name}
