@@ -25,7 +25,7 @@ public class UserDto implements Momento<String> {
     private int reviewCount, reviewSum;
     private List<ReviewDTO> reviews;
     private Set<String> usedSitters;
-    CustomGeoPoint geographicPoint;
+    //private CustomGeoPoint geographicPoint;
     Map<String, PetCollectionDTO> sitPets;
 
 	public Map<String, PetCollectionDTO> getSitPets() {
@@ -68,13 +68,13 @@ public class UserDto implements Momento<String> {
         this.notification = notification;
     }
 
-	public CustomGeoPoint getGeographicPoint() {
-		return geographicPoint;
-	}
-
-	public void setGeographicPoint(CustomGeoPoint geographicPoint) {
-		this.geographicPoint = geographicPoint;
-	}
+//	public CustomGeoPoint getGeographicPoint() {
+//		return geographicPoint;
+//	}
+//
+//	public void setGeographicPoint(CustomGeoPoint geographicPoint) {
+//		this.geographicPoint = geographicPoint;
+//	}
 
 	public UserDto() {
 		this.reviewCount = 1;
@@ -82,7 +82,7 @@ public class UserDto implements Momento<String> {
 		this.reviews = new LinkedList<>();
 		this.notification = new ArrayList<>();
 		this.usedSitters = new HashSet<>();
-		this.geographicPoint = new CustomGeoPoint(0.0,0.0);
+		//this.geographicPoint = new CustomGeoPoint(0.0,0.0);
 		this.sitPets = new HashMap<>();
 	}
 
@@ -140,7 +140,7 @@ public class UserDto implements Momento<String> {
 		this.reviewSum = reviewSum;
 		this.reviews = reviews;
 		this.usedSitters = usedSitters;
-		this.geographicPoint = geographicPoint;
+		//this.geographicPoint = geographicPoint;
 		this.sitPets = sitPets;
 	}
 
@@ -161,7 +161,7 @@ public class UserDto implements Momento<String> {
 		this.reviewSum = reviewSum;
 		this.reviews = reviews;
 		this.usedSitters = usedSitters;
-		this.geographicPoint = new CustomGeoPoint(geographicPoint);
+		//this.geographicPoint = new CustomGeoPoint(geographicPoint);
 	}
 
 	public String getPrincipal() {

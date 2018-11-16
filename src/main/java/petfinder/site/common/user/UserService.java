@@ -179,13 +179,13 @@ public class UserService {
 				UserType.OWNER, request.getAttributes(),
 				request.getAddress(), request.getCity().toLowerCase(),
 				request.getState().toLowerCase(), request.getZip());
-		if(request.getType().equals("SITTER")){
+		if(request.getType().equalsIgnoreCase("SITTER")){
 			toSet.setType(UserType.SITTER);
 		}
 		else{
 			toSet.setType(UserType.OWNER);
 		}
-		toSet.setGeographicPoint(new CustomGeoPoint(latitude, longitude));
+		//toSet.setGeographicPoint(new CustomGeoPoint(latitude, longitude));
 		userAuthentication = new UserAuthenticationDto(toSet,
 				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);

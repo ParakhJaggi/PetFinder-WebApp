@@ -1,35 +1,35 @@
 package petfinder.site.common;
 
 public class CustomGeoPoint {
-    Double lat, lon;
+    double lat, lon;
 
-    public Double getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(Double lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public Double getLon() {
+    public double getLon() {
         return lon;
     }
 
-    public void setLon(Double lon) {
+    public void setLon(double lon) {
         this.lon = lon;
     }
 
     public CustomGeoPoint(Double lat, Double lon) {
-        this.lat = new Double(lat);
-        this.lon = new Double(lon);
+        this.lat =lat;
+        this.lon = lon;
     }
     public CustomGeoPoint (CustomGeoPoint other){
-        this.lat = new Double(other.getLat());
-        this.lon = new Double(other.getLon());
+        this.lat = other.getLat();
+        this.lon = other.getLon();
     }
 
     public CustomGeoPoint() {
-        this.lat = new Double(0.0);
-        this.lon = new Double(0.0);
+        this.lat = 0.0;
+        this.lon = 0.0;
     }
 }
