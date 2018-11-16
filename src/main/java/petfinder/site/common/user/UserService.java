@@ -50,6 +50,9 @@ public class UserService {
     @Autowired
 	private UserDao userDao;
 
+    @Autowired
+	private PetDao petDao;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -393,6 +396,11 @@ public class UserService {
 		sitter.get().getUser().setNotification(test);
 		//add this owner to the people allowed to review the sitter
 		sitter.get().getUser().getUsedSitters().add(bd.getPrincipal());
+		List<Object> toMatch = new LinkedList<>();
+		toMatch.add(bd.getPrincipal());
+		sitter.get().getUser().getSitPets().remove(bd.getPrincipal());
+		//need to add to the sitter the pets it is sitting
+		sitter.get().getUser().getSitPets().put(bd.getPrincipal(),petDao.findByOwner(toMatch));
 		userDao.save(sitter.get());
 
 		//also add this to the owner that requested the booking
@@ -454,13 +462,16 @@ public class UserService {
 		//figure out which one is the sitter
 		UserAuthenticationDto sitter = (user.get().user.getType() == UserType.SITTER ? user.get() : other.get());
 		UserAuthenticationDto owner =  (user.get().user.getType() == UserType.OWNER ? user.get() : other.get());
+
 		if(sitter.getUser().getRequestedBookings().contains(bd))
 			sitter.getUser().getRequestedBookings().remove(bd);
 		else {
-			//see if it is the owner cancelling a requested booking
+			sitter.getUser().getSitPets().remove(owner.getMomento());
+			//see if it is the owner cancelling a confirmed booking
 			if (principal.equals(owner.getUser().getPrincipal())) {
 				owner.getUser().getBookings().remove(bd);
 				sitter.getUser().getBookings().remove(new BookingDTO(owner.getUser().getPrincipal(), bd.getDays()));
+
 			}
 			else {
 				sitter.getUser().getBookings().remove(bd);
