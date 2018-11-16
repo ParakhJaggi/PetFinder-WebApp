@@ -326,7 +326,9 @@ public class UserService {
 		List<String> test2 = owner.get().getUser().getNotification();
 		test.add("Booking requested " + owner.get().getUser().getPrincipal());
 		test2.add("Booking requested " + sitter.get().getUser().getPrincipal());
-
+		List<Object> toMatch = new LinkedList<>();
+		toMatch.add(owner.get().getMomento());
+		sitter.get().getUser().getSitPets().put(owner.get().getMomento(), petDao.findByOwner(toMatch));
 		sitter.get().getUser().setNotification(test);
 		owner.get().getUser().setNotification(test2);
 		userDao.save(sitter.get());
@@ -396,11 +398,6 @@ public class UserService {
 		sitter.get().getUser().setNotification(test);
 		//add this owner to the people allowed to review the sitter
 		sitter.get().getUser().getUsedSitters().add(bd.getPrincipal());
-		List<Object> toMatch = new LinkedList<>();
-		toMatch.add(bd.getPrincipal());
-		sitter.get().getUser().getSitPets().remove(bd.getPrincipal());
-		//need to add to the sitter the pets it is sitting
-		sitter.get().getUser().getSitPets().put(bd.getPrincipal(),petDao.findByOwner(toMatch));
 		userDao.save(sitter.get());
 
 		//also add this to the owner that requested the booking
@@ -462,11 +459,10 @@ public class UserService {
 		//figure out which one is the sitter
 		UserAuthenticationDto sitter = (user.get().user.getType() == UserType.SITTER ? user.get() : other.get());
 		UserAuthenticationDto owner =  (user.get().user.getType() == UserType.OWNER ? user.get() : other.get());
-
+		sitter.getUser().getSitPets().remove(owner.getMomento());
 		if(sitter.getUser().getRequestedBookings().contains(bd))
 			sitter.getUser().getRequestedBookings().remove(bd);
 		else {
-			sitter.getUser().getSitPets().remove(owner.getMomento());
 			//see if it is the owner cancelling a confirmed booking
 			if (principal.equals(owner.getUser().getPrincipal())) {
 				owner.getUser().getBookings().remove(bd);
