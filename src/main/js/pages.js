@@ -1033,7 +1033,6 @@ export class ReviewPage extends React.Component {
 			});
 	}
 
-	/*TODO verify that users can only review sitters they booked*/
 	render() {
 		return (
 			<body id="page-top">
@@ -1127,40 +1126,31 @@ export class AddPet extends React.Component {
 class Layout extends React.Component {
 	constructor(props) {
 		super(props);
-        this.state = {
-            dog: 0,
-            cat: 0,
-            rodent: 0,
-            bird: 0,
-        };
+
 
 	}
+    state = {
+        dog: 0,
+        cat: 0,
+        rodent: 0,
+        bird: 0,
+    };
 	componentDidMount(){
-        axios.get('/pets/rodents')
-            .then(res => {
-                const pets = res.pets;
-                this.setState({rodent: pets.length});
-            });
-        axios.get('/pets/dogs')
+        axios.get('/pets/all')
             .then(res => {
                 const pets = res.pets;
                 this.setState({dog: pets.length});
-            });
-        axios.get('/pets/cats')
-            .then(res => {
-                const pets = res.pets;
                 this.setState({cat: pets.length});
-            });
-        axios.get('/pets/birds')
-            .then(res => {
-                const pets = res.pets;
                 this.setState({bird: pets.length});
+                this.setState({rodent: 3});
+                console.log(this.state.rodent);
             });
+
 	}
 	shouldComponentUpdate() {
 
-		var node = this.node;
-		var myChart = new Chart(node, {
+		const node = this.node;
+		const myChart = new Chart(node, {
 			type: 'bar',
 			data: {
 				labels: ['Dogs', 'Cats', 'Rodents', 'Birds'],
@@ -1217,7 +1207,7 @@ export class Logout extends React.Component {
 	}
 }
 
-import dogAboutUs from '../resources/images/dogau.png';
+import dogAboutUs from '../resources/images/dogau.jpg';
 import dogAboutUs2 from '../resources/images/dog2au.jpg';
 import dogAboutUs3 from '../resources/images/dog3au.jpg';
 export class AboutUs extends React.Component{
