@@ -1033,7 +1033,6 @@ export class ReviewPage extends React.Component {
 			});
 	}
 
-	/*TODO verify that users can only review sitters they booked*/
 	render() {
 		return (
 			<body id="page-top">
@@ -1136,6 +1135,7 @@ class Layout extends React.Component {
 
 	}
 	componentDidMount(){
+
         axios.get('/pets/rodents')
             .then(res => {
                 const pets = res.pets;
