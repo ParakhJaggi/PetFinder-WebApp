@@ -1,5 +1,7 @@
 package petfinder.site.common.user;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,11 +12,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import static java.net.URLEncoder.encode;
 
 import alloy.util.AlloyAuthentication;
 import alloy.util.Wait;
 import alloy.util._Lists;
 import alloy.util._Maps;
+import petfinder.site.common.CustomGeoPoint;
 import petfinder.site.common.Exceptions.UserException;
 import petfinder.site.common.RestRequests.AnimalTypeRequestBuilder;
 import petfinder.site.common.pet.PetCollectionDTO;
@@ -46,6 +50,9 @@ public class UserService {
     @Autowired
 	private UserDao userDao;
 
+    @Autowired
+	private PetDao petDao;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -54,7 +61,8 @@ public class UserService {
 	}
 
 	public Optional<UserDto> findUserByPrincipal(String principal) {
-		return userDao.findUserByPrincipal(principal).map(UserAuthenticationDto::getUser);
+		Optional<UserDto> u = userDao.findUserByPrincipal(principal).map(UserAuthenticationDto::getUser);
+		return u;
 	}
 
 	public Optional<UserAuthenticationDto> findUserAuthenticationByPrincipal(String principal) {
@@ -145,22 +153,39 @@ public class UserService {
 	}
 
 	public UserDto register(RegistrationRequest request) {
+		RestTemplate rs = new RestTemplate();
+		StringBuilder strB = new StringBuilder();
+		Double latitude = 0.0, longitude = 0.0;
+		strB.append(request.getAddress()).append(',').append(request.getCity()).append(',').append(request.getState());
 		UserAuthenticationDto userAuthentication = null;
 		//see if the user already exists
 		if(findUserByPrincipal(request.getPrincipal()).isPresent()){
 			return null;
+		}
+		Map<?, ?> o = null;
+		try {
+			o = rs.getForObject("https://maps.googleapis.com/maps/api/geocode/json?address={address}&key=AIzaSyCXPmp-yjzKl9jIN9fwXbRLgCUOfwaYZfQ", Map.class, encode(strB.toString(), "UTF-8"));
+		}
+		catch(UnsupportedEncodingException e){
+			return null;
+		}
+		if(((String)(((Map<?,?>)o).get("status"))).equals("OK") ){
+			Map<?, ?> location = ((Map<?, ?>) ((Map<?, ?>) ((Map<?, ?>) ((List<?>) o.get("results")).get(0)).get("geometry")).get("location"));
+			latitude = (Double)location.get("lat");
+			longitude = (Double)location.get("lng");
 		}
 		UserDto toSet = new UserDto(request.getPrincipal(),
 				_Lists.list("ROLE_USER"),
 				UserType.OWNER, request.getAttributes(),
 				request.getAddress(), request.getCity().toLowerCase(),
 				request.getState().toLowerCase(), request.getZip());
-		if(request.getType().equals("SITTER")){
+		if(request.getType().equalsIgnoreCase("SITTER")){
 			toSet.setType(UserType.SITTER);
 		}
 		else{
 			toSet.setType(UserType.OWNER);
 		}
+		//toSet.setGeographicPoint(new CustomGeoPoint(latitude, longitude));
 		userAuthentication = new UserAuthenticationDto(toSet,
 				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);
@@ -214,7 +239,8 @@ public class UserService {
 		Set<UserDto> allObjects = new HashSet<>(users.getUsers());
 		allObjects.addAll(userCity.getUsers());
 		*/
-		UserCollectionDTO users = userDao.findSitters(user.getZip(), user.getCity(), user.getState());
+		//UserCollectionDTO users = userDao.findSitters(user.getGeographicPoint());
+		UserCollectionDTO users = userDao.findSitters(user.getCity(),user.getState(),user.getZip());
 
 		//now remove the current user
 		List<UserDto> filtered = users.getUsers().stream()
@@ -232,7 +258,7 @@ public class UserService {
 					return flag;
 				})
 				.sorted((x,y) -> x.getCity().compareTo(y.getCity()))
-              //  .limit((long)20)
+                .limit((long)20)
 				.collect(Collectors.toList());
 		users.setUsers(filtered);
 		return users;
@@ -300,7 +326,9 @@ public class UserService {
 		List<String> test2 = owner.get().getUser().getNotification();
 		test.add("Booking requested " + owner.get().getUser().getPrincipal());
 		test2.add("Booking requested " + sitter.get().getUser().getPrincipal());
-
+		List<Object> toMatch = new LinkedList<>();
+		toMatch.add(owner.get().getMomento());
+		sitter.get().getUser().getSitPets().put(owner.get().getMomento(), petDao.findByOwner(toMatch));
 		sitter.get().getUser().setNotification(test);
 		owner.get().getUser().setNotification(test2);
 		userDao.save(sitter.get());
@@ -431,13 +459,15 @@ public class UserService {
 		//figure out which one is the sitter
 		UserAuthenticationDto sitter = (user.get().user.getType() == UserType.SITTER ? user.get() : other.get());
 		UserAuthenticationDto owner =  (user.get().user.getType() == UserType.OWNER ? user.get() : other.get());
+		sitter.getUser().getSitPets().remove(owner.getMomento());
 		if(sitter.getUser().getRequestedBookings().contains(bd))
 			sitter.getUser().getRequestedBookings().remove(bd);
 		else {
-			//see if it is the owner cancelling a requested booking
+			//see if it is the owner cancelling a confirmed booking
 			if (principal.equals(owner.getUser().getPrincipal())) {
 				owner.getUser().getBookings().remove(bd);
 				sitter.getUser().getBookings().remove(new BookingDTO(owner.getUser().getPrincipal(), bd.getDays()));
+
 			}
 			else {
 				sitter.getUser().getBookings().remove(bd);

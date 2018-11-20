@@ -8,10 +8,11 @@ import petfinder.site.common.RestRequests.AnimalTypeRequestBuilder;
 import petfinder.site.common.pet.PetCollectionDTO;
 import petfinder.site.common.pet.PetDto;
 import petfinder.site.common.pet.PetService;
+import petfinder.site.common.user.BookingDTO;
+import petfinder.site.common.user.UserDto;
+import petfinder.site.common.user.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -19,6 +20,9 @@ import java.util.stream.Collectors;
 public class UserPetEndpoint {
     @Autowired
     private PetService petService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * @author Laird
@@ -57,5 +61,24 @@ public class UserPetEndpoint {
         //}
         petService.save(pet);
         return pet;
+    }
+
+    @GetMapping(value = "getBookedPets", produces = "application/json")
+    public PetCollectionDTO getSitPets(){
+        Set<PetDto> setOfPets = new HashSet<>();
+        PetCollectionDTO toReturn = new PetCollectionDTO();
+        String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<UserDto> retrieved = userService.findUserByPrincipal(principal);
+        if(!retrieved.isPresent() || retrieved.get().getType() == UserDto.UserType.OWNER){
+            return null;
+        }
+        UserDto user = retrieved.get();
+        for(BookingDTO b : user.getBookings()){
+            List<Object> toMatch = new ArrayList<>();
+            toMatch.add(b.getPrincipal());
+            setOfPets.addAll((petService.findByOwner(toMatch)).getPets());
+        }
+        toReturn.setPets(setOfPets.stream().collect(Collectors.toList()));
+        return toReturn;
     }
 }
