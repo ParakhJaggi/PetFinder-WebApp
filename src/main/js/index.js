@@ -6,7 +6,7 @@ import {RegisterPage} from 'js/Pages/registerPage';
 import {LoginPage} from 'js/Pages/loginPage';
 import {AboutUs} from 'js/Pages/aboutUsPage';
 import {AddPet} from 'js/Pages/addPetPage';
-import {BirdSearch, CatSearch, DogSearch, RodentSearch} from 'js/Pages/petPages';
+import {OtherSearch, CatSearch, DogSearch, RodentSearch} from 'js/Pages/petPages';
 import {Dashboard} from 'js/Pages/dashboardPage';
 import {ReviewPage} from 'js/Pages/reviewPage';
 import {ProfilePage} from 'js/Pages/theProfilePage';
@@ -23,7 +23,7 @@ export default class Index extends React.Component {
 					<Route exact path="/rodent-search" component={RodentSearch}/>
 					<Route exact path="/dog-search" component={DogSearch}/>
 					<Route exact path="/cat-search" component={CatSearch}/>
-					<Route exact path="/bird-search" component={BirdSearch}/>
+					<Route exact path="/other-search" component={OtherSearch}/>
 					<Route exact path="/dashboard" component={Dashboard}/>
 					<Route exact path="/review-page" component={ReviewPage}/>
 					<Route exact path="/sits" component={AddPet}/>

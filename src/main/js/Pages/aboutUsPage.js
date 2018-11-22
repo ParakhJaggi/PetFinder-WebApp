@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavBar, SideBar} from 'js/navigationModules/navigation';
+import {NavBar, SideBar, Footer} from 'js/navigationModules/navigation';
 import dogAboutUs from '../../resources/images/dogau.jpg';
 import dogAboutUs2 from '../../resources/images/dog2au.jpg';
 import dogAboutUs3 from '../../resources/images/dog3au.jpg';
@@ -64,6 +64,7 @@ export class AboutUs extends React.Component {
                     </div>
                 </div>
                 <Logout/>
+                <Footer/>
             </div>
         );
     }

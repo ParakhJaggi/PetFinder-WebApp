@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnimalTypeTester extends PetDao {
-    public static final int CAT_NUM = 3, DOG_NUM = 2, RODENT_NUM = 3, REPTILE_NUM = 1, BIRD_NUM = 4;
+    public static final int CAT_NUM = 3, DOG_NUM = 2, RODENT_NUM = 3, REPTILE_NUM = 1, OTHER_NUM = 4;
     public static final int FLUFFY_NUM = 2;
     @Override
     public PetCollectionDTO findByType(AnimalTypeRequest atr){
@@ -35,11 +35,11 @@ public class AnimalTypeTester extends PetDao {
             pets.add(new PetDto((long)1, "gross", "reptile"));
 
         }
-        if(presentTypes.contains("bird")){
-            pets.add(new PetDto((long)39, "a", "bird"));
-            pets.add(new PetDto((long)48788, "b", "bird"));
-            pets.add(new PetDto((long)30005, "c", "bird"));
-            pets.add(new PetDto((long)300, "d", "bird"));
+        if(presentTypes.contains("other")){
+            pets.add(new PetDto((long)39, "a", "other"));
+            pets.add(new PetDto((long)48788, "b", "other"));
+            pets.add(new PetDto((long)30005, "c", "other"));
+            pets.add(new PetDto((long)300, "d", "other"));
         }
         toReturn.setPets(pets);
         return toReturn;
@@ -58,10 +58,10 @@ public class AnimalTypeTester extends PetDao {
         petsTotal.add(new PetDto((long) 74, "syvester", "rodent"));
         petsTotal.add(new PetDto((long) 89, "hi", "rodent"));
         petsTotal.add(new PetDto((long) 10008, "gross", "reptile"));
-        petsTotal.add(new PetDto((long) 39, "a", "bird"));
-        petsTotal.add(new PetDto((long) 48788, "b", "bird"));
-        petsTotal.add(new PetDto((long) 30005, "c", "bird"));
-        petsTotal.add(new PetDto((long) 300, "d", "bird"));
+        petsTotal.add(new PetDto((long) 39, "a", "other"));
+        petsTotal.add(new PetDto((long) 48788, "b", "other"));
+        petsTotal.add(new PetDto((long) 30005, "c", "other"));
+        petsTotal.add(new PetDto((long) 300, "d", "other"));
         if(term.equals( "type")) {
             petsTotal.stream().filter(s -> toMatch.contains(s.getType())).forEach(pets::add);
         } else if(term.equals("name")){

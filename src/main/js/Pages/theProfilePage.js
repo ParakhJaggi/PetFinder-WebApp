@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import {NavBar, SideBar} from 'js/navigationModules/navigation';
+import {Footer, NavBar, SideBar} from 'js/navigationModules/navigation';
 import _ from 'lodash';
 import {EditPetForm} from 'js/petModules/pet';
 import {BookingTable} from 'js/profileModules/bookings';
@@ -84,25 +84,60 @@ class ProfilePage extends React.Component {
                         //<div>{this.props.authentication['access_token']}</div>
                     }
                     {_.isDefined(this.props.user) &&
-                    <div>Welcome, {this.props.user.principal}!</div>
+                    <div className="card mb-3"><div className="card-header">
+                        <i className="fas fa-table"></i>Profile</div>
+                            <table className="table" id="dataTable" width="100%" cellSpacing="0">
+                                <thead>
+                                <tr>
+                                    <td>Email</td><td>Type</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                            <tr><td>{this.props.user.principal}</td>
+                                <td>{this.props.user.type}</td></tr></tbody>
+                            </table>
+                    </div>
                     }
                     {
                         this.state.user && this.state.user.notification &&
-                        <div>Your current notifications: {this.state.user.notification.map(test =>
+                        <div>
+                            <div className="card mb-3">
+                            <div className="card-header">
+                                <i className="fas fa-table"></i>
+                                Your Current Notifications <br/>
+                                <button className="btn btn-primary" onClick={() => ClearNotification()}>Clear Notifications</button>
+                            </div>
+                            <div className='pl-3 pr-3 pt-3'> {this.state.user.notification.map(test =>
                             <tr>
                                 <td>{test.toString()}</td>
                             </tr>
-                        )}</div>
-                    }
-                    <button className="btn btn-primary" onClick={() => ClearNotification()}>Clear Notifications</button>
 
+                        )}</div>
+
+                            </div>
+
+                        </div>
+                    }
+
+                    <div className="card mb-3">
+                        <div className="card-header">
+                            <i className="fas fa-table"></i>
+                            My Pets
+                        </div>
+                        <div className='pl-3 pr-3 pt-3'>
                     {
                         this.state.pets &&
                         this.state.pets.map(pet =>
                             <EditPetForm pet={pet}/>
                         )
                     }
-                    <div className="card">
+                        </div>
+                    </div>
+                    <div className="card mb-3">
+                        <div className="card-header">
+                            <i className="fas fa-table"></i>
+                            My Availability
+                        </div>
                         <div className="card-body justify-content-center">
                             <form onSubmit={this.onSubmit.bind(this)}>
                                 {availableCheck.map(checkbox => {
@@ -126,8 +161,8 @@ class ProfilePage extends React.Component {
                             }
                         </React.Fragment>
                     }
+                    <Footer/>
                 </div>
-
             </div>
         );
     }

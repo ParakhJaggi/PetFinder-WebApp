@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavBar, SideBar} from 'js/navigationModules/navigation';
+import {NavBar, SideBar,Footer} from 'js/navigationModules/navigation';
 import Pulse from 'react-reveal/Pulse';
 import {Logout} from 'js/profileModules/logoutHelpers';
 
@@ -20,7 +20,6 @@ export class Dashboard extends React.Component {
                             <li class="breadcrumb-item">
                                 <a href="#">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item active">Find Pets</li>
                         </ol>
 
                         <Pulse>
@@ -75,8 +74,8 @@ export class Dashboard extends React.Component {
                                 <div className="pr-2"></div>
                                 <div className="col-xl-4 col-sm-9 mb-3 card text-white bg-light o-hidden h-35">
 
-                                    <a className="card-footer text-black-50 clearfix small z-1" href="#/bird-search">
-                                        <span className="float-left"><b>Birds</b></span>
+                                    <a className="card-footer text-black-50 clearfix small z-1" href="#/other-search">
+                                        <span className="float-left"><b>Other</b></span>
                                         <span className="float-right">
                     <i className="fas fa-angle-right"></i>
                   </span>
@@ -93,15 +92,7 @@ export class Dashboard extends React.Component {
 
 
                     </div>
-
-                    <footer class="footer navbar-fixed-bottom">
-                        <div class="container shiftRight my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright © Your Website 2018</span>
-                            </div>
-                        </div>
-                    </footer>
-
+                    <Footer/>
                 </div>
             </div>
             <Logout/>
