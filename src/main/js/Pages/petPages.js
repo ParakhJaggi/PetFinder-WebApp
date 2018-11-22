@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {NavBar, SideBar} from 'js/navigationModules/navigation';
-import {LocationSlider} from 'js/petModules/switches';
+import {NavBar, SideBar,Footer} from 'js/navigationModules/navigation';
 import Pulse from 'react-reveal/Pulse';
 import Switch from 'react-switch';
 import {Logout} from 'js/profileModules/logoutHelpers';
@@ -113,7 +112,7 @@ export class RodentSearch extends React.Component {
                             <li class="breadcrumb-item">
                                 <a href="#">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item active">Find Pets</li>
+                            <li class="breadcrumb-item active">Rodents</li>
                         </ol>
                         <div class="card mb-3">
                             <div class="card-header">
@@ -219,7 +218,6 @@ export class RodentSearch extends React.Component {
                                     </tr>
                                     </thead>
                                 </table>
-                                <LocationSlider/>
                                 <div className="table-responsive">
                                     <table className="table table-bordered" id="dataTable" width="90%" cellSpacing="0">
                                         <Pulse>
@@ -245,16 +243,9 @@ export class RodentSearch extends React.Component {
                                     </table>
                                 </div>
                             </div>
-                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                         </div>
                     </div>
-                    <footer class="footer navbar-fixed-bottom">
-                        <div class="container shiftRight my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright © Your Website 2018</span>
-                            </div>
-                        </div>
-                    </footer>
+                    <Footer/>
                 </div>
             </div>
             <a class="scroll-to-top rounded" href="#page-top">
@@ -262,6 +253,7 @@ export class RodentSearch extends React.Component {
             </a>
             <Logout/>
             </body>
+
             </html>
         );
     }
@@ -295,7 +287,7 @@ export class DogSearch extends React.Component {
                             <li class="breadcrumb-item">
                                 <a href="#">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item active">Find Pets</li>
+                            <li class="breadcrumb-item active">Dogs</li>
                         </ol>
                         <div class="card mb-3">
                             <div class="card-header">
@@ -303,7 +295,6 @@ export class DogSearch extends React.Component {
                                 Dogs
                             </div>
                             <div class="card-body">
-                                <LocationSlider/>
                                 <div className="table-responsive">
                                     <table className="table table-bordered" id="dataTable" width="90%" cellSpacing="0">
                                         <Pulse>
@@ -329,16 +320,9 @@ export class DogSearch extends React.Component {
                                     </table>
                                 </div>
                             </div>
-                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                         </div>
                     </div>
-                    <footer class="footer navbar-fixed-bottom">
-                        <div class="container shiftRight my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright © Your Website 2018</span>
-                            </div>
-                        </div>
-                    </footer>
+                    <Footer/>
                 </div>
             </div>
             <a class="scroll-to-top rounded" href="#page-top">
@@ -350,10 +334,22 @@ export class DogSearch extends React.Component {
     }
 }
 
-export class BirdSearch extends React.Component {
+export class OtherSearch extends React.Component {
+    state = {
+        other: []
+    };
+
+    componentDidMount() {
+        axios.get('/pets/other')
+            .then(res => {
+                const pets = res.pets;
+                console.log(pets);
+                this.setState({other: pets});
+            });
+    }
+
     render() {
         return (
-            <html lang="en">
             <body id="page-top">
             <div id="wrapper">
                 <NavBar></NavBar>
@@ -366,143 +362,50 @@ export class BirdSearch extends React.Component {
                             <li class="breadcrumb-item">
                                 <a href="#">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item active">Find Pets</li>
+                            <li class="breadcrumb-item active">Other</li>
                         </ol>
                         <div class="card mb-3">
                             <div class="card-header">
                                 <i class="fas fa-table"></i>
-                                Birds
+                                Other
                             </div>
                             <div class="card-body">
-                                <table className="table" id="dataTable" width="100%" cellSpacing="0">
-                                    <thead>
-                                    <tr>
-                                    </tr>
-                                    </thead>
-                                </table>
-                                <LocationSlider/>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                        </thead>
-                                        <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                        </tfoot>
-                                        <tbody>
-                                        <tr>
-                                            <td>Jena Gaines</td>
-                                            <td>Office Manager</td>
-                                            <td>London</td>
-                                            <td>30</td>
-                                            <td>2008/12/19</td>
-                                            <td>$90,560</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Quinn Flynn</td>
-                                            <td>Support Lead</td>
-                                            <td>Edinburgh</td>
-                                            <td>22</td>
-                                            <td>2013/03/03</td>
-                                            <td>$342,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Charde Marshall</td>
-                                            <td>Regional Director</td>
-                                            <td>San Francisco</td>
-                                            <td>36</td>
-                                            <td>2008/10/16</td>
-                                            <td>$470,600</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Haley Kennedy</td>
-                                            <td>Senior Marketing Designer</td>
-                                            <td>London</td>
-                                            <td>43</td>
-                                            <td>2012/12/18</td>
-                                            <td>$313,500</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tatyana Fitzpatrick</td>
-                                            <td>Regional Director</td>
-                                            <td>London</td>
-                                            <td>19</td>
-                                            <td>2010/03/17</td>
-                                            <td>$385,750</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Michael Silva</td>
-                                            <td>Marketing Designer</td>
-                                            <td>London</td>
-                                            <td>66</td>
-                                            <td>2012/11/27</td>
-                                            <td>$198,500</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Paul Byrd</td>
-                                            <td>Chief Financial Officer (CFO)</td>
-                                            <td>New York</td>
-                                            <td>64</td>
-                                            <td>2010/06/09</td>
-                                            <td>$725,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Gloria Little</td>
-                                            <td>Systems Administrator</td>
-                                            <td>New York</td>
-                                            <td>59</td>
-                                            <td>2009/04/10</td>
-                                            <td>$237,500</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bradley Greer</td>
-                                            <td>Software Engineer</td>
-                                            <td>London</td>
-                                            <td>41</td>
-                                            <td>2012/10/13</td>
-                                            <td>$132,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dai Rios</td>
-                                            <td>Personnel Lead</td>
-                                            <td>Edinburgh</td>
-                                            <td>35</td>
-                                            <td>2012/09/26</td>
-                                            <td>$217,500</td>
-                                        </tr>
-                                        </tbody>
+                                <div className="table-responsive">
+                                    <table className="table table-bordered" id="dataTable" width="90%" cellSpacing="0">
+                                        <Pulse>
+                                            <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Owner</td>
+                                                <td>Subtype</td>
+                                                <td>Preferences</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {this.state.other.sort((a, b) => a.name > b.name).map(pet =>
+                                                <tr>
+                                                    <td>{pet.name}</td>
+                                                    <td>{pet.owner}</td>
+                                                    <td>{pet.subtype}</td>
+                                                    <td>{pet.preferences}</td>
+                                                </tr>
+                                            )}
+
+                                            </tbody>
+                                        </Pulse>
                                     </table>
                                 </div>
                             </div>
-                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                         </div>
                     </div>
-                    <footer class="footer navbar-fixed-bottom">
-                        <div class="container shiftRight my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright © Your Website 2018</span>
-                            </div>
-                        </div>
-                    </footer>
+                    <Footer/>
                 </div>
             </div>
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
             <Logout/>
             </body>
-            </html>
         );
     }
 }
@@ -536,7 +439,7 @@ export class CatSearch extends React.Component {
                             <li class="breadcrumb-item">
                                 <a href="#">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item active">Find Pets</li>
+                            <li class="breadcrumb-item active">Cats</li>
                         </ol>
                         <div class="card mb-3">
                             <div class="card-header">
@@ -548,7 +451,6 @@ export class CatSearch extends React.Component {
                                     <thead>
                                     </thead>
                                 </table>
-                                <LocationSlider/>
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="90%" cellspacing="0">
                                         <Pulse>
@@ -574,16 +476,9 @@ export class CatSearch extends React.Component {
                                     </table>
                                 </div>
                             </div>
-                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                         </div>
                     </div>
-                    <footer class="footer navbar-fixed-bottom">
-                        <div class="container my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright © Your Website 2018</span>
-                            </div>
-                        </div>
-                    </footer>
+                   <Footer/>
                 </div>
             </div>
             <Logout/>

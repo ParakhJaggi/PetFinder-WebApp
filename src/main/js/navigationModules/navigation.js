@@ -37,7 +37,6 @@ export class NavBar extends React.Component {
 
 export class SideBar extends React.Component {
 	render() {
-		/*TODO edit*/
 		return (
 			<ul className="sidebar navbar-nav sticky fixed-top">
 				<div className="top-buffer"></div>
@@ -78,5 +77,17 @@ export class SideBar extends React.Component {
                 </li>
 			</ul>
 		);
+	}
+}
+
+export class Footer extends React.Component{
+	render(){
+		return(<footer className="footer navbar-fixed-bottom">
+            <div className="container shiftRight my-auto">
+                <div className="copyright text-center my-auto">
+                    <span>Tempeturs - 2018</span>
+                </div>
+            </div>
+        </footer>);
 	}
 }

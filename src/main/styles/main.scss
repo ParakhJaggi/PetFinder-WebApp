@@ -27,7 +27,9 @@ $fa-font-path: "~font-awesome/fonts";
   overflow: visible;
 
 }
-
+.textarea {
+  resize: none;
+}
 .bunny-crop{
   position:relative;
   top:0px;

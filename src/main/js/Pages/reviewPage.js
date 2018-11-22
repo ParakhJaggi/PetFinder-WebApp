@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {NavBar, SideBar} from 'js/navigationModules/navigation';
+import {Footer, NavBar, SideBar} from 'js/navigationModules/navigation';
 import Pulse from 'react-reveal/Pulse';
 import {Logout} from 'js/profileModules/logoutHelpers';
 
@@ -127,6 +127,7 @@ export class ReviewPage extends React.Component {
                             </div>
                         </div>
                     </div>
+                    <Footer/>
                 </div>
             </div>
             <Logout/>

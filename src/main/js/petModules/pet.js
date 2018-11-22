@@ -5,17 +5,72 @@ import * as ReduxForm from 'redux-form';
 import connect from 'react-redux/es/connect/connect';
 import * as Users from 'js/profileModules/users';
 import axios from 'axios';
+import {SubmissionError} from 'redux-form';
+
 
 class RegistrationPetForm extends React.Component {
 	onSubmit = pet => {
+		if(pet.type==='Dog'){
+			if(pet.subtype!=='Dog'){
+                throw new SubmissionError({ subtype: 'Subtype must be Dog'});
+			}
+		}
+        if(pet.type==='Cat'){
+            if(pet.subtype!=='Cat'){
+                throw new SubmissionError({ subtype: 'Subtype must be Cat'});
+            }
+        }
+        if(pet.type==='Rodent'){
+            if(pet.subtype!=='Chinchilla'|| pet.subtype!=='Ferret'  ||
+                pet.subtype!=='Hamster' || pet.subtype!=='Guinea Pig' ||
+                pet.subtype!=='Rabbit'||pet.subtype!=='Other Rodent'){
+                throw new SubmissionError({ subtype: 'Subtype does not Match'});
+            }
+        }
+        if(pet.type==='Other'){
+            if(pet.subtype!=='Reptile'&& pet.subtype!=='Bird'  &&
+                pet.subtype!=='Other'){
+                throw new SubmissionError({ subtype: 'Subtype does not Match'});
+            }
+        }
 		return axios.post('/api/userPets/savePet', pet);
 	};
-
+    state = {
+        selectedOption: null,
+        selectedOption2: null
+    }
+    handleChange = (selectedOption) => {
+        this.setState({selectedOption});
+        console.log('Option selected:', selectedOption);
+    };
+    handleChange2 = (selectedOption2) => {
+        this.setState({selectedOption2});
+        console.log('Option selected:', selectedOption2);
+    };
 
 	render() {
 		let {handleSubmit, submitting} = this.props;
 		let onSuccess = this.props.success;
 
+        const options = [
+            {value: 'Dog', label: 'Dog'},
+            {value: 'Cat', label: 'Cat'},
+            {value: 'Rodent', label: 'Rodent'},
+            {value: 'Other', label: 'Other'}
+        ];
+        const options2 = [
+            {value: 'Dog', label: 'Dog'},
+            {value: 'Cat', label: 'Cat'},
+            {value: 'Chinchilla', label: 'Chinchilla'},
+            {value: 'Ferret', label: 'Ferret'},
+            {value: 'Rabbit', label: 'Rabbit'},
+            {value: 'Guinea Pig', label: 'Guinea Pig'},
+            {value: 'Hamster', label: 'Hamster'},
+            {value: 'Other Rodent', label: 'Other Rodent'},
+            {value: 'Bird', label: 'Bird'},
+            {value: 'Reptile', label: 'Reptile'},
+            {value: 'Other', label: 'Other'},
+        ];
 		return (
 
 			<form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
@@ -24,12 +79,18 @@ class RegistrationPetForm extends React.Component {
 
 				<Bessemer.Field name="type" friendlyName="Type"/*Todo Radio box*/
 				                validators={[Validation.requiredValidator]}
-				/>
+								field={<Bessemer.Select className="pull-right" name="type" friendlyName="Type"
+                                                                                                   options={options} value={this.state.selectedOption}
+                                                                                                   onChange={this.handleChange}
+                                                                                                   style={{width: 585}}/>}/>
 
 				<Bessemer.Field name="subtype" friendlyName="Sub Type"
-				                validators={[Validation.requiredValidator]}/>
+				                validators={[Validation.requiredValidator]} field={<Bessemer.Select className="pull-right" name="subtype" friendlyName="Sub Type"
+                                                                                                    options={options2} value={this.state.selectedOption2}
+                                                                                                    onChange={this.handleChange2}
+                                                                                                    style={{width: 585}}/>}/>
 
-				<Bessemer.Field name="preferences" friendlyName="Extra Preferences"/>
+				<Bessemer.Field name="preferences" friendlyName="Extra Preferences/Instructions"/>
 
 				<Bessemer.Button loading={submitting}>Register</Bessemer.Button>
 			</form>
@@ -96,12 +157,12 @@ class EditPetForm extends React.Component {
 							                value={this.props.pet.name}
 							/>
 
-							<Bessemer.Field name={this.props.pet.id + 'type'} friendlyName="Type"/*Todo Radio box*/
-							                defaultVal={this.props.pet.type}
+							<Bessemer.Field name={this.props.pet.id + 'type'} friendlyName="Type (Can't Edit)"/*Todo Radio box*/
+							                defaultVal={this.props.pet.type} field={<textarea rows="1" cols="30" placeholder={this.props.pet.type}  readOnly/>}
 							/>
 
-							<Bessemer.Field name={this.props.pet.id + 'subtype'} friendlyName="Sub Type"
-							                defaultVal={this.props.pet.subtype}
+							<Bessemer.Field name={this.props.pet.id + 'subtype'} friendlyName="Sub Type (Can't Edit)"
+							                defaultVal={this.props.pet.subtype} field={<textarea rows="1" cols="30" placeholder={this.props.pet.subtype}  readOnly/>}
 							/>
 
 							<Bessemer.Field name={this.props.pet.id + 'preferences'} friendlyName="Extra Preferences"
@@ -129,50 +190,3 @@ EditPetForm = connect(
 )(EditPetForm);
 
 export {EditPetForm};
-
-const $ = require('jquery');
-$.DataTable = require('datatables.net');
-
-const columns = [
-	{
-		title: 'PetName',
-		width: 120,
-		data: 'name'
-	},
-	{
-		title: 'OwnerName',
-		width: 180,
-		data: 'ownername'
-	},
-];
-
-export class PetTable extends React.Component {
-	componentDidMount() {
-		$(this.refs.main).DataTable({
-			dom: '<"data-table-wrapper"t>',
-			data: this.props.names,
-			columns,
-			ordering: false
-		});
-	}
-
-	componentWillUnmount() {
-		$('.data-table-wrapper')
-			.find('table')
-			.DataTable()
-			.destroy(true);
-	}
-
-	shouldComponentUpdate() {
-		return false;
-	}
-
-	render() {
-		return (
-			<div>
-				<table>
-
-				</table>
-			</div>);
-	}
-}
