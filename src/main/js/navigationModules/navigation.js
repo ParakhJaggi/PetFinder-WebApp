@@ -1,28 +1,11 @@
-import _ from 'lodash';
-
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
-import * as Users from 'js/users';
-import * as Login from 'js/login';
-import 'js/dogs2.jpg';
-import 'js/cats.png';
-import 'js/bunny.png';
-import 'js/birds.png';
-import Pulse from 'react-reveal/Pulse';
 import 'bootstrap';
 import 'jquery';
-import 'js/sb-admin';
+import 'js/navigationModules/sb-admin';
 import 'react-chartjs-2';
-import {LoginForm} from 'js/login';
-import {RegistrationForm} from 'js/login';
-import {Redirect} from 'react-router-dom';
-import Switch from 'react-switch';
-
 
 export class NavBar extends React.Component {
 	render() {
-		/*TODO edit*/
 		return (
 			<div className="fixed-top">
 				<nav className="navbar navbar-expand navbar-light bg-blue">
@@ -33,19 +16,6 @@ export class NavBar extends React.Component {
 						</div>
 					</form>
 					<ul className="navbar-nav ml-auto ml-md-0">
-						<li className="nav-item dropdown no-arrow mx-1">
-							<a className="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-							   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i className="fas fa-bell fa-fw"></i>
-								<span className="badge badge-danger">9+</span>
-							</a>
-							<div className="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-								<a className="dropdown-item" href="#">Action</a>
-								<a className="dropdown-item" href="#">Another action</a>
-								<div className="dropdown-divider"></div>
-								<a className="dropdown-item" href="#">Something else here</a>
-							</div>
-						</li>
 						<li className="nav-item dropdown no-arrow">
 							<a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 							   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,7 +23,6 @@ export class NavBar extends React.Component {
 							</a>
 							<div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 								<a className="dropdown-item" href="#/profile-page">Settings</a>
-								<a className="dropdown-item" href="#">Activity Log</a>
 								<div className="dropdown-divider"></div>
 								<a className="dropdown-item" href="#" data-toggle="modal"
 								   data-target="#logoutModal">Logout</a>

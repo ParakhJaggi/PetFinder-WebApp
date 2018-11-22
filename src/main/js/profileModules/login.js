@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 import * as Validation from 'js/alloy/utils/validation';
 import * as Bessemer from 'js/alloy/bessemer/components';
-import * as Users from 'js/users';
+import * as Users from 'js/profileModules/users';
 
 
 class LoginForm extends React.Component {

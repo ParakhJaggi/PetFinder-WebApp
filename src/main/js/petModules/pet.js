@@ -3,13 +3,14 @@ import * as Bessemer from 'js/alloy/bessemer/components';
 import * as Validation from 'js/alloy/utils/validation';
 import * as ReduxForm from 'redux-form';
 import connect from 'react-redux/es/connect/connect';
-import * as Users from 'js/users';
+import * as Users from 'js/profileModules/users';
 import axios from 'axios';
 
 class RegistrationPetForm extends React.Component {
 	onSubmit = pet => {
 		return axios.post('/api/userPets/savePet', pet);
 	};
+
 
 	render() {
 		let {handleSubmit, submitting} = this.props;
