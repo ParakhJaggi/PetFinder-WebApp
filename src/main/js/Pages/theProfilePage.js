@@ -14,6 +14,14 @@ function ClearNotification() {
     location.reload();
 }
 
+function initpetform(pet){
+    let vals = {};
+    ['name', 'type', 'subtype', 'preferences'].forEach(x => {
+        vals[pet.id + x] = pet[x];
+    });
+    return vals;
+}
+
 class ProfilePage extends React.Component {
     constructor(props) {
         super(props);
@@ -128,7 +136,7 @@ class ProfilePage extends React.Component {
                     {
                         this.state.pets &&
                         this.state.pets.map(pet =>
-                            <EditPetForm pet={pet}/>
+                            <EditPetForm pet={pet} initialValues={initpetform(pet)}/>
                         )
                     }
                         </div>
