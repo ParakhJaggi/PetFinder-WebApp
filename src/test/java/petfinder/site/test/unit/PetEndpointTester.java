@@ -47,7 +47,7 @@ public class PetEndpointTester {
                 .getPets().size(), AnimalTypeTester.DOG_NUM);
         assertEquals(service.findByCustomType(true, true, true, true, true)
                 .getPets().size(), AnimalTypeTester.CAT_NUM + AnimalTypeTester.DOG_NUM
-                +AnimalTypeTester.BIRD_NUM + AnimalTypeTester.REPTILE_NUM + AnimalTypeTester.RODENT_NUM);
+                +AnimalTypeTester.OTHER_NUM + AnimalTypeTester.REPTILE_NUM + AnimalTypeTester.RODENT_NUM);
     }
     @Test
     public void testFieldMatch(){
@@ -60,10 +60,10 @@ public class PetEndpointTester {
                 .getPets().size(), AnimalTypeTester.CAT_NUM + AnimalTypeTester.DOG_NUM);
         animals.add("reptile");
         animals.add("rodent");
-        animals.add("bird");
+        animals.add("other");
         assertEquals(service.findByFieldMatch("type",animals)
                 .getPets().size(), AnimalTypeTester.CAT_NUM + AnimalTypeTester.DOG_NUM
-                +AnimalTypeTester.BIRD_NUM + AnimalTypeTester.REPTILE_NUM + AnimalTypeTester.RODENT_NUM + 1);
+                +AnimalTypeTester.OTHER_NUM + AnimalTypeTester.REPTILE_NUM + AnimalTypeTester.RODENT_NUM + 1);
         names.add("fluffy");
         assertEquals(service.findByFieldMatch("name", names).getPets().size(), AnimalTypeTester.FLUFFY_NUM);
         names.add("zeek");

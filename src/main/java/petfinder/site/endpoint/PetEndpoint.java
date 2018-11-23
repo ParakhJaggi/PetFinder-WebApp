@@ -129,9 +129,9 @@ public class PetEndpoint {
 	 * @author Laird
 	 * @return
 	 */
-	@GetMapping(value = "/birds", produces = "application/json")
-	public PetCollectionDTO getBirds(){
-		return petService.findAllBirds();
+	@GetMapping(value = "/other", produces = "application/json")
+	public PetCollectionDTO getOther(){
+		return petService.findAllOther();
 	}
 
 	/**
@@ -139,15 +139,15 @@ public class PetEndpoint {
 	 * @param cat
 	 * @param dog
 	 * @param rodent
-	 * @param bird
+	 * @param other
 	 * @param reptile
 	 * @return
 	 */
-	@GetMapping(value = "/{cat}/{dog}/{rodent}/{bird}/{reptile}", produces = "application/json")
-	public PetCollectionDTO getBirds(@PathVariable("cat") Boolean cat, @PathVariable("dog") Boolean dog,
-									 @PathVariable("rodent") Boolean rodent, @PathVariable("bird") Boolean bird,
+	@GetMapping(value = "/{cat}/{dog}/{rodent}/{other}/{reptile}", produces = "application/json")
+	public PetCollectionDTO getOther(@PathVariable("cat") Boolean cat, @PathVariable("dog") Boolean dog,
+									 @PathVariable("rodent") Boolean rodent, @PathVariable("other") Boolean other,
 									 @PathVariable("reptile") Boolean reptile){
-		return petService.findByCustomType(cat, dog, rodent, bird, reptile);
+		return petService.findByCustomType(cat, dog, rodent, other, reptile);
 	}
 
 	/**

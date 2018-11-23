@@ -62,8 +62,8 @@ public class PetService {
 	 * @author Laird
 	 * @return
 	 */
-	public PetCollectionDTO findAllBirds(){
-		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setBird().generate());
+	public PetCollectionDTO findAllOther(){
+		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setOther().generate());
 	}
 
 	/**
@@ -79,19 +79,19 @@ public class PetService {
 	 * @param cat
 	 * @param dog
 	 * @param rodent
-	 * @param bird
+	 * @param other
 	 * @param reptile
 	 * @return
 	 */
 	public PetCollectionDTO findByCustomType(boolean cat, boolean dog,
-											 boolean rodent, boolean bird, boolean reptile){
+											 boolean rodent, boolean other, boolean reptile){
 		AnimalTypeRequestBuilder buildRequest = AnimalTypeRequestBuilder.getInstance();
 		if(cat)
 			buildRequest.setCat();
 		if(dog)
 			buildRequest.setDog();
-		if(bird)
-			buildRequest.setBird();
+		if(other)
+			buildRequest.setOther();
 		if(rodent)
 			buildRequest.setRodent();
 		if(reptile)

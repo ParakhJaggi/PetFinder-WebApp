@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 import * as Validation from 'js/alloy/utils/validation';
 import * as Bessemer from 'js/alloy/bessemer/components';
-import * as Users from 'js/users';
+import * as Users from 'js/profileModules/users';
 
 
 class LoginForm extends React.Component {
@@ -44,9 +44,11 @@ LoginForm = connect(
 )(LoginForm);
 
 export {LoginForm};
-
+import { SubmissionError } from 'redux-form';
 class RegistrationForm extends React.Component {
 	onSubmit = user => {
+		if(user.password != user.Secondpassword)
+            throw new SubmissionError({ password: 'The passwords do not match.', Secondpassword: 'The passwords do not match.' });
 		return this.props.register(user);
 	};
 	state = {

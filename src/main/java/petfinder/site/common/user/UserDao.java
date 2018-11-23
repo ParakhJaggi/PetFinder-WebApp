@@ -5,13 +5,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import petfinder.site.common.CustomGeoPoint;
 import petfinder.site.common.Exceptions.PetException;
 import petfinder.site.common.pet.PetCollectionDTO;
 import petfinder.site.elasticsearch.UserElasticSearchRepository;
@@ -70,9 +75,15 @@ public class UserDao {
 		return results;
 	}
 
-	public UserCollectionDTO findSitters(String zip, String city, String state){
+	public UserCollectionDTO findSitters(/*CustomGeoPoint p*/ String city, String state, String zip){
 		QueryBuilder queryBuilder = null;
 		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+//		GeoDistanceQueryBuilder g = QueryBuilders.geoDistanceQuery("geographicPoint");
+//		org.elasticsearch.common.geo.GeoPoint altGeoPoint = new org.elasticsearch.common.geo.GeoPoint();
+//		altGeoPoint.resetLon(p.getLon());
+//		altGeoPoint.resetLat(p.getLat());
+//		g.point(altGeoPoint).distance("35 km");
+	//	SortBuilder sb = SortBuilders.geoDistanceSort("geographicPoint", p.getLat(), p.getLon()).unit(DistanceUnit.KILOMETERS);
 		BoolQueryBuilder qs = QueryBuilders.boolQuery();
 		BoolQueryBuilder q = QueryBuilders.boolQuery();
 		//BoolQueryBuilder r = QueryBuilders.boolQuery();
@@ -84,7 +95,7 @@ public class UserDao {
 		        .should(QueryBuilders.termQuery("user.zip", zip));
 	//	r.must(QueryBuilders.termQuery("user.type", "petfinder.site.common.user.UserDto.UserType.SITTER"));
 				//.must(q);
-		sourceBuilder.query(q).size(20);
+		sourceBuilder.query(q).size(100)/*.sort(sb);*/;
 		UserCollectionDTO results = new UserCollectionDTO();
 		List<UserDto> users = new LinkedList<>();
 		List<UserAuthenticationDto> res = this.repository.search(sourceBuilder);
