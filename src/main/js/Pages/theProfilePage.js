@@ -162,7 +162,7 @@ class ProfilePage extends React.Component {
                                 this.state.user.type === 'SITTER' &&
                                 'You are a sitter.'
                             }
-                            <BookingTable user={this.state.user}/>
+                            <BookingTable user={this.state.user} sitpets={this.state}/>
                             {
                                 this.state.user.type === 'OWNER' &&
                                 <SitterTable/>
