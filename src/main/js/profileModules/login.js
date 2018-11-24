@@ -48,7 +48,7 @@ import { SubmissionError } from 'redux-form';
 class RegistrationForm extends React.Component {
 	onSubmit = user => {
 		if(user.password != user.Secondpassword)
-            throw new SubmissionError({ password: 'The passwords do not match.', Secondpassword: 'The passwords do not match.' });
+			throw new SubmissionError({ password: 'The passwords do not match.', Secondpassword: 'The passwords do not match.' });
 		return this.props.register(user);
 	};
 	state = {
