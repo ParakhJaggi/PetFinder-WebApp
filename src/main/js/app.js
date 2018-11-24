@@ -1,3 +1,5 @@
+/*eslint no-unused-vars: ["error", { "varsIgnorePattern": "React" }]*/
+
 import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
