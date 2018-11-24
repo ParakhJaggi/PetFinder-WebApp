@@ -54,7 +54,7 @@ class BookingRow extends React.Component {
                             Pets:
                         </td>
                         <td colSpan={7}>
-                            <table>
+                            <table><tbody>
 								{this.props.user.sitPets[this.props.pair[0]].pets.map((val, i) =>
                                     <tr key={i}>
 										<th>
@@ -71,7 +71,7 @@ class BookingRow extends React.Component {
 										</td>
 									</tr>
 								)}
-                            </table>
+							</tbody></table>
                         </td>
                     </tr>
                 }
