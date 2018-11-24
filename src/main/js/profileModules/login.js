@@ -37,7 +37,7 @@ class LoginForm extends React.Component {
 LoginForm = ReduxForm.reduxForm({form: 'login'})(LoginForm);
 
 LoginForm = connect(
-	state => ({}),
+	//state => ({}),
 	dispatch => ({
 		authenticate: (principal, password, onSuccess) => dispatch(Users.Actions.authenticate(principal, password, onSuccess))
 	})
@@ -66,7 +66,7 @@ class RegistrationForm extends React.Component {
 
 	render() {
 		let {handleSubmit, submitting} = this.props;
-		let onSuccess = this.props.success;
+		//let onSuccess = this.props.success;
 
 		const options = [
 			{value: 'Alabama', label: 'Alabama'},
@@ -172,7 +172,7 @@ class RegistrationForm extends React.Component {
 RegistrationForm = ReduxForm.reduxForm({form: 'register'})(RegistrationForm);
 
 RegistrationForm = connect(
-	state => ({}),
+	//state => ({}),
 	dispatch => ({
 		register: user => dispatch(Users.Actions.register(user))
 	})

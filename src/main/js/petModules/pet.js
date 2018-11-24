@@ -52,7 +52,7 @@ class RegistrationPetForm extends React.Component {
 
 	render() {
 		let {handleSubmit, submitting} = this.props;
-		let onSuccess = this.props.success;
+		//let onSuccess = this.props.success;
 
 		const options = [
 			{value: 'Dog', label: 'Dog'},
@@ -104,7 +104,7 @@ class RegistrationPetForm extends React.Component {
 RegistrationPetForm = ReduxForm.reduxForm({form: 'register'})(RegistrationPetForm);
 
 RegistrationPetForm = connect(
-	state => ({}),
+	//state => ({}),
 	dispatch => ({
 		register: user => dispatch(Users.Actions.register(user))
 	})
@@ -142,7 +142,7 @@ class EditPetForm extends React.Component {
 
 	render() {
 		let {handleSubmit, submitting} = this.props;
-		let onSuccess = this.props.success;
+		//let onSuccess = this.props.success;
 
 		if (this.state) {
 			return (
@@ -184,7 +184,7 @@ class EditPetForm extends React.Component {
 EditPetForm = ReduxForm.reduxForm({form: 'register'})(EditPetForm);
 
 EditPetForm = connect(
-	state => ({}),
+	//state => ({}),
 	dispatch => ({
 		register: user => dispatch(Users.Actions.register(user))
 	})
