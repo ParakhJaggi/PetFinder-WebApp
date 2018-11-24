@@ -18,7 +18,7 @@ class SitterRow extends React.Component {
 					{this.props.sitter.principal}
 				</td>
 				{this.props.sitter.days.map((available, index) =>
-					<td>
+					<td key={index}>
 						<button onClick={this.onClick.bind(this, index)} disabled={!available}
 						>Request Booking
 						</button>
@@ -65,8 +65,8 @@ export class SitterTable extends React.Component {
 				</tr>
 				</thead>
 				<tbody>
-				{this.state.sitters.map(sitter =>
-					<SitterRow sitter={sitter}/>
+				{this.state.sitters.map((sitter, i) =>
+					<SitterRow sitter={sitter} key={i}/>
 				)}
 				</tbody>
 			</table>

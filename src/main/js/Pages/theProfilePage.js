@@ -14,7 +14,7 @@ function ClearNotification() {
 	location.reload();
 }
 
-function initpetform(pet){
+function initpetform(pet) {
 	let vals = {};
 	['name', 'type', 'subtype', 'preferences'].forEach(x => {
 		vals[pet.id + x] = pet[x];
@@ -75,7 +75,7 @@ class ProfilePage extends React.Component {
 		const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 		for (let i = 0; i < 7; i++) {
 			availableCheck.push(
-				<h3><label className="container-checkbox">{week[i]}
+				<h3 key={i}><label className="container-checkbox">{week[i]}
 					<input type="checkbox" checked={this.state.available[i]}
 						   onClick={this.toggleAvailable.bind(this, i)}/>
 					<span className="checkmark"></span>
@@ -92,35 +92,46 @@ class ProfilePage extends React.Component {
 						//<div>{this.props.authentication['access_token']}</div>
 					}
 					{_.isDefined(this.props.user) &&
-					<div className="card mb-3"><div className="card-header">
-						<i className="fas fa-table"></i>Profile</div>
-							<table className="table" id="dataTable" width="100%" cellSpacing="0">
-								<thead>
-								<tr>
-									<td>Email</td><td>Type</td>
-								</tr>
-								</thead>
-								<tbody>
-							<tr><td>{this.props.user.principal}</td>
-								<td>{this.props.user.type}</td></tr></tbody>
-							</table>
+					<div className="card mb-3">
+						<div className="card-header">
+							<i className="fas fa-table"></i>Profile
+						</div>
+						<table className="table" id="dataTable" width="100%" cellSpacing="0">
+							<thead>
+							<tr>
+								<td>Email</td>
+								<td>Type</td>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>{this.props.user.principal}</td>
+								<td>{this.props.user.type}</td>
+							</tr>
+							</tbody>
+						</table>
 					</div>
 					}
 					{
 						this.state.user && this.state.user.notification &&
 						<div>
 							<div className="card mb-3">
-							<div className="card-header">
-								<i className="fas fa-table"></i>
-								Your Current Notifications <br/>
-								<button className="btn btn-primary" onClick={() => ClearNotification()}>Clear Notifications</button>
-							</div>
-							<div className='pl-3 pr-3 pt-3'> {this.state.user.notification.map(test =>
-							<tr>
-								<td>{test.toString()}</td>
-							</tr>
-
-						)}</div>
+								<div className="card-header">
+									<i className="fas fa-table"></i>
+									Your Current Notifications <br/>
+									<button className="btn btn-primary" onClick={() => ClearNotification()}>Clear
+										Notifications
+									</button>
+								</div>
+								<table className='pl-3 pr-3 pt-3'><tbody>
+									{
+									    this.state.user.notification.map((test, i) =>
+                                            <tr key={i}>
+                                                <td>{test.toString()}</td>
+                                            </tr>
+									    )
+									}
+								</tbody></table>
 
 							</div>
 
@@ -133,12 +144,12 @@ class ProfilePage extends React.Component {
 							My Pets
 						</div>
 						<div className='pl-3 pr-3 pt-3'>
-					{
-						this.state.pets &&
-						this.state.pets.map(pet =>
-							<EditPetForm pet={pet} initialValues={initpetform(pet)}/>
-						)
-					}
+							{
+								this.state.pets &&
+								this.state.pets.map((pet, i) =>
+									<EditPetForm pet={pet} initialValues={initpetform(pet)} key={i}/>
+								)
+							}
 						</div>
 					</div>
 					<div className="card mb-3">

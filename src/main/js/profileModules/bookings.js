@@ -42,7 +42,7 @@ class BookingRow extends React.Component {
 						{this.props.pair[0]}
 					</td>
 					{this.props.pair[1].map((val, index) =>
-						<td>
+						<td key={index}>
 							{this.renderDay(index, val)}
 						</td>
 					)}
@@ -55,8 +55,8 @@ class BookingRow extends React.Component {
                         </td>
                         <td colSpan={7}>
                             <table>
-								{this.props.user.sitPets[this.props.pair[0]].pets.map(val =>
-                                    <tr>
+								{this.props.user.sitPets[this.props.pair[0]].pets.map((val, i) =>
+                                    <tr key={i}>
 										<th>
 											{val.name}
 										</th>
@@ -128,8 +128,8 @@ export class BookingTable extends React.Component {
 				</tr>
 				</thead>
 				<tbody>
-				{Array.from(this.state.rowdata).map((pair) =>
-					<BookingRow user={this.props.user} pair={pair}/>
+				{Array.from(this.state.rowdata).map((pair, i) =>
+					<BookingRow user={this.props.user} pair={pair} key={i}/>
 				)}
 				</tbody>
 			</table>
