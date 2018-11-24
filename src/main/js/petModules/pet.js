@@ -10,8 +10,8 @@ import {SubmissionError} from 'redux-form';
 
 class RegistrationPetForm extends React.Component {
 	onSubmit = pet => {
-		console.log(pet.type);
-		console.log(pet.subtype);
+		//console.log(pet.type);
+		//console.log(pet.subtype);
 		if(pet.type==='Dog'){
 			if(pet.subtype!=='Dog'){
 				throw new SubmissionError({ subtype: 'Subtype must be Dog'});
@@ -43,11 +43,11 @@ class RegistrationPetForm extends React.Component {
 	}
 	handleChange = (selectedOption) => {
 		this.setState({selectedOption});
-		console.log('Option selected:', selectedOption);
+		//console.log('Option selected:', selectedOption);
 	};
 	handleChange2 = (selectedOption2) => {
 		this.setState({selectedOption2});
-		console.log('Option selected:', selectedOption2);
+		//console.log('Option selected:', selectedOption2);
 	};
 
 	render() {

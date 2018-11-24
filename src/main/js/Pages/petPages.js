@@ -31,7 +31,7 @@ export class RodentSearch extends React.Component {
 		axios.get('/pets/rodents')
 			.then(res => {
 				const pets = res.pets;
-				console.log(pets);
+				//console.log(pets);
 				this.setState({rodents: pets});
 				this.setState({allRodents: pets});
 			});
@@ -268,7 +268,7 @@ export class DogSearch extends React.Component {
 		axios.get('/pets/dogs')
 			.then(res => {
 				const pets = res.pets;
-				console.log(pets);
+				//console.log(pets);
 				this.setState({dogs: pets});
 			});
 	}
@@ -343,7 +343,7 @@ export class OtherSearch extends React.Component {
 		axios.get('/pets/other')
 			.then(res => {
 				const pets = res.pets;
-				console.log(pets);
+				//console.log(pets);
 				this.setState({other: pets});
 			});
 	}
@@ -419,7 +419,7 @@ export class CatSearch extends React.Component {
 		axios.get('/pets/cats')
 			.then(res => {
 				const pets = res.pets;
-				console.log(pets);
+				//console.log(pets);
 				this.setState({cats: pets});
 			});
 	}

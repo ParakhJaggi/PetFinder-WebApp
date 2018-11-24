@@ -35,7 +35,6 @@ class BookingRow extends React.Component {
 	}
 
 	render() {
-		console.log('XXXXXXXXXXXXXXXXXXXXXXX', this.props.user.sitPets[this.props.pair[0]]);
 		return (
 			<React.Fragment>
 				<tr>

@@ -38,7 +38,7 @@ export class SitterTable extends React.Component {
 		axios.get('/api/user/getavailablesitters')
 			.then(res => {
 				const sitters = res.users;
-				console.log(res);
+				//console.log(res);
 				this.setState({sitters: sitters});
 			});
 	}

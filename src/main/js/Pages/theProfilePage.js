@@ -41,19 +41,19 @@ class ProfilePage extends React.Component {
 			});
 		axios.get('/api/user')
 			.then(res => {
-				console.log(res);
+				//console.log(res);
 				this.setState({user: res});
 			});
 		axios.get('/api/userPets/getPets')
 			.then(res => {
-				console.log(res);
+				//console.log(res);
 				this.setState({pets: res.pets});
 			});
 	}
 
 
 	onSubmit(event) {
-		console.log('Submitting');
+		//console.log('Submitting');
 		event.preventDefault();
 		let toPost = {
 			'bools': this.state.available
