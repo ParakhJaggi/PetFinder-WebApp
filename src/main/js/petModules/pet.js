@@ -10,6 +10,8 @@ import {SubmissionError} from 'redux-form';
 
 class RegistrationPetForm extends React.Component {
 	onSubmit = pet => {
+		console.log(pet.type);
+		console.log(pet.subtype);
 		if(pet.type==='Dog'){
 			if(pet.subtype!=='Dog'){
                 throw new SubmissionError({ subtype: 'Subtype must be Dog'});
@@ -21,9 +23,9 @@ class RegistrationPetForm extends React.Component {
             }
         }
         if(pet.type==='Rodent'){
-            if(pet.subtype!=='Chinchilla'|| pet.subtype!=='Ferret'  ||
-                pet.subtype!=='Hamster' || pet.subtype!=='Guinea Pig' ||
-                pet.subtype!=='Rabbit'||pet.subtype!=='Other Rodent'){
+            if(pet.subtype!=='Chinchilla'&& pet.subtype!=='Ferret'  &&
+                pet.subtype!=='Hamster' && pet.subtype!=='Guinea Pig' &&
+                pet.subtype!=='Rabbit'&& pet.subtype!=='Other Rodent'){
                 throw new SubmissionError({ subtype: 'Subtype does not Match'});
             }
         }
