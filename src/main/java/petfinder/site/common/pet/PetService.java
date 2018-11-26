@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import petfinder.site.common.Exceptions.PetException;
 import petfinder.site.common.RestRequests.AnimalTypeRequest;
@@ -32,6 +33,16 @@ public class PetService {
 
 	public void save(PetDto pet) {
 		petDao.save(pet);
+	}
+
+	public void update(PetDto p){
+		Optional<PetDto> toCheck = petDao.findPet(p.getId());
+		if(toCheck.isPresent() && toCheck.get().getOwner().equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+			PetDto oldVersion = toCheck.get();
+			oldVersion.setName(oldVersion.getName());
+			oldVersion.setPreferences(oldVersion.getPreferences());
+			petDao.save(p);
+		}
 	}
 
 	/**

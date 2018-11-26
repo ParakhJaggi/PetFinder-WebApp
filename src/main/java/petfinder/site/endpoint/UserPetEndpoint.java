@@ -44,6 +44,10 @@ public class UserPetEndpoint {
         return ret;
         */
     }
+    @PostMapping("/update")
+    public void updatePet(@RequestBody PetDto p){
+        petService.update(p);
+    }
 
     /**
      * @author Laird
@@ -59,7 +63,14 @@ public class UserPetEndpoint {
         pet.setId(petID);
         pet.setOwner(SecurityContextHolder.getContext().getAuthentication().getName());
         //}
-        petService.save(pet);
+        //make sure that the owner does not double list an animal
+        PetCollectionDTO pdo = getUsersPets();
+        if(pdo.getPets().stream().noneMatch(x  ->
+                x.getName().equals(pet.getName()) &&
+                x.getType().equals(pet.getType()) &&
+                x.getSubtype().equals(pet.getSubtype()))){
+            petService.save(pet);
+        }
         return pet;
     }
 

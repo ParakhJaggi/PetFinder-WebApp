@@ -14,6 +14,7 @@ import petfinder.site.common.pet.PetDto;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by jlutteringer on 2/7/18.
@@ -75,7 +76,7 @@ public class PetElasticsearchRepository extends ElasticSearchJsonRepository<PetD
 		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 		sourceBuilder.query(QueryBuilders.queryStringQuery((String)toMatch.get(0)));
 		PetCollectionDTO results = new PetCollectionDTO();
-		results.setPets( this.index.search(sourceBuilder, this.serializer));
+		results.setPets( this.index.search(sourceBuilder, this.serializer).stream().filter(x->x.getOwner().equals(toMatch.get(0))).collect(Collectors.toList()));
 		return results;
 	}
 }
