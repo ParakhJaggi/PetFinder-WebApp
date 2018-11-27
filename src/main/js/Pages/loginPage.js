@@ -4,7 +4,7 @@ import Pulse from 'react-reveal/Pulse';
 import {LoginForm} from 'js/profileModules/login';
 import {Logout} from 'js/profileModules/logoutHelpers';
 
-const loginRedirectPage = '/profile-page';
+const loginRedirectPage = '/about-us';
 
 export class LoginPage extends React.Component {
 	state = {
