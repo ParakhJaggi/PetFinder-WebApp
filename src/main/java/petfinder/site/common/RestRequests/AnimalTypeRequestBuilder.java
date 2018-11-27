@@ -2,18 +2,18 @@ package petfinder.site.common.RestRequests;
 
 public class AnimalTypeRequestBuilder {
     private static AnimalTypeRequestBuilder at = new AnimalTypeRequestBuilder();
-    private boolean cat = false, dog = false, reptile = false, bird = false, rodent = false;
+    private boolean cat = false, dog = false, reptile = false, other = false, rodent = false;
     private AnimalTypeRequestBuilder(){}
     public static AnimalTypeRequestBuilder getInstance(){
         return at;
     }
     public AnimalTypeRequest generate(){
-        AnimalTypeRequest toReturn = new AnimalTypeRequest(cat, dog, rodent, reptile, bird);
+        AnimalTypeRequest toReturn = new AnimalTypeRequest(cat, dog, rodent, reptile, other);
         this.reset();
         return toReturn;
     }
     private void reset(){
-        cat = false; dog = false; reptile = false; bird = false; rodent = false;
+        cat = false; dog = false; reptile = false; other = false; rodent = false;
     }
     public AnimalTypeRequestBuilder setCat(){
         this.cat = true;
@@ -32,8 +32,8 @@ public class AnimalTypeRequestBuilder {
         this.rodent = true;
         return this;
     }
-    public AnimalTypeRequestBuilder setBird(){
-        this.bird = true;
+    public AnimalTypeRequestBuilder setOther(){
+        this.other = true;
         return this;
     }
 

@@ -10,7 +10,7 @@ import axios from 'axios';
 import cookie from 'react-cookies';
 
 import Index from 'js/index';
-import * as Users from 'js/users';
+import * as Users from 'js/profileModules/users';
 import * as Utils from 'js/alloy/utils/core-utils';
 
 import 'styles/main.scss';
