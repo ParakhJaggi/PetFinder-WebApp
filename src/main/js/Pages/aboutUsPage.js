@@ -23,7 +23,7 @@ export class AboutUs extends React.Component {
 											to match. Simply set your availability, and create a booking to accommodate
 											your furry
 											friends.</p>
-										<a href="#" className="btn btn-primary">My Profile</a>
+										<a href="#/profile-page" className="btn btn-primary">My Profile</a>
 									</div>
 								</div>
 								<div className="col-md-4">
