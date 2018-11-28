@@ -53,7 +53,7 @@ class ProfilePage extends React.Component {
 
 
 	onSubmit(event) {
-		console.log('Submitting');
+		//console.log('Submitting');
 		event.preventDefault();
 		let toPost = {
 			'bools': this.state.available
@@ -62,7 +62,7 @@ class ProfilePage extends React.Component {
 	}
 
 	/* callback to change the checkboxState to false when the checkbox is checked */
-	toggleAvailable(day, event) {
+	toggleAvailable(day) {
 		let newAvailable = this.state.available;
 		newAvailable[day] = !newAvailable[day];
 		this.setState({
@@ -143,7 +143,7 @@ class ProfilePage extends React.Component {
 							{
 								this.state.pets &&
 								this.state.pets.map(pet =>
-									<EditPetForm pet={pet}/>
+									<EditPetForm pet={pet} initialValues={initpetform(pet)}/>
 								)
 							}
 						</div>
