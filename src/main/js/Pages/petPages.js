@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {NavBar, SideBar,Footer} from 'js/navigationModules/navigation';
+import {NavBar, SideBar, Footer} from 'js/navigationModules/navigation';
 import Pulse from 'react-reveal/Pulse';
 import Switch from 'react-switch';
 import {Logout} from 'js/profileModules/logoutHelpers';
@@ -478,7 +478,7 @@ export class CatSearch extends React.Component {
 							</div>
 						</div>
 					</div>
-				   <Footer/>
+					<Footer/>
 				</div>
 			</div>
 			<Logout/>

@@ -7,27 +7,27 @@ export class AddPet extends React.Component {
 	render() {
 		return (
 			<div>
-			<div className="container shiftRight top-buffer">
-				<NavBar/>
-				<SideBar/>
-				<ol className="breadcrumb">
-					<li className="breadcrumb-item">
-						<a href="#/sits">Add Pet</a>
-					</li>
-				</ol>
-				<div className="card mb-3">
-					<div className="card-header">
-						<i className="fas fa-table"></i>
-						Add Pet
+				<div className="container shiftRight top-buffer">
+					<NavBar/>
+					<SideBar/>
+					<ol className="breadcrumb">
+						<li className="breadcrumb-item">
+							<a href="#/sits">Add Pet</a>
+						</li>
+					</ol>
+					<div className="card mb-3">
+						<div className="card-header">
+							<i className="fas fa-table"></i>
+							Add Pet
+						</div>
+						<div className='pl-3 pr-3 pt-3'>
+							<RegistrationPetForm/>
+						</div>
+
 					</div>
-					<div className='pl-3 pr-3 pt-3'>
-					<RegistrationPetForm/>
-					</div>
+					<Logout/>
 
 				</div>
-				<Logout/>
-
-			</div>
 				<Footer/>
 			</div>
 		);

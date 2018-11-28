@@ -10,29 +10,29 @@ import {SubmissionError} from 'redux-form';
 
 class RegistrationPetForm extends React.Component {
 	onSubmit = pet => {
-		//console.log(pet.type);
-		//console.log(pet.subtype);
-		if(pet.type==='Dog'){
-			if(pet.subtype!=='Dog'){
-				throw new SubmissionError({ subtype: 'Subtype must be Dog'});
+		console.log(pet.type);
+		console.log(pet.subtype);
+		if (pet.type === 'Dog') {
+			if (pet.subtype !== 'Dog') {
+				throw new SubmissionError({subtype: 'Subtype must be Dog'});
 			}
 		}
-		if(pet.type==='Cat'){
-			if(pet.subtype!=='Cat'){
-				throw new SubmissionError({ subtype: 'Subtype must be Cat'});
+		if (pet.type === 'Cat') {
+			if (pet.subtype !== 'Cat') {
+				throw new SubmissionError({subtype: 'Subtype must be Cat'});
 			}
 		}
-		if(pet.type==='Rodent'){
-			if(pet.subtype!=='Chinchilla'&& pet.subtype!=='Ferret'  &&
-				pet.subtype!=='Hamster' && pet.subtype!=='Guinea Pig' &&
-				pet.subtype!=='Rabbit'&& pet.subtype!=='Other Rodent'){
-				throw new SubmissionError({ subtype: 'Subtype does not Match'});
+		if (pet.type === 'Rodent') {
+			if (pet.subtype !== 'Chinchilla' && pet.subtype !== 'Ferret' &&
+				pet.subtype !== 'Hamster' && pet.subtype !== 'Guinea Pig' &&
+				pet.subtype !== 'Rabbit' && pet.subtype !== 'Other Rodent') {
+				throw new SubmissionError({subtype: 'Subtype does not Match'});
 			}
 		}
-		if(pet.type==='Other'){
-			if(pet.subtype!=='Reptile'&& pet.subtype!=='Bird'  &&
-				pet.subtype!=='Other'){
-				throw new SubmissionError({ subtype: 'Subtype does not Match'});
+		if (pet.type === 'Other') {
+			if (pet.subtype !== 'Reptile' && pet.subtype !== 'Bird' &&
+				pet.subtype !== 'Other') {
+				throw new SubmissionError({subtype: 'Subtype does not Match'});
 			}
 		}
 		return axios.post('/api/userPets/savePet', pet);
@@ -43,11 +43,11 @@ class RegistrationPetForm extends React.Component {
 	}
 	handleChange = (selectedOption) => {
 		this.setState({selectedOption});
-		//console.log('Option selected:', selectedOption);
+		console.log('Option selected:', selectedOption);
 	};
 	handleChange2 = (selectedOption2) => {
 		this.setState({selectedOption2});
-		//console.log('Option selected:', selectedOption2);
+		console.log('Option selected:', selectedOption2);
 	};
 
 	render() {
@@ -80,17 +80,18 @@ class RegistrationPetForm extends React.Component {
 								validators={[Validation.requiredValidator]}/>
 
 				<Bessemer.Field name="type" friendlyName="Type"/*Todo Radio box*/
-								validators={[Validation.requiredValidator]}
-								field={<Bessemer.Select className="pull-right" name="type" friendlyName="Type"
-														options={options} value={this.state.selectedOption}
-														onChange={this.handleChange}
-														style={{width: 585}}/>}/>
+				                validators={[Validation.requiredValidator]}
+				                field={<Bessemer.Select className="pull-right" name="type" friendlyName="Type"
+				                                        options={options} value={this.state.selectedOption}
+				                                        onChange={this.handleChange}
+				                                        style={{width: 585}}/>}/>
 
 				<Bessemer.Field name="subtype" friendlyName="Sub Type"
-								validators={[Validation.requiredValidator]} field={<Bessemer.Select className="pull-right" name="subtype" friendlyName="Sub Type"
-																									options={options2} value={this.state.selectedOption2}
-																									onChange={this.handleChange2}
-																									style={{width: 585}}/>}/>
+				                validators={[Validation.requiredValidator]}
+				                field={<Bessemer.Select className="pull-right" name="subtype" friendlyName="Sub Type"
+				                                        options={options2} value={this.state.selectedOption2}
+				                                        onChange={this.handleChange2}
+				                                        style={{width: 585}}/>}/>
 
 				<Bessemer.Field name="preferences" friendlyName="Extra Preferences/Instructions"/>
 
@@ -158,12 +159,17 @@ class EditPetForm extends React.Component {
 											value={this.props.pet.name}
 							/>
 
-							<Bessemer.Field name={this.props.pet.id + 'type'} friendlyName="Type (Can't Edit)"/*Todo Radio box*/
-											defaultVal={this.props.pet.type} field={<textarea rows="1" cols="30" placeholder={this.props.pet.type}  readOnly/>}
+							<Bessemer.Field name={this.props.pet.id + 'type'}
+							                friendlyName="Type (Can't Edit)"/*Todo Radio box*/
+							                defaultVal={this.props.pet.type}
+							                field={<textarea rows="1" cols="30" placeholder={this.props.pet.type}
+							                                 readOnly/>}
 							/>
 
 							<Bessemer.Field name={this.props.pet.id + 'subtype'} friendlyName="Sub Type (Can't Edit)"
-											defaultVal={this.props.pet.subtype} field={<textarea rows="1" cols="30" placeholder={this.props.pet.subtype}  readOnly/>}
+							                defaultVal={this.props.pet.subtype}
+							                field={<textarea rows="1" cols="30" placeholder={this.props.pet.subtype}
+							                                 readOnly/>}
 							/>
 
 							<Bessemer.Field name={this.props.pet.id + 'preferences'} friendlyName="Extra Preferences"

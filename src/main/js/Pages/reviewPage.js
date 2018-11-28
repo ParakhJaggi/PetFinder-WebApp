@@ -52,6 +52,13 @@ export class ReviewPage extends React.Component {
 	componentDidMount() {
 		axios.get('/api/user')
 			.then(res => {
+				if (res.type == 'SITTER') {
+					window.alert('Sitters Can Not Review');
+					window.location.href = '#/profile-page';
+					location.reload();
+
+				}
+
 				const myBookings = res.bookings;
 				this.setState({bookings: myBookings});
 			});
@@ -119,8 +126,8 @@ export class ReviewPage extends React.Component {
 										<label>
 											Your Review (Optional):
 										</label><br/><textarea className="form-control" rows="5" id="comment"
-															   type="text" value={this.state.review}
-															   onChange={this.handleChange3}></textarea>
+										                       type="text" value={this.state.review}
+										                       onChange={this.handleChange3}></textarea>
 										<input type="submit" value="Submit"/>
 									</form>
 								</div>

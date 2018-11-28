@@ -44,7 +44,7 @@ class ProfilePage extends React.Component {
 				//console.log(res);
 				this.setState({user: res});
 			});
-		axios.get('/api/userPets/getPets')
+		axios.get('/api/userPets/ugly')
 			.then(res => {
 				//console.log(res);
 				this.setState({pets: res.pets});
@@ -53,7 +53,7 @@ class ProfilePage extends React.Component {
 
 
 	onSubmit(event) {
-		//console.log('Submitting');
+		console.log('Submitting');
 		event.preventDefault();
 		let toPost = {
 			'bools': this.state.available
@@ -62,7 +62,7 @@ class ProfilePage extends React.Component {
 	}
 
 	/* callback to change the checkboxState to false when the checkbox is checked */
-	toggleAvailable(day/*, event*/) {
+	toggleAvailable(day, event) {
 		let newAvailable = this.state.available;
 		newAvailable[day] = !newAvailable[day];
 		this.setState({
@@ -75,9 +75,9 @@ class ProfilePage extends React.Component {
 		const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 		for (let i = 0; i < 7; i++) {
 			availableCheck.push(
-				<h3 key={i}><label className="container-checkbox">{week[i]}
+				<h3><label className="container-checkbox">{week[i]}
 					<input type="checkbox" checked={this.state.available[i]}
-						   onClick={this.toggleAvailable.bind(this, i)}/>
+					       onClick={this.toggleAvailable.bind(this, i)}/>
 					<span className="checkmark"></span>
 				</label></h3>
 			);
@@ -123,15 +123,11 @@ class ProfilePage extends React.Component {
 										Notifications
 									</button>
 								</div>
-								<table className='pl-3 pr-3 pt-3'><tbody>
-									{
-									    this.state.user.notification.map((test, i) =>
-                                            <tr key={i}>
-                                                <td>{test.toString()}</td>
-                                            </tr>
-									    )
-									}
-								</tbody></table>
+								<div className='pl-3 pr-3 pt-3'> {this.state.user.notification.map(test =>
+									<tr>
+										<td>{test.toString()}</td>
+									</tr>
+								)}</div>
 
 							</div>
 
@@ -146,8 +142,8 @@ class ProfilePage extends React.Component {
 						<div className='pl-3 pr-3 pt-3'>
 							{
 								this.state.pets &&
-								this.state.pets.map((pet, i) =>
-									<EditPetForm pet={pet} initialValues={initpetform(pet)} key={i}/>
+								this.state.pets.map(pet =>
+									<EditPetForm pet={pet}/>
 								)
 							}
 						</div>
@@ -173,7 +169,7 @@ class ProfilePage extends React.Component {
 								this.state.user.type === 'SITTER' &&
 								'You are a sitter.'
 							}
-							<BookingTable user={this.state.user} sitpets={this.state}/>
+							<BookingTable user={this.state.user}/>
 							{
 								this.state.user.type === 'OWNER' &&
 								<SitterTable/>
