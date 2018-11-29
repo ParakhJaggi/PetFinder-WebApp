@@ -1,7 +1,7 @@
 import React from 'react';
 import {HashRouter, Route} from 'react-router-dom';
 
-import * as Pages from 'js/profileModules/logoutHelpers';
+//import * as Pages from 'js/profileModules/logoutHelpers';
 import {RegisterPage} from 'js/Pages/registerPage';
 import {LoginPage} from 'js/Pages/loginPage';
 import {AboutUs} from 'js/Pages/aboutUsPage';

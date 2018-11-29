@@ -36,16 +36,46 @@ class BookingRow extends React.Component {
 
 	render() {
 		return (
-			<tr>
-				<td>
-					{this.props.pair[0]}
-				</td>
-				{this.props.pair[1].map((val, index) =>
+			<React.Fragment>
+				<tr>
 					<td>
-						{this.renderDay(index, val)}
+						{this.props.pair[0]}
 					</td>
-				)}
-			</tr>
+					{this.props.pair[1].map((val, index) =>
+						<td key={index}>
+							{this.renderDay(index, val)}
+						</td>
+					)}
+				</tr>
+                {
+                    this.props.user.sitPets[this.props.pair[0]] &&
+                    <tr>
+                        <td>
+                            Pets:
+                        </td>
+                        <td colSpan={7}>
+                            <table><tbody>
+								{this.props.user.sitPets[this.props.pair[0]].pets.map((val, i) =>
+                                    <tr key={i}>
+										<th>
+											{val.name}
+										</th>
+										<td>
+											{val.type}
+										</td>
+										<td>
+											{val.subtype}
+										</td>
+										<td>
+											{val.preferences}
+										</td>
+									</tr>
+								)}
+							</tbody></table>
+                        </td>
+                    </tr>
+                }
+			</React.Fragment>
 		);
 	}
 }
@@ -80,7 +110,7 @@ export class BookingTable extends React.Component {
                 <div className="card mb-3">
                     <div className="card-header">
                         <i className="fas fa-table"></i>
-                        My confirmed bookings
+                        My Bookings
                     </div>
                     <div className="card-body">
             <table className="table" id="dataTable" width="100%" cellSpacing="0">
@@ -98,8 +128,8 @@ export class BookingTable extends React.Component {
 				</tr>
 				</thead>
 				<tbody>
-				{Array.from(this.state.rowdata).map((pair) =>
-					<BookingRow user={this.props.user} pair={pair}/>
+				{Array.from(this.state.rowdata).map((pair, i) =>
+					<BookingRow user={this.props.user} pair={pair} key={i}/>
 				)}
 				</tbody>
 			</table>

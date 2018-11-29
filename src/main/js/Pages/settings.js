@@ -2,12 +2,15 @@ import React from 'react';
 import {NavBar, SideBar} from 'js/navigationModules/navigation';
 import dogAboutUs from '../../resources/images/dogau.jpg';
 import axios from 'axios';
+import * as cookie from "react-cookies";
 
 function DeleteAccount() {
-	axios.get('/api/user/deleteThisUser');
-	window.alert('You have been deleted');
-	window.location.href = '#/login';
-	location.reload();
+	axios.get('/api/user/deleteThisUser').then( res => {
+		window.alert('You have been deleted');
+		cookie.remove('authentication', {path: '/'});
+		cookie.remove('user', {path: '/'});
+		window.location.replace('...');
+	});
 }
 
 export class Settings extends React.Component {
@@ -24,7 +27,7 @@ export class Settings extends React.Component {
 									<div className="card-block">
 										<h6 className="card-title text-right"></h6>
 										<p className="card-text text-justify">If you want to delete your account please click the button.</p>
-										<a href="#/profile-page" className="btn btn-primary" onClick={() => DeleteAccount}>Delete Account</a>
+										<div className="btn btn-primary" onClick={DeleteAccount}>Delete Account</div>
 									</div>
 								</div>
 								<div className="col-md-4">
