@@ -5,7 +5,6 @@ import com.textmagic.sdk.resource.instance.TMNewMessage;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
-import java.time.Duration;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -13,19 +12,12 @@ import java.util.stream.Collectors;
 import com.mailjet.client.resource.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import static java.net.URLEncoder.encode;
 
-import alloy.util.AlloyAuthentication;
-import alloy.util.Wait;
 import alloy.util._Lists;
-import alloy.util._Maps;
-import petfinder.site.common.CustomGeoPoint;
 import petfinder.site.common.Exceptions.UserException;
-import petfinder.site.common.RestRequests.AnimalTypeRequestBuilder;
-import petfinder.site.common.pet.PetCollectionDTO;
 import petfinder.site.common.pet.PetDao;
 import petfinder.site.common.user.UserDto.UserType;
 import com.mailjet.client.errors.MailjetException;
@@ -33,8 +25,6 @@ import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
-import com.mailjet.client.ClientOptions;
-import com.mailjet.client.resource.Emailv31;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

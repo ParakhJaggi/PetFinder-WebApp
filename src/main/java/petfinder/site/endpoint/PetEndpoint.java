@@ -1,18 +1,8 @@
 package petfinder.site.endpoint;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
-import java.util.logging.Logger;
 
-import com.mailjet.client.MailjetClient;
-import com.mailjet.client.MailjetRequest;
-import com.mailjet.client.MailjetResponse;
-import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.errors.MailjetSocketTimeoutException;
-import com.mailjet.client.resource.Email;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import petfinder.site.common.Exceptions.PetException;
-import petfinder.site.common.RestRequests.AnimalTypeRequest;
 import petfinder.site.common.RestRequests.AnimalTypeRequestBuilder;
 import petfinder.site.common.RestRequests.SingleFieldRequest;
 import petfinder.site.common.pet.PetCollectionDTO;

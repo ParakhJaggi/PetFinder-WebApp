@@ -11,10 +11,8 @@ import petfinder.site.common.Exceptions.PetException;
 import petfinder.site.common.RestRequests.AnimalTypeRequest;
 import petfinder.site.common.RestRequests.AnimalTypeRequestBuilder;
 import petfinder.site.common.user.BookingDTO;
-import petfinder.site.common.user.UserAuthenticationDto;
 import petfinder.site.common.user.UserDto;
 import petfinder.site.common.user.UserService;
-import petfinder.site.endpoint.PetEndpoint;
 
 /**
  * Created by jlutteringer on 8/23/17.
