@@ -383,6 +383,21 @@ public class UserService {
         response = client.post(request);
         System.out.println(response.getData());
 
+		RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+
+		TMNewMessage m = client2.getResource(TMNewMessage.class);
+		m.setText("Dear User, You have a booking! Please check our site to accept/decline.");
+		m.setPhones(Arrays.asList(new String[] {"1"+sitter.get().user.getPhoneNumber(),"1"+owner.get().user.getPhoneNumber()}));
+		try {
+			m.send();
+		} catch (final RestException e) {
+			System.out.println(e.getErrors());
+			throw new RuntimeException(e);
+		}
+		System.out.println(m.getId());
+
+
+
 		return true;
 	}
 
@@ -457,6 +472,19 @@ public class UserService {
 
         response = client.post(request);
         System.out.println(response.getData());
+
+		RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+
+		TMNewMessage m = client2.getResource(TMNewMessage.class);
+		m.setText("Dear User, Your booking has been confirmed!");
+		m.setPhones(Arrays.asList(new String[] {"1"+sitter.get().user.getPhoneNumber(),"1"+owner.get().user.getPhoneNumber()}));
+		try {
+			m.send();
+		} catch (final RestException e) {
+			System.out.println(e.getErrors());
+			throw new RuntimeException(e);
+		}
+		System.out.println(m.getId());
 		return true;
 	}
 	public void ClearNotifications(String principle)  {
@@ -567,6 +595,20 @@ public class UserService {
 
             response = client.post(request);
             System.out.println(response.getData());
+
+			RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+
+			TMNewMessage m = client2.getResource(TMNewMessage.class);
+			m.setText("Dear User, A user gave you a review! Your new score is " + sitter.getReviewSum() +".");
+			m.setPhones(Arrays.asList(new String[] {"1"+sitter.getPhoneNumber()}));
+			try {
+				m.send();
+			} catch (final RestException e) {
+				System.out.println(e.getErrors());
+				throw new RuntimeException(e);
+			}
+			System.out.println(m.getId());
+
 	    }
     }
 
