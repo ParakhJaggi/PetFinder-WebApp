@@ -163,6 +163,7 @@ class RegistrationForm extends React.Component {
 				<br/><br/>
 				<Bessemer.Field name="zip" friendlyName="Zip code"
 				                validators={[Validation.requiredValidator]}/>
+                <Bessemer.Field name="phoneNumber" friendlyName="Phone Number"/>
 
 				<Bessemer.Button loading={submitting}>Register</Bessemer.Button>
 			</form>
