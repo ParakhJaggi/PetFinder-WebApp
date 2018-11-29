@@ -2,7 +2,7 @@ import React from 'react';
 import {NavBar, SideBar} from 'js/navigationModules/navigation';
 import dogAboutUs from '../../resources/images/dogau.jpg';
 import axios from 'axios';
-import * as cookie from "react-cookies";
+import * as cookie from 'react-cookies';
 
 function DeleteAccount() {
 	axios.get('/api/user/deleteThisUser').then( res => {
