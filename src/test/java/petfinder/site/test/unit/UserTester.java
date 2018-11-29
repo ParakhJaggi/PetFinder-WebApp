@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * Used to test the User Endpoints. Functions like a fake database using lambda streams for test purposes.
  * @author Laird
  */
 public class UserTester extends UserDao {
@@ -21,6 +22,7 @@ public class UserTester extends UserDao {
      private static List<UserDto> usersTotal = null;
      public static final int ZIP_59718_COUNT_SITTER_ALL_DAYS = 4,
                              ZIP_59718_COUNT_SITTER_WEEKENDS = 1;
+     //adds all users that will be in the fake DB
      static {
          usersTotal = new ArrayList<>();
          boolean [] allDays = {true, true, true, true, true, true, true},
@@ -121,6 +123,11 @@ public class UserTester extends UserDao {
                  "59718", weekdays));
      }
 
+    /**
+     * @author Laird
+     * @param principal the desired email of the user
+     * @return the user if is found
+     */
     @Override
     public Optional<UserAuthenticationDto> findUserByPrincipal(String principal) {
         for(UserDto u : usersTotal){
@@ -160,6 +167,14 @@ public class UserTester extends UserDao {
         return toReturn;
     }
 
+    /**
+     * Gets the suggested sitters for the DB
+     * @author Laird
+     * @param zip the zip code to match on
+     * @param city the city to match on
+     * @param state the state to match on
+     * @return the suggested sitters
+     */
     @Override
     public UserCollectionDTO findSitters(String zip, String city, String state){
        List<Object> zipList = new ArrayList<>(), cityList = new ArrayList<>();

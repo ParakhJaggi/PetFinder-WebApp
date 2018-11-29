@@ -169,8 +169,9 @@ public class PetEndpoint {
 
 	/**
 	 * @author Laird
-	 * @param request
-	 * @return
+	 * @param request indicates what animals should be included in the response
+	 * @return all pats that are of one of the types indicated in request
+	 * @see SingleFieldRequest
 	 */
 	@GetMapping(value = "/byType", produces = "application/json")
 	public PetCollectionDTO getByGenericType(@RequestBody SingleFieldRequest request) {
