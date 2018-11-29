@@ -47,7 +47,9 @@ public class UserEndpoint {
 
 	/**
 	 * @author Laird
-	 * @return
+	 * @return true indicates that the user has been successfully deleted.
+	 *         false indicates that the current user has not been deleted.
+	 * This is is the endpoint for deleting a logged in user.
 	 */
 	@DeleteMapping(value = "/deleteThisUser")
 	public boolean deleteCurrentUser(){
@@ -56,7 +58,8 @@ public class UserEndpoint {
 
 	/**
 	 * @author Laird
-	 * @return
+	 * @return all bookings of the current sitter
+	 * Note that this endpoint is for getting all sits of a currently logged in sitter.
 	 */
 	@GetMapping(value = "/getSits")
 	public List<BookingDTO> getMySits(){
@@ -65,8 +68,10 @@ public class UserEndpoint {
 	}
 
 	/**
+	 * Way for sitters to get all requested bookings from various owners.
 	 * @author Laird
-	 * @return
+	 * @return all of the sits that the current sitter has from owners.
+	 * Note: this method is designed for sitters.
 	 */
 	@GetMapping(value = "/getRequestedSits")
 	public List<BookingDTO> getRequestedSits(){
@@ -75,8 +80,9 @@ public class UserEndpoint {
 	}
 
 	/**
+	 * Is the sitter suggestion method that uses city and zip to give priority to sitters.
 	 * @author Laird
-	 * @return
+	 * @return all sitters currently available for the current owner
 	 * @throws UserException
 	 */
 	@GetMapping(value = "/getavailablesitters")
@@ -85,14 +91,19 @@ public class UserEndpoint {
 		return userService.getAvailableSitters(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
+	/**
+	 * clears all of the notifications of the current user
+	 * @author Laird
+	 */
 	@GetMapping(value = "/clearnotifications")
 	public void clearNotifications(){
 		userService.ClearNotifications(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	/**
+	 * This is a way for a user to set or reset their available times
 	 * @author Laird
-	 * @param utd
+	 * @param utd the times of the user
 	 */
 	@PostMapping(value = "/setdays")
 	public void setTimes(@RequestBody UserTimesDTO utd){
@@ -101,8 +112,9 @@ public class UserEndpoint {
 	}
 
 	/**
+	 * Way for an authenticated user to get their saved availability
 	 * @author Laird
-	 * @return
+	 * @return the times saved of the current user
 	 */
 	@GetMapping(value = "/getDays")
 	public UserTimesDTO getDays(){
@@ -112,8 +124,10 @@ public class UserEndpoint {
 
 	/**
 	 * @author Laird
-	 * @param utd
-	 * @return
+	 * @param utd the booking that the current owner is requesting
+	 * @return true indicates that the booking has been successfully requested.
+	 *         false indicates that the booking ahs not been successfully requested.
+	 * @see makebookingDTO
 	 */
 	@PostMapping(value = "/requestBooking")
 	public boolean requestBooking(@RequestBody makebookingDTO utd) throws MailjetSocketTimeoutException, MailjetException {
@@ -121,9 +135,13 @@ public class UserEndpoint {
 	}
 
 	/**
+	 * Way for a sitter to confirm a booking.
 	 * @author Laird
-	 * @param bd
-	 * @return
+	 * @param bd the booking that the sitter would like to confirm
+	 * @return true indicates that the booking has been successfully confirmed.
+	 *         false indicates that the booking has not been successfully confirmed.
+	 * Note: the booking indicates must already exist as a requested booking for the currently
+	 * logged in sitter or else false will be returned.
 	 */
 	@PostMapping(value = "/confirmBooking")
 	public boolean confirmBooking(@RequestBody BookingDTO bd) throws MailjetSocketTimeoutException, MailjetException {
@@ -131,9 +149,10 @@ public class UserEndpoint {
 	}
 
 	/**
+	 * Way for a user to cancel a booking.
 	 * @author Laird
-	 * @param bd
-	 * @return
+	 * @param bd the booking to be cancelled.
+	 * @return true indicates success
 	 */
 	@PostMapping(value = "/deleteBooking")
 	public boolean deleteBooking(@RequestBody BookingDTO bd){
@@ -141,13 +160,14 @@ public class UserEndpoint {
 	}
 
 	/**
+	 * Way for an owner to review a sitter
 	 * @author Laird
-	 * @param rd
+	 * @param rd the review that is to associated with the sitter
+	 * @see ReviewDTO
 	 */
 	@PostMapping(value = "/addReviewScore")
 	public void addReview(@RequestBody ReviewDTO rd) throws MailjetSocketTimeoutException, MailjetException {
 		userService.addReview(rd);
-
 	}
 
 }

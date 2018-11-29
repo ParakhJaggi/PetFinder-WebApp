@@ -41,6 +41,7 @@ public class PetEndpoint {
 
 	/**
 	 * @author laird
+	 * Note: this is an endpoint just for testing purposes.
 	 */
 	@GetMapping(value = "/populateTestData")
 	public void popData(){
@@ -52,14 +53,22 @@ public class PetEndpoint {
 		petService.save(new PetDto((long)3, "ratto", "rodent"));
 	}
 
-
-
-
+	/**
+	 * @author Laird
+	 * @param id the id of the animal
+	 * @return the pet of the id.
+	 */
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public Optional<PetDto> getPet(@PathVariable("id") Long id) {
 		return petService.findPet(id);
 	}
 
+	/**
+	 * @author Laird
+	 * @param pet the pet to be saved in Elasticsearch
+	 * @return {@link PetDto} the given pet
+	 * Note: a new random id is associated with the pet.
+	 */
 	@PostMapping(produces = "application/json")
 	public PetDto savePet(@RequestBody PetDto pet) {
 		//if(pet.getId() == null) {
@@ -71,6 +80,12 @@ public class PetEndpoint {
 		petService.save(pet);
 		return pet;
 	}
+
+	/**
+	 * @author Laird
+	 * @param pet the pet to edit
+	 * @return the given pet
+	 */
 	@PostMapping(value = "/edit", produces = "application/json")
 	public PetDto editPet(@RequestBody PetDto pet) {
 		petService.editPet(pet);
@@ -79,8 +94,9 @@ public class PetEndpoint {
 
 
 	/**
+	 * Way to get all pets in the system
 	 * @author Laird
-	 * @return
+	 * @return all pets in elasticsearch
 	 */
 	@GetMapping(value = "/all", produces = "application/json")
 	public PetCollectionDTO getAll(){
@@ -90,7 +106,7 @@ public class PetEndpoint {
 
 	/**
 	 * @author Laird
-	 * @return
+	 * @return all cats in elasticsearch
 	 */
 	@GetMapping(value = "/cats", produces = "application/json")
 	public PetCollectionDTO getCats(){
@@ -100,7 +116,7 @@ public class PetEndpoint {
 
 	/**
 	 * @author Laird
-	 * @return
+	 * @return all dogs in elasticsearch
 	 */
 	@GetMapping(value = "/dogs", produces = "application/json")
 	public PetCollectionDTO getDogs(){
@@ -109,7 +125,7 @@ public class PetEndpoint {
 
 	/**
 	 * @author Laird
-	 * @return
+	 * @return all reptiles in elasticsearch
 	 */
 	@GetMapping(value = "/reptiles", produces = "application/json")
 	public PetCollectionDTO getReptiles(){
@@ -118,7 +134,7 @@ public class PetEndpoint {
 
 	/**
 	 * @author Laird
-	 * @return
+	 * @return all rodents in elasticsearch
 	 */
 	@GetMapping(value = "/rodents", produces = "application/json")
 	public PetCollectionDTO getRodents(){
@@ -126,8 +142,9 @@ public class PetEndpoint {
 	}
 
 	/**
+	 * Way for a user to get custom search of all animals in elasticsearch
 	 * @author Laird
-	 * @return
+	 * @return all desired animals in elasticsearch
 	 */
 	@GetMapping(value = "/other", produces = "application/json")
 	public PetCollectionDTO getOther(){
@@ -136,11 +153,11 @@ public class PetEndpoint {
 
 	/**
 	 * @author Laird
-	 * @param cat
-	 * @param dog
-	 * @param rodent
-	 * @param other
-	 * @param reptile
+	 * @param cat indicates if cats should be included
+	 * @param dog indicates if dogs should be included
+	 * @param rodent ndicates if rodents should be included
+	 * @param other indicates if birds should be included
+	 * @param reptile indicates if reptiles should be included
 	 * @return
 	 */
 	@GetMapping(value = "/{cat}/{dog}/{rodent}/{other}/{reptile}", produces = "application/json")
@@ -152,8 +169,9 @@ public class PetEndpoint {
 
 	/**
 	 * @author Laird
-	 * @param request
-	 * @return
+	 * @param request indicates what animals should be included in the response
+	 * @return all pats that are of one of the types indicated in request
+	 * @see SingleFieldRequest
 	 */
 	@GetMapping(value = "/byType", produces = "application/json")
 	public PetCollectionDTO getByGenericType(@RequestBody SingleFieldRequest request) {

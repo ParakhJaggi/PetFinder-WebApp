@@ -9,9 +9,20 @@ import petfinder.site.common.pet.PetDto;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An access object solely to be used to test the pet endpoints. Functions like a fake database
+ * and has a few dummy entries inside of it which are filtered using java stream/lambda.
+ * @author Laird
+ */
 public class AnimalTypeTester extends PetDao {
     public static final int CAT_NUM = 3, DOG_NUM = 2, RODENT_NUM = 3, REPTILE_NUM = 1, OTHER_NUM = 4;
     public static final int FLUFFY_NUM = 2;
+
+    /**
+     * find animals of the desired types
+     * @param atr the tupes of animals that are to be returned.
+     * @return all desired animals
+     */
     @Override
     public PetCollectionDTO findByType(AnimalTypeRequest atr){
         PetCollectionDTO toReturn = new PetCollectionDTO();
@@ -44,6 +55,14 @@ public class AnimalTypeTester extends PetDao {
         toReturn.setPets(pets);
         return toReturn;
     }
+
+    /**
+     * Finds all animals that match the desired attribute on one of the desired values
+     * @param term the attribute name
+     * @param toMatch any value that should match for the attribute
+     * @return all desired pets
+     * @throws PetException
+     */
     @Override
     public PetCollectionDTO findByFieldMatch(String term, List<Object> toMatch) throws PetException {
         PetCollectionDTO toReturn = new PetCollectionDTO();

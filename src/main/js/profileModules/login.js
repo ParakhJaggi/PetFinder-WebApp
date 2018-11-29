@@ -1,3 +1,5 @@
+/*eslint no-unused-vars: ["warn", { "varsIgnorePattern": "state" }]*/
+
 import React from 'react';
 import * as ReduxForm from 'redux-form';
 import {connect} from 'react-redux';
@@ -48,7 +50,7 @@ import { SubmissionError } from 'redux-form';
 class RegistrationForm extends React.Component {
 	onSubmit = user => {
 		if(user.password != user.Secondpassword)
-            throw new SubmissionError({ password: 'The passwords do not match.', Secondpassword: 'The passwords do not match.' });
+			throw new SubmissionError({ password: 'The passwords do not match.', Secondpassword: 'The passwords do not match.' });
 		return this.props.register(user);
 	};
 	state = {
@@ -57,16 +59,16 @@ class RegistrationForm extends React.Component {
 	}
 	handleChange = (selectedOption) => {
 		this.setState({selectedOption});
-		console.log('Option selected:', selectedOption);
+		//console.log('Option selected:', selectedOption);
 	};
 	handleChange2 = (selectedOption2) => {
 		this.setState({selectedOption2});
-		console.log('Option selected:', selectedOption2);
+		//console.log('Option selected:', selectedOption2);
 	};
 
 	render() {
 		let {handleSubmit, submitting} = this.props;
-		let onSuccess = this.props.success;
+		//let onSuccess = this.props.success;
 
 		const options = [
 			{value: 'Alabama', label: 'Alabama'},
@@ -161,6 +163,7 @@ class RegistrationForm extends React.Component {
 				<br/><br/>
 				<Bessemer.Field name="zip" friendlyName="Zip code"
 				                validators={[Validation.requiredValidator]}/>
+                <Bessemer.Field name="phoneNumber" friendlyName="Phone Number"/>
 
 				<Bessemer.Button loading={submitting}>Register</Bessemer.Button>
 			</form>

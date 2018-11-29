@@ -1,7 +1,7 @@
 import React from 'react';
 import {HashRouter, Route} from 'react-router-dom';
 
-import * as Pages from 'js/profileModules/logoutHelpers';
+//import * as Pages from 'js/profileModules/logoutHelpers';
 import {RegisterPage} from 'js/Pages/registerPage';
 import {LoginPage} from 'js/Pages/loginPage';
 import {AboutUs} from 'js/Pages/aboutUsPage';
@@ -10,6 +10,7 @@ import {OtherSearch, CatSearch, DogSearch, RodentSearch} from 'js/Pages/petPages
 import {Dashboard} from 'js/Pages/dashboardPage';
 import {ReviewPage} from 'js/Pages/reviewPage';
 import {ProfilePage} from 'js/Pages/theProfilePage';
+import {Settings} from 'js/Pages/settings.js';
 
 export default class Index extends React.Component {
 	render() {
@@ -28,6 +29,8 @@ export default class Index extends React.Component {
 					<Route exact path="/review-page" component={ReviewPage}/>
 					<Route exact path="/sits" component={AddPet}/>
                     <Route exact path="/about-us" component={AboutUs}/>
+					<Route exact path="/settings" component={Settings}/>
+
 				</div>
 			</HashRouter>
 		);

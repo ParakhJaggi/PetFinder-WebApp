@@ -1,4 +1,7 @@
 package petfinder.site.common.user;
+import com.textmagic.sdk.RestClient;
+import com.textmagic.sdk.RestException;
+import com.textmagic.sdk.resource.instance.TMNewMessage;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
@@ -37,8 +40,6 @@ import org.json.JSONObject;
 
 /**
  * Created by jlutteringer on 8/23/17.
- *
- * laird added many features
  */
 @Service
 public class UserService {
@@ -73,7 +74,7 @@ public class UserService {
 		private String principal;
 		private String password;
 		private Map<String, Object> attributes;
-		private String city, state, address, zip, type;
+		private String city, state, address, zip, type, phoneNumber;
 
 		public String getZip() {
 			return zip;
@@ -138,8 +139,20 @@ public class UserService {
 		public void setType(String type) {
 			this.type = type;
 		}
+
+		public String getPhoneNumber() {
+			return phoneNumber;
+		}
+
+		public void setPhoneNumber(String phoneNumber) {
+			this.phoneNumber = phoneNumber;
+		}
 	}
 
+	/**
+	 * Request for a users password to be changed.
+	 * @author Laird
+	 */
 	public static class PasswordChangeRequest {
 		private String password;
 
@@ -162,15 +175,15 @@ public class UserService {
 		if(findUserByPrincipal(request.getPrincipal()).isPresent()){
 			return null;
 		}
-		Map<?, ?> o = null;
+		Map<?, ?> obj = null;
 		try {
-			o = rs.getForObject("https://maps.googleapis.com/maps/api/geocode/json?address={address}&key=AIzaSyCXPmp-yjzKl9jIN9fwXbRLgCUOfwaYZfQ", Map.class, encode(strB.toString(), "UTF-8"));
+			obj = rs.getForObject("https://maps.googleapis.com/maps/api/geocode/json?address={address}&key=AIzaSyCXPmp-yjzKl9jIN9fwXbRLgCUOfwaYZfQ", Map.class, encode(strB.toString(), "UTF-8"));
 		}
 		catch(UnsupportedEncodingException e){
 			return null;
 		}
-		if(((String)(((Map<?,?>)o).get("status"))).equals("OK") ){
-			Map<?, ?> location = ((Map<?, ?>) ((Map<?, ?>) ((Map<?, ?>) ((List<?>) o.get("results")).get(0)).get("geometry")).get("location"));
+		if(((String)(((Map<?,?>)obj).get("status"))).equals("OK") ){
+			Map<?, ?> location = ((Map<?, ?>) ((Map<?, ?>) ((Map<?, ?>) ((List<?>) obj.get("results")).get(0)).get("geometry")).get("location"));
 			latitude = (Double)location.get("lat");
 			longitude = (Double)location.get("lng");
 		}
@@ -186,9 +199,27 @@ public class UserService {
 			toSet.setType(UserType.OWNER);
 		}
 		//toSet.setGeographicPoint(new CustomGeoPoint(latitude, longitude));
+		//do some checking on the phone number
+		//filter out anything that is not a number
+		request.setPhoneNumber(request.getPhoneNumber() != null ? request.getPhoneNumber().replaceAll("[^0-9]","" ): null);
 		userAuthentication = new UserAuthenticationDto(toSet,
 				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);
+
+		RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+
+		TMNewMessage m = client2.getResource(TMNewMessage.class);
+		m.setText("Thank you for registering for the Tempeturs pet sitting app!");
+		m.setPhones(Arrays.asList(new String[] {"1"+request.phoneNumber}));
+		try {
+			m.send();
+		} catch (final RestException e) {
+			System.out.println(e.getErrors());
+			throw new RuntimeException(e);
+		}
+		System.out.println(m.getId());
+
+
 		return userAuthentication.getUser();
 	}
 	public UserDto changePassword(PasswordChangeRequest req){
@@ -298,6 +329,7 @@ public class UserService {
 
     /**
      * @author laird
+	 * @author Parakh
      * @param s the principal of the sitter that the owner is requesting a booking of
      * @param utd boolean array representing each day of the week
      * @return true indicates that the booking has been successfully requested
@@ -352,6 +384,21 @@ public class UserService {
         response = client.post(request);
         System.out.println(response.getData());
 
+		RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+
+		TMNewMessage m = client2.getResource(TMNewMessage.class);
+		m.setText("Dear User, You have a booking! Please check our site to accept/decline.");
+		m.setPhones(Arrays.asList(new String[] {"1"+sitter.get().user.getPhoneNumber(),"1"+owner.get().user.getPhoneNumber()}));
+		try {
+			m.send();
+		} catch (final RestException e) {
+			System.out.println(e.getErrors());
+			throw new RuntimeException(e);
+		}
+		System.out.println(m.getId());
+
+
+
 		return true;
 	}
 
@@ -376,6 +423,7 @@ public class UserService {
     /**
      * This method is used for a sitter to confirm a requestedbooking from an owner.
      * @author Laird
+	 * @author Parakh
      * @param bd the bookig that the user will request
      * @return true indicates that the booking was successfully confimed. False means the confirmation failed.
      * @see BookingDTO
@@ -426,8 +474,27 @@ public class UserService {
 
         response = client.post(request);
         System.out.println(response.getData());
+
+		RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+
+		TMNewMessage m = client2.getResource(TMNewMessage.class);
+		m.setText("Dear User, Your booking has been confirmed!");
+		m.setPhones(Arrays.asList(new String[] {"1"+sitter.get().user.getPhoneNumber(),"1"+owner.get().user.getPhoneNumber()}));
+		try {
+			m.send();
+		} catch (final RestException e) {
+			System.out.println(e.getErrors());
+			throw new RuntimeException(e);
+		}
+		System.out.println(m.getId());
 		return true;
 	}
+
+	/**
+	 * This meathod will clear a users notifications
+	 * @author Parakh
+	 * @param principle the users email
+	 */
 	public void ClearNotifications(String principle)  {
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
@@ -483,6 +550,7 @@ public class UserService {
     /**
      * Method for an owner to add a review to a sitter.
      * @author Laird
+	 * @author Parakh
      * @param rd review that the current owner is adding.
      * @see ReviewDTO
      */
@@ -536,6 +604,20 @@ public class UserService {
 
             response = client.post(request);
             System.out.println(response.getData());
+
+			RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+
+			TMNewMessage m = client2.getResource(TMNewMessage.class);
+			m.setText("Dear User, A user gave you a review! Your new score is " + sitter.getReviewSum() +".");
+			m.setPhones(Arrays.asList(new String[] {"1"+sitter.getPhoneNumber()}));
+			try {
+				m.send();
+			} catch (final RestException e) {
+				System.out.println(e.getErrors());
+				throw new RuntimeException(e);
+			}
+			System.out.println(m.getId());
+
 	    }
     }
 
