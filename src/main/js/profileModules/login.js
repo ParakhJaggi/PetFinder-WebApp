@@ -1,3 +1,5 @@
+/*eslint no-unused-vars: ["warn", { "varsIgnorePattern": "state" }]*/
+
 import React from 'react';
 import * as ReduxForm from 'redux-form';
 import {connect} from 'react-redux';
@@ -37,7 +39,7 @@ class LoginForm extends React.Component {
 LoginForm = ReduxForm.reduxForm({form: 'login'})(LoginForm);
 
 LoginForm = connect(
-	//state => ({}),
+	state => ({}),
 	dispatch => ({
 		authenticate: (principal, password, onSuccess) => dispatch(Users.Actions.authenticate(principal, password, onSuccess))
 	})
@@ -172,7 +174,7 @@ class RegistrationForm extends React.Component {
 RegistrationForm = ReduxForm.reduxForm({form: 'register'})(RegistrationForm);
 
 RegistrationForm = connect(
-	//state => ({}),
+	state => ({}),
 	dispatch => ({
 		register: user => dispatch(Users.Actions.register(user))
 	})
