@@ -49,7 +49,7 @@ Actions.Types = {
 Actions.register = user => {
 	return (dispatch) => {
 		return register(user).then(() => {
-			return dispatch(Actions.authenticate(user.principal, user.password));
+			return dispatch(Actions.authenticate(user.principal, user.password, ()=>{}));
 		});
 	};
 };

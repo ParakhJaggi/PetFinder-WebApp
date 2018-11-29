@@ -10,8 +10,8 @@ import {SubmissionError} from 'redux-form';
 
 class RegistrationPetForm extends React.Component {
 	onSubmit = pet => {
-		console.log(pet.type);
-		console.log(pet.subtype);
+		//console.log(pet.type);
+		//console.log(pet.subtype);
 		if (pet.type === 'Dog') {
 			if (pet.subtype !== 'Dog') {
 				throw new SubmissionError({subtype: 'Subtype must be Dog'});
@@ -43,16 +43,16 @@ class RegistrationPetForm extends React.Component {
 	}
 	handleChange = (selectedOption) => {
 		this.setState({selectedOption});
-		console.log('Option selected:', selectedOption);
+		//console.log('Option selected:', selectedOption);
 	};
 	handleChange2 = (selectedOption2) => {
 		this.setState({selectedOption2});
-		console.log('Option selected:', selectedOption2);
+		//console.log('Option selected:', selectedOption2);
 	};
 
 	render() {
 		let {handleSubmit, submitting} = this.props;
-		let onSuccess = this.props.success;
+		//let onSuccess = this.props.success;
 
 		const options = [
 			{value: 'Dog', label: 'Dog'},
@@ -77,7 +77,7 @@ class RegistrationPetForm extends React.Component {
 
 			<form name="form" onSubmit={handleSubmit(form => this.onSubmit(form))}>
 				<Bessemer.Field name="name" friendlyName="Pet Name"
-				                validators={[Validation.requiredValidator]}/>
+								validators={[Validation.requiredValidator]}/>
 
 				<Bessemer.Field name="type" friendlyName="Type"/*Todo Radio box*/
 				                validators={[Validation.requiredValidator]}
@@ -105,7 +105,7 @@ class RegistrationPetForm extends React.Component {
 RegistrationPetForm = ReduxForm.reduxForm({form: 'register'})(RegistrationPetForm);
 
 RegistrationPetForm = connect(
-	state => ({}),
+	//state => ({}),
 	dispatch => ({
 		register: user => dispatch(Users.Actions.register(user))
 	})
@@ -143,7 +143,7 @@ class EditPetForm extends React.Component {
 
 	render() {
 		let {handleSubmit, submitting} = this.props;
-		let onSuccess = this.props.success;
+		//let onSuccess = this.props.success;
 
 		if (this.state) {
 			return (
@@ -153,11 +153,10 @@ class EditPetForm extends React.Component {
 					<div>&#9661;{this.props.pet.name}</div>}</div>
 					{
 						this.state.show &&
-						<form name={this.props.pet.id + 'form'} onSubmit={handleSubmit(form => this.onSubmit(form))}
-						      initialValues={this.props.pet}>
+						<form name={this.props.pet.id + 'form'} onSubmit={handleSubmit(form => this.onSubmit(form))}>
 							<Bessemer.Field name={this.props.pet.id + 'name'} friendlyName="Pet Name"
-							                defaultVal={this.props.pet.name}
-							                value={this.props.pet.name}
+											defaultVal={this.props.pet.name}
+											value={this.props.pet.name}
 							/>
 
 							<Bessemer.Field name={this.props.pet.id + 'type'}
@@ -174,7 +173,7 @@ class EditPetForm extends React.Component {
 							/>
 
 							<Bessemer.Field name={this.props.pet.id + 'preferences'} friendlyName="Extra Preferences"
-							                defaultVal={this.props.pet.preferences}
+											defaultVal={this.props.pet.preferences}
 							/>
 
 							<Bessemer.Button loading={submitting}>Update Pet</Bessemer.Button>
@@ -191,7 +190,7 @@ class EditPetForm extends React.Component {
 EditPetForm = ReduxForm.reduxForm({form: 'register'})(EditPetForm);
 
 EditPetForm = connect(
-	state => ({}),
+	//state => ({}),
 	dispatch => ({
 		register: user => dispatch(Users.Actions.register(user))
 	})

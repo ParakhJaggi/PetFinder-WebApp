@@ -14,6 +14,14 @@ function ClearNotification() {
 	location.reload();
 }
 
+function initpetform(pet) {
+	let vals = {};
+	['name', 'type', 'subtype', 'preferences'].forEach(x => {
+		vals[pet.id + x] = pet[x];
+	});
+	return vals;
+}
+
 class ProfilePage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -33,19 +41,19 @@ class ProfilePage extends React.Component {
 			});
 		axios.get('/api/user')
 			.then(res => {
-				console.log(res);
+				//console.log(res);
 				this.setState({user: res});
 			});
 		axios.get('/api/userPets/ugly')
 			.then(res => {
-				console.log(res);
+				//console.log(res);
 				this.setState({pets: res.pets});
 			});
 	}
 
 
 	onSubmit(event) {
-		console.log('Submitting');
+		//console.log('Submitting');
 		event.preventDefault();
 		let toPost = {
 			'bools': this.state.available
@@ -54,7 +62,7 @@ class ProfilePage extends React.Component {
 	}
 
 	/* callback to change the checkboxState to false when the checkbox is checked */
-	toggleAvailable(day, event) {
+	toggleAvailable(day) {
 		let newAvailable = this.state.available;
 		newAvailable[day] = !newAvailable[day];
 		this.setState({
@@ -135,7 +143,7 @@ class ProfilePage extends React.Component {
 							{
 								this.state.pets &&
 								this.state.pets.map(pet =>
-									<EditPetForm pet={pet}/>
+									<EditPetForm pet={pet} initialValues={initpetform(pet)}/>
 								)
 							}
 						</div>

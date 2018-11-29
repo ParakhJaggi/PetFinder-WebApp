@@ -22,7 +22,7 @@ export class NavBar extends React.Component {
 								<i className="fas fa-user-circle fa-fw  "></i>
 							</a>
 							<div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-								<a className="dropdown-item" href="#/profile-page">Settings</a>
+								<a className="dropdown-item" href="#/settings">Settings</a>
 								<div className="dropdown-divider"></div>
 								<a className="dropdown-item" href="#" data-toggle="modal"
 								   data-target="#logoutModal">Logout</a>
@@ -44,6 +44,12 @@ export class SideBar extends React.Component {
 					<a className="nav-link" href="#/dashboard">
 						<i className="fas fa-fw fa-tachometer-alt"></i>
 						<span>Dashboard</span>
+					</a>
+				</li>
+				<li className="nav-item active">
+					<a className="nav-link" href="#/profile-page">
+						<i className="fas fa-user"></i>
+						<span>Profile</span>
 					</a>
 				</li>
 				<li className="nav-item dropdown">

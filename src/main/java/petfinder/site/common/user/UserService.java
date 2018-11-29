@@ -1,4 +1,7 @@
 package petfinder.site.common.user;
+import com.textmagic.sdk.RestClient;
+import com.textmagic.sdk.RestException;
+import com.textmagic.sdk.resource.instance.TMNewMessage;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
@@ -202,6 +205,21 @@ public class UserService {
 		userAuthentication = new UserAuthenticationDto(toSet,
 				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);
+
+		RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+
+		TMNewMessage m = client2.getResource(TMNewMessage.class);
+		m.setText("Thank you for registering for the Tempeturs pet sitting app!");
+		m.setPhones(Arrays.asList(new String[] {"1"+request.phoneNumber}));
+		try {
+			m.send();
+		} catch (final RestException e) {
+			System.out.println(e.getErrors());
+			throw new RuntimeException(e);
+		}
+		System.out.println(m.getId());
+
+
 		return userAuthentication.getUser();
 	}
 	public UserDto changePassword(PasswordChangeRequest req){
@@ -311,6 +329,7 @@ public class UserService {
 
     /**
      * @author laird
+	 * @author Parakh
      * @param s the principal of the sitter that the owner is requesting a booking of
      * @param utd boolean array representing each day of the week
      * @return true indicates that the booking has been successfully requested
@@ -365,6 +384,21 @@ public class UserService {
         response = client.post(request);
         System.out.println(response.getData());
 
+		RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+
+		TMNewMessage m = client2.getResource(TMNewMessage.class);
+		m.setText("Dear User, You have a booking! Please check our site to accept/decline.");
+		m.setPhones(Arrays.asList(new String[] {"1"+sitter.get().user.getPhoneNumber(),"1"+owner.get().user.getPhoneNumber()}));
+		try {
+			m.send();
+		} catch (final RestException e) {
+			System.out.println(e.getErrors());
+			throw new RuntimeException(e);
+		}
+		System.out.println(m.getId());
+
+
+
 		return true;
 	}
 
@@ -389,6 +423,7 @@ public class UserService {
     /**
      * This method is used for a sitter to confirm a requestedbooking from an owner.
      * @author Laird
+	 * @author Parakh
      * @param bd the bookig that the user will request
      * @return true indicates that the booking was successfully confimed. False means the confirmation failed.
      * @see BookingDTO
@@ -439,8 +474,27 @@ public class UserService {
 
         response = client.post(request);
         System.out.println(response.getData());
+
+		RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+
+		TMNewMessage m = client2.getResource(TMNewMessage.class);
+		m.setText("Dear User, Your booking has been confirmed!");
+		m.setPhones(Arrays.asList(new String[] {"1"+sitter.get().user.getPhoneNumber(),"1"+owner.get().user.getPhoneNumber()}));
+		try {
+			m.send();
+		} catch (final RestException e) {
+			System.out.println(e.getErrors());
+			throw new RuntimeException(e);
+		}
+		System.out.println(m.getId());
 		return true;
 	}
+
+	/**
+	 * This meathod will clear a users notifications
+	 * @author Parakh
+	 * @param principle the users email
+	 */
 	public void ClearNotifications(String principle)  {
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
@@ -496,6 +550,7 @@ public class UserService {
     /**
      * Method for an owner to add a review to a sitter.
      * @author Laird
+	 * @author Parakh
      * @param rd review that the current owner is adding.
      * @see ReviewDTO
      */
@@ -549,6 +604,20 @@ public class UserService {
 
             response = client.post(request);
             System.out.println(response.getData());
+
+			RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+
+			TMNewMessage m = client2.getResource(TMNewMessage.class);
+			m.setText("Dear User, A user gave you a review! Your new score is " + sitter.getReviewSum() +".");
+			m.setPhones(Arrays.asList(new String[] {"1"+sitter.getPhoneNumber()}));
+			try {
+				m.send();
+			} catch (final RestException e) {
+				System.out.println(e.getErrors());
+				throw new RuntimeException(e);
+			}
+			System.out.println(m.getId());
+
 	    }
     }
 
