@@ -37,8 +37,6 @@ import org.json.JSONObject;
 
 /**
  * Created by jlutteringer on 8/23/17.
- *
- * laird added many features
  */
 @Service
 public class UserService {
@@ -73,7 +71,7 @@ public class UserService {
 		private String principal;
 		private String password;
 		private Map<String, Object> attributes;
-		private String city, state, address, zip, type;
+		private String city, state, address, zip, type, phoneNumber;
 
 		public String getZip() {
 			return zip;
@@ -138,8 +136,20 @@ public class UserService {
 		public void setType(String type) {
 			this.type = type;
 		}
+
+		public String getPhoneNumber() {
+			return phoneNumber;
+		}
+
+		public void setPhoneNumber(String phoneNumber) {
+			this.phoneNumber = phoneNumber;
+		}
 	}
 
+	/**
+	 * Request for a users password to be changed.
+	 * @author Laird
+	 */
 	public static class PasswordChangeRequest {
 		private String password;
 
@@ -162,15 +172,15 @@ public class UserService {
 		if(findUserByPrincipal(request.getPrincipal()).isPresent()){
 			return null;
 		}
-		Map<?, ?> o = null;
+		Map<?, ?> obj = null;
 		try {
-			o = rs.getForObject("https://maps.googleapis.com/maps/api/geocode/json?address={address}&key=AIzaSyCXPmp-yjzKl9jIN9fwXbRLgCUOfwaYZfQ", Map.class, encode(strB.toString(), "UTF-8"));
+			obj = rs.getForObject("https://maps.googleapis.com/maps/api/geocode/json?address={address}&key=AIzaSyCXPmp-yjzKl9jIN9fwXbRLgCUOfwaYZfQ", Map.class, encode(strB.toString(), "UTF-8"));
 		}
 		catch(UnsupportedEncodingException e){
 			return null;
 		}
-		if(((String)(((Map<?,?>)o).get("status"))).equals("OK") ){
-			Map<?, ?> location = ((Map<?, ?>) ((Map<?, ?>) ((Map<?, ?>) ((List<?>) o.get("results")).get(0)).get("geometry")).get("location"));
+		if(((String)(((Map<?,?>)obj).get("status"))).equals("OK") ){
+			Map<?, ?> location = ((Map<?, ?>) ((Map<?, ?>) ((Map<?, ?>) ((List<?>) obj.get("results")).get(0)).get("geometry")).get("location"));
 			latitude = (Double)location.get("lat");
 			longitude = (Double)location.get("lng");
 		}
@@ -186,6 +196,9 @@ public class UserService {
 			toSet.setType(UserType.OWNER);
 		}
 		//toSet.setGeographicPoint(new CustomGeoPoint(latitude, longitude));
+		//do some checking on the phone number
+		//filter out anything that is not a number
+		request.setPhoneNumber(request.getPhoneNumber().replaceAll("[^0-9]",""));
 		userAuthentication = new UserAuthenticationDto(toSet,
 				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);

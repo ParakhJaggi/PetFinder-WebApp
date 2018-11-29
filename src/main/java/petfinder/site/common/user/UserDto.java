@@ -25,6 +25,7 @@ public class UserDto implements Momento<String> {
     private int reviewCount, reviewSum;
     private List<ReviewDTO> reviews;
     private Set<String> usedSitters;
+    private String phoneNumber;
     //private CustomGeoPoint geographicPoint;
     Map<String, PetCollectionDTO> sitPets;
 
@@ -68,7 +69,15 @@ public class UserDto implements Momento<String> {
         this.notification = notification;
     }
 
-//	public CustomGeoPoint getGeographicPoint() {
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	//	public CustomGeoPoint getGeographicPoint() {
 //		return geographicPoint;
 //	}
 //
@@ -162,6 +171,27 @@ public class UserDto implements Momento<String> {
 		this.reviews = reviews;
 		this.usedSitters = usedSitters;
 		//this.geographicPoint = new CustomGeoPoint(geographicPoint);
+	}
+
+	public UserDto(String principal, List<String> roles, UserType type, Map<String, Object> attributes, String address, String city, String state, String zip, boolean[] days, List<BookingDTO> bookings, List<BookingDTO> requestedBookings, List<String> notification, int reviewCount, int reviewSum, List<ReviewDTO> reviews, Set<String> usedSitters, String phoneNumber, Map<String, PetCollectionDTO> sitPets) {
+		this.principal = principal;
+		this.roles = roles;
+		this.type = type;
+		this.attributes = attributes;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.days = days;
+		this.bookings = bookings;
+		this.requestedBookings = requestedBookings;
+		this.notification = notification;
+		this.reviewCount = reviewCount;
+		this.reviewSum = reviewSum;
+		this.reviews = reviews;
+		this.usedSitters = usedSitters;
+		this.phoneNumber = phoneNumber;
+		this.sitPets = sitPets;
 	}
 
 	public String getPrincipal() {
@@ -282,12 +312,14 @@ public class UserDto implements Momento<String> {
 				Objects.equals(requestedBookings, userDto.requestedBookings) &&
 				Objects.equals(notification, userDto.notification) &&
 				Objects.equals(reviews, userDto.reviews) &&
-				Objects.equals(usedSitters, userDto.usedSitters);
+				Objects.equals(usedSitters, userDto.usedSitters) &&
+				Objects.equals(phoneNumber, userDto.phoneNumber) &&
+				Objects.equals(sitPets, userDto.sitPets);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = Objects.hash(principal, roles, type, attributes, address, city, state, zip, bookings, requestedBookings, notification, reviewCount, reviewSum, reviews, usedSitters);
+		int result = Objects.hash(principal, roles, type, attributes, address, city, state, zip, bookings, requestedBookings, notification, reviewCount, reviewSum, reviews, usedSitters, phoneNumber, sitPets);
 		result = 31 * result + Arrays.hashCode(days);
 		return result;
 	}

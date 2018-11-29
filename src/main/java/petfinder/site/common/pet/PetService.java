@@ -65,6 +65,12 @@ public class PetService {
 		}
 	}
 
+	/**
+	 * Gets the pets of the current user.
+	 * @author Laird
+	 * @param us the service that can be used to get users
+	 * @return all pets of the currently logged in user
+	 */
 	public PetCollectionDTO getSitPets(UserService us){
 		Set<PetDto> setOfPets = new HashSet<>();
 		PetCollectionDTO toReturn = new PetCollectionDTO();
@@ -84,40 +90,45 @@ public class PetService {
 	}
 
 	/**
+	 * Gets all cats in the DB.
 	 * @author Laird
-	 * @return
+	 * @return all cats
 	 */
 	public PetCollectionDTO findAllCats(){
 		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setCat().generate());
 	}
 
 	/**
+	 * Gets all dogs in the DB
 	 * @author Laird
-	 * @return
+	 * @return all dogs
 	 */
 	public PetCollectionDTO findAllDogs(){
 		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setDog().generate());
 	}
 
 	/**
+	 * Gets all rodents in the DB
 	 * @author Laird
-	 * @return
+	 * @return all rodents
 	 */
 	public PetCollectionDTO findAllRodents(){
 		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setRodent().generate());
 	}
 
 	/**
+	 * Gets all birds in the DB
 	 * @author Laird
-	 * @return
+	 * @return all birds
 	 */
 	public PetCollectionDTO findAllOther(){
 		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setOther().generate());
 	}
 
 	/**
+	 * Gets all reptiles in the DB
 	 * @author Laird
-	 * @return
+	 * @return all reptiles
 	 */
 	public PetCollectionDTO findAllReptiles(){
 		return petDao.findByType(AnimalTypeRequestBuilder.getInstance().setReptile().generate());
@@ -125,12 +136,12 @@ public class PetService {
 
 	/**
 	 * @author Laird
-	 * @param cat
-	 * @param dog
-	 * @param rodent
-	 * @param other
-	 * @param reptile
-	 * @return
+	 * @param cat if cats should be included in the results
+	 * @param dog if dogs should be included in the results
+	 * @param rodent if rodents should be included in the results
+	 * @param other if birds should be included in the results
+	 * @param reptile if reptiles should be included in the results
+	 * @return all pets that match any of the set types
 	 */
 	public PetCollectionDTO findByCustomType(boolean cat, boolean dog,
 											 boolean rodent, boolean other, boolean reptile){
@@ -150,8 +161,8 @@ public class PetService {
 
 	/**
 	 * @author Laird
-	 * @param atr
-	 * @return
+	 * @param atr all animal types that should be searched for
+	 * @return all pets
 	 */
 	public PetCollectionDTO findByType(AnimalTypeRequest atr){
 		return petDao.findByType(atr);
@@ -159,9 +170,9 @@ public class PetService {
 
 	/**
 	 * @author Laird
-	 * @param term
-	 * @param toMatch
-	 * @return
+	 * @param term the name of the attribute that is to be matched to
+	 * @param toMatch all objects that can be matched
+	 * @return all pets that match on an attribute with one of the values contained in toMatch
 	 */
 	public PetCollectionDTO findByFieldMatch(String term, List<Object> toMatch){
 		try{
@@ -177,11 +188,12 @@ public class PetService {
 		return petDao.findByOwner(toMatch);
 	}
 	/**
+	 * Way for an existing pet to be changed without having an id randomly assigned to it.
 	 * @author Laird
-	 * @param newPet
+	 * @param changePet the pet whose name is to be changed
 	 */
-	public void editPet(PetDto newPet){
-		petDao.deletePet(newPet.getId());
-		petDao.save(newPet);
+	public void editPet(PetDto changePet){
+		petDao.deletePet(changePet.getId());
+		petDao.save(changePet);
 	}
 }
