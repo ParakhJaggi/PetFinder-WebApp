@@ -7,6 +7,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.UnsupportedEncodingException;
 import java.time.Duration;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import com.mailjet.client.resource.Email;
@@ -47,6 +48,8 @@ public class UserService {
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
+    private static Logger logger = Logger.getLogger(UserService.class.toString());
+
 
     @Autowired
 	private UserDao userDao;
@@ -206,7 +209,7 @@ public class UserService {
 				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);
 
-		RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+		RestClient client2 = new RestClient("parakhjaggi1", "M3GQdW8I8krGr5P1OG1Gh8S2iKKRgd");
 
 		TMNewMessage m = client2.getResource(TMNewMessage.class);
 		m.setText("Thank you for registering for the Tempeturs pet sitting app!");
@@ -214,12 +217,8 @@ public class UserService {
 		try {
 			m.send();
 		} catch (final RestException e) {
-			System.out.println(e.getErrors());
-			throw new RuntimeException(e);
+			logger.warning(e.getErrorMessage());
 		}
-		System.out.println(m.getId());
-
-
 		return userAuthentication.getUser();
 	}
 	public UserDto changePassword(PasswordChangeRequest req){
@@ -382,9 +381,8 @@ public class UserService {
 
 
         response = client.post(request);
-        System.out.println(response.getData());
 
-		RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+		RestClient client2 = new RestClient("parakhjaggi1", "M3GQdW8I8krGr5P1OG1Gh8S2iKKRgd");
 
 		TMNewMessage m = client2.getResource(TMNewMessage.class);
 		m.setText("Dear User, You have a booking! Please check our site to accept/decline.");
@@ -392,10 +390,8 @@ public class UserService {
 		try {
 			m.send();
 		} catch (final RestException e) {
-			System.out.println(e.getErrors());
-			throw new RuntimeException(e);
+			logger.warning(e.getErrorMessage());
 		}
-		System.out.println(m.getId());
 
 
 
@@ -473,9 +469,8 @@ public class UserService {
 
 
         response = client.post(request);
-        System.out.println(response.getData());
 
-		RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+		RestClient client2 = new RestClient("parakhjaggi1", "M3GQdW8I8krGr5P1OG1Gh8S2iKKRgd");
 
 		TMNewMessage m = client2.getResource(TMNewMessage.class);
 		m.setText("Dear User, Your booking has been confirmed!");
@@ -483,10 +478,8 @@ public class UserService {
 		try {
 			m.send();
 		} catch (final RestException e) {
-			System.out.println(e.getErrors());
-			throw new RuntimeException(e);
+			logger.warning(e.getErrorMessage());
 		}
-		System.out.println(m.getId());
 		return true;
 	}
 
@@ -603,20 +596,19 @@ public class UserService {
 
 
             response = client.post(request);
-            System.out.println(response.getData());
 
-			RestClient client2 = new RestClient("parakhjaggi", "iisjH6XlD3b8PLCzbfWgUzC5uO41vh");
+			RestClient client2 = new RestClient("parakhjaggi1", "M3GQdW8I8krGr5P1OG1Gh8S2iKKRgd");
 
 			TMNewMessage m = client2.getResource(TMNewMessage.class);
 			m.setText("Dear User, A user gave you a review! Your new score is " + sitter.getReviewSum() +".");
 			m.setPhones(Arrays.asList(new String[] {"1"+sitter.getPhoneNumber()}));
 			try {
-				m.send();
+
+					m.send();
+
 			} catch (final RestException e) {
-				System.out.println(e.getErrors());
-				throw new RuntimeException(e);
+
 			}
-			System.out.println(m.getId());
 
 	    }
     }

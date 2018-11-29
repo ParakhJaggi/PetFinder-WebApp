@@ -33,6 +33,5 @@ public class EmailEndpoint {
 
 
         response = client.post(request);
-        System.out.println(response.getData());
     }
 }
