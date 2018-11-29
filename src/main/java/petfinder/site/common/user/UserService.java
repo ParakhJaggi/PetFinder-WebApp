@@ -201,7 +201,7 @@ public class UserService {
 		//toSet.setGeographicPoint(new CustomGeoPoint(latitude, longitude));
 		//do some checking on the phone number
 		//filter out anything that is not a number
-		request.setPhoneNumber(request.getPhoneNumber().replaceAll("[^0-9]",""));
+		request.setPhoneNumber(request.getPhoneNumber() != null ? request.getPhoneNumber().replaceAll("[^0-9]","" ): null);
 		userAuthentication = new UserAuthenticationDto(toSet,
 				passwordEncoder.encode(request.getPassword()));
 		userDao.save(userAuthentication);
