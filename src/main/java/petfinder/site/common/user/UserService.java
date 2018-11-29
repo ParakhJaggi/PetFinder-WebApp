@@ -329,6 +329,7 @@ public class UserService {
 
     /**
      * @author laird
+	 * @author Parakh
      * @param s the principal of the sitter that the owner is requesting a booking of
      * @param utd boolean array representing each day of the week
      * @return true indicates that the booking has been successfully requested
@@ -422,6 +423,7 @@ public class UserService {
     /**
      * This method is used for a sitter to confirm a requestedbooking from an owner.
      * @author Laird
+	 * @author Parakh
      * @param bd the bookig that the user will request
      * @return true indicates that the booking was successfully confimed. False means the confirmation failed.
      * @see BookingDTO
@@ -487,6 +489,12 @@ public class UserService {
 		System.out.println(m.getId());
 		return true;
 	}
+
+	/**
+	 * This meathod will clear a users notifications
+	 * @author Parakh
+	 * @param principle the users email
+	 */
 	public void ClearNotifications(String principle)  {
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Optional<UserAuthenticationDto> sitter = userDao.findUserByPrincipal(principal);
@@ -542,6 +550,7 @@ public class UserService {
     /**
      * Method for an owner to add a review to a sitter.
      * @author Laird
+	 * @author Parakh
      * @param rd review that the current owner is adding.
      * @see ReviewDTO
      */

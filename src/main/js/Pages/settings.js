@@ -5,7 +5,7 @@ import axios from 'axios';
 import * as cookie from 'react-cookies';
 
 function DeleteAccount() {
-	axios.get('/api/user/deleteThisUser').then( res => {
+	axios.post('/api/user/deleteThisUser').then( res => {
 		window.alert('You have been deleted');
 		cookie.remove('authentication', {path: '/'});
 		cookie.remove('user', {path: '/'});
